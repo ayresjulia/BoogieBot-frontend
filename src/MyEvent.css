@@ -1,0 +1,12 @@
+.Event {
+	margin-top: 20px;
+	margin-left: auto;
+	margin-right: auto;
+	width: 600px;
+}
+
+.Event-btn {
+	width: 100px;
+	margin: 10px;
+	margin-left: 480px;
+}
