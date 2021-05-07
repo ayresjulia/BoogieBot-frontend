@@ -13,7 +13,8 @@ const SignupForm = ({ signup }) => {
 		password: "",
 		firstName: "",
 		lastName: "",
-		email: ""
+		email: "",
+		profileUrl: ""
 	});
 	const [ formErrors, setFormErrors ] = useState([]);
 
@@ -97,7 +98,18 @@ const SignupForm = ({ signup }) => {
 						required
 					/>
 				</FormGroup>
-
+				<FormGroup>
+					<Label htmlFor="profileUrl">Profile URL</Label>
+					<Input
+						id="profileUrl"
+						type="text"
+						name="profileUrl"
+						className="Form-input"
+						value={formData.profileUrl}
+						onChange={handleChange}
+						required
+					/>
+				</FormGroup>
 				{formErrors.length ? <Alert type="danger" messages={formErrors} /> : null}
 
 				<Button className="btn btn-success float-right" onSubmit={handleSubmit}>

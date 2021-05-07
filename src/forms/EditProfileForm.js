@@ -13,6 +13,7 @@ const EditProfileForm = ({ currentUser }) => {
 		firstName: currentUser.firstName,
 		lastName: currentUser.lastName,
 		email: currentUser.email,
+		profileUrl: currentUser.profileUrl,
 		password: ""
 	};
 	const [ formData, setFormData ] = useState(INITIAL_STATE);
@@ -37,7 +38,8 @@ const EditProfileForm = ({ currentUser }) => {
 			firstName: formData.firstName,
 			lastName: formData.lastName,
 			email: formData.email,
-			password: formData.password
+			password: formData.password,
+			profileUrl: formData.profileUrl
 		};
 		try {
 			let username = currentUser.username;
@@ -88,6 +90,16 @@ const EditProfileForm = ({ currentUser }) => {
 						name="email"
 						id="email"
 						value={formData.email}
+						onChange={handleChange}
+					/>
+				</FormGroup>
+				<FormGroup>
+					<Label htmlFor="profileUrl">Profile URL</Label>
+					<Input
+						className="Form-input"
+						name="profileUrl"
+						id="profileUrl"
+						value={formData.profileUrl}
 						onChange={handleChange}
 					/>
 				</FormGroup>
