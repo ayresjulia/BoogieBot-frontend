@@ -14,23 +14,31 @@ const NavBar = ({ currentUser, logout }) => {
 				</NavLink>
 				{currentUser && (
 					<Nav className="ml-auto" navbar className="NavBar">
-						<NavItem className="navbar-link">
-							<NavLink to="/events">My Events</NavLink>
+						<NavItem>
+							<NavLink className="navbar-link" to="/events">
+								My Events
+							</NavLink>
 						</NavItem>
-						<NavItem className="navbar-link">
-							<NavLink to="/inspiration">Get Inspired</NavLink>
+						<NavItem>
+							<NavLink className="navbar-link" to="/inspiration">
+								Get Inspired
+							</NavLink>
 						</NavItem>
-						<NavItem className="navbar-link">
-							<NavLink to="/catering">Catering</NavLink>
+						<NavItem>
+							<NavLink className="navbar-link" to="/catering">
+								Catering
+							</NavLink>
 						</NavItem>
 						{/* <NavItem className="navbar-link">
 							<NavLink to="/transit">Transit</NavLink>
 						</NavItem> */}
-						<NavItem className="navbar-link">
-							<NavLink to="/profile">Profile</NavLink>
+						<NavItem>
+							<NavLink className="navbar-link" to="/profile">
+								Profile
+							</NavLink>
 						</NavItem>
-						<NavItem className="navbar-link">
-							<NavLink to="/" onClick={logout}>
+						<NavItem>
+							<NavLink className="navbar-link" to="/" onClick={logout}>
 								Log Out
 							</NavLink>
 						</NavItem>
@@ -38,14 +46,20 @@ const NavBar = ({ currentUser, logout }) => {
 				)}
 				{!currentUser && (
 					<Nav className="ml-auto" navbar>
-						<NavItem className="navbar-link">
-							<NavLink to="/inspiration">Get Inspired</NavLink>
+						<NavItem>
+							<NavLink className="navbar-link" to="/inspiration">
+								Get Inspired
+							</NavLink>
 						</NavItem>
-						<NavItem className="navbar-link">
-							<NavLink to="/login">Log In</NavLink>
+						<NavItem>
+							<NavLink className="navbar-link" to="/login">
+								Log In
+							</NavLink>
 						</NavItem>
-						<NavItem className="navbar-link">
-							<NavLink to="/signup">Sign Up</NavLink>
+						<NavItem>
+							<NavLink className="navbar-link" to="/signup">
+								Sign Up
+							</NavLink>
 						</NavItem>
 					</Nav>
 				)}

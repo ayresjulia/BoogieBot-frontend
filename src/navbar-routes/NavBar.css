@@ -1,8 +1,10 @@
 .navbar-welcome {
 	font-size: 25px;
 	margin-right: 20px;
+	text-decoration: none;
 }
 .navbar-link {
 	margin-right: 20px;
 	font-size: 18px;
+	text-decoration: none;
 }

@@ -1,0 +1,24 @@
+.Events {
+	display: grid;
+	grid-template-columns: auto auto auto auto;
+	text-align: center;
+	justify-content: space-evenly;
+	width: auto;
+}
+
+.Events-card {
+	width: 300px;
+	text-align: center;
+}
+
+.Event-form {
+	text-align: center;
+	margin-top: 20px;
+	margin-left: auto;
+	margin-right: auto;
+	width: 600px;
+}
+
+.btn {
+	width: 100px;
+}

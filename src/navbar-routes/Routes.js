@@ -4,7 +4,7 @@ import BoogieBotApi from "../Api";
 import Events from "../Events";
 import Home from "../Home";
 import MyEvent from "../MyEvent";
-// import SearchJob from "../SearchJob";
+import Inspiration from "../Inspiration";
 import LoginForm from "../forms/LoginForm";
 import SignupForm from "../forms/SignupForm";
 import EditProfileForm from "../forms/EditProfileForm";
@@ -45,14 +45,15 @@ const Routes = ({ login, signup, currentUser }) => {
 					<MyEvent events={events} cantFind="/events" />
 				</Route>
 			)}
-			{/* <Route path="/inspiration">
-				<Inspiration currentUser={currentUser} />
+			<Route path="/inspiration">
+				<Inspiration />
 			</Route>
-			{currentUser && (
+			{/* {currentUser && (
 				<Route path="/catering">
 					<SearchCard currentUser={currentUser} />
 				</Route>
 			)} */}
+
 			<Route path="/login">
 				<LoginForm login={login} />
 			</Route>
@@ -64,7 +65,6 @@ const Routes = ({ login, signup, currentUser }) => {
 					<EditProfileForm currentUser={currentUser} />
 				</Route>
 			)}
-
 			<Redirect to="/" />
 		</Switch>
 	);
