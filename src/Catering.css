@@ -1,4 +1,4 @@
-.Events {
+.Catering {
 	display: grid;
 	grid-template-columns: auto auto auto auto;
 	text-align: center;
@@ -6,12 +6,12 @@
 	width: auto;
 }
 
-.Events-card {
+.Catering-card {
 	width: 300px;
 	text-align: center;
 }
 
-.Event-form {
+.Catering-form {
 	text-align: center;
 	margin-top: 20px;
 	margin-left: auto;

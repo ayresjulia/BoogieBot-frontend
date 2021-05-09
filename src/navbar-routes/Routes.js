@@ -5,6 +5,7 @@ import Events from "../Events";
 import Home from "../Home";
 import MyEvent from "../MyEvent";
 import Inspiration from "../Inspiration";
+import Catering from "../Catering";
 import LoginForm from "../forms/LoginForm";
 import SignupForm from "../forms/SignupForm";
 import EditProfileForm from "../forms/EditProfileForm";
@@ -48,11 +49,11 @@ const Routes = ({ login, signup, currentUser }) => {
 			<Route path="/inspiration">
 				<Inspiration />
 			</Route>
-			{/* {currentUser && (
+			{currentUser && (
 				<Route path="/catering">
-					<SearchCard currentUser={currentUser} />
+					<Catering />
 				</Route>
-			)} */}
+			)}
 
 			<Route path="/login">
 				<LoginForm login={login} />
