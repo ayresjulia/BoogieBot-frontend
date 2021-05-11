@@ -12,12 +12,14 @@ const NavBar = ({ currentUser, logout }) => {
 
 	return (
 		<div>
-			<Navbar expand="md" color="faded" light className="NavBar-main">
-				<NavbarBrand href="/">BoogieBot</NavbarBrand>
-				<NavbarToggler onClick={toggleNavbar} />
+			<Navbar expand="md" light className="Navbar">
+				<NavbarBrand href="/" className="Navbar-brand">
+					BoogieBot
+				</NavbarBrand>
+				<NavbarToggler onClick={toggleNavbar} className="Navbar-hamburger" />
 				<Collapse isOpen={!collapsed} navbar>
 					{currentUser && (
-						<Nav className="ml-auto" navbar>
+						<Nav className="ml-auto" navbar className="Navbar-cntr">
 							<NavItem>
 								<NavLink className="navbar-link" to="/events">
 									My Events
@@ -33,14 +35,12 @@ const NavBar = ({ currentUser, logout }) => {
 									Catering
 								</NavLink>
 							</NavItem>
-							{/* <NavItem className="navbar-link">
-							<NavLink to="/transit">Transit</NavLink>
-						</NavItem> */}
 							<NavItem>
 								<NavLink className="navbar-link" to="/profile">
 									Profile
 								</NavLink>
 							</NavItem>
+
 							<NavItem>
 								<NavLink className="navbar-link" to="/" onClick={logout}>
 									Log Out
@@ -50,11 +50,6 @@ const NavBar = ({ currentUser, logout }) => {
 					)}
 					{!currentUser && (
 						<Nav className="ml-auto" navbar>
-							<NavItem>
-								<NavLink className="navbar-link" to="/inspiration">
-									Get Inspired
-								</NavLink>
-							</NavItem>
 							<NavItem>
 								<NavLink className="navbar-link" to="/login">
 									Log In

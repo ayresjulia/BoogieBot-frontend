@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import BoogieBotApi from "../Api";
 import Events from "../Events";
+import EventForm from "../forms/EventForm";
 import Home from "../Home";
 import MyEvent from "../MyEvent";
 import Inspiration from "../Inspiration";
@@ -14,7 +15,7 @@ import EditProfileForm from "../forms/EditProfileForm";
  * If user is not logged in, page redirects to homepage and asks to log in or sign up.
 */
 
-const Routes = ({ login, signup, currentUser }) => {
+const Routes = ({ login, signup, currentUser, newEvent }) => {
 	const [ isLoading, setIsLoading ] = useState(true);
 	const [ events, setEvents ] = useState([]);
 
@@ -38,7 +39,12 @@ const Routes = ({ login, signup, currentUser }) => {
 			</Route>
 			{currentUser && (
 				<Route exact path="/events">
-					<Events events={events} getEvents={getEvents} />
+					<Events events={events} />
+				</Route>
+			)}
+			{currentUser && (
+				<Route exact path="/events/new">
+					<EventForm newEvent={newEvent} />
 				</Route>
 			)}
 			{currentUser && (

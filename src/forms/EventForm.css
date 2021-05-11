@@ -1,4 +1,4 @@
-.Form {
+.EventForm {
 	margin-top: 0px;
 	margin-left: auto;
 	margin-right: auto;
@@ -11,7 +11,7 @@
 	height: auto;
 }
 
-.Form-left {
+.EventForm-left {
 	margin: 15px;
 	transition: all .2s ease-in-out;
 	text-decoration: none;
@@ -24,27 +24,17 @@
 	margin-bottom: 200px;
 }
 
-.Form-right {
-	margin-top: 20px;
+.EventForm-right {
+	margin-top: 10%;
 }
 
-.Form-update {
+.big-bold {
 	font-size: 80px;
 }
 
-.Form-profile-pic {
-	width: 150px;
-	height: 150px;
-	border-radius: 50%;
-	animation: rotation 0.5s 1 linear;
-	animation-delay: 1s;
-}
-
-@keyframes rotation {
-	from {
-		transform: rotate(0deg);
-	}
-	to {
-		transform: rotate(359deg);
-	}
+.btn {
+	margin-top: 10px;
+	background-color: rgba(37, 36, 216, 0.5) !important;
+	border: none !important;
+	color: rgb(53, 52, 52) !important;
 }

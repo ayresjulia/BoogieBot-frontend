@@ -35,6 +35,11 @@ class BoogieBotApi {
 		return res.event;
 	}
 
+	static async newEvent (data) {
+		let res = await this.request(`events/new`, data, "post");
+		return res.event;
+	}
+
 	/** Get current user */
 
 	static async getCurrentUser (username) {
@@ -63,10 +68,11 @@ class BoogieBotApi {
 		return res.user;
 	}
 
-	// /** Claim Event as Host */
+	/** Claim Event As Host. */
 
-	// static async claimEventAsHost (username, id) {
-	// 	await this.request(`users/${username}/events/${id}`, {}, "post");
-	// }
+	static async claimEventAsHost (username, event_id) {
+		let res = await this.request(`users/${username}/events/${event_id}`, {}, "post");
+		return res.user;
+	}
 }
 export default BoogieBotApi;

@@ -30,7 +30,7 @@ const SearchForm = ({ searchFor }) => {
 						value={search}
 						onChange={handleChange}
 					/>
-					<Button type="submit" className="btn btn-success">
+					<Button type="submit" className="Searchform-btn" color="primary">
 						Submit
 					</Button>
 				</FormGroup>
