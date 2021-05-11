@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import SearchForm from "./forms/SearchForm";
+import EventCheckbox from "./forms/EventCheckbox";
 import { Image } from "react-bootstrap";
 import "./Inspiration.css";
 import { CLIENT_ID_UNSPLASH } from "./secret";
 
 const API_BASE_URL = "https://api.unsplash.com/search/photos?";
 
-const Inspiration = () => {
+const Inspiration = ({ events }) => {
 	const [ pictures, setPictures ] = useState([]);
 
 	useEffect(() => {
@@ -31,9 +32,11 @@ const Inspiration = () => {
 						pictures to your event <i>moodboard</i> for inspiration.
 					</p>
 					<p className="small-text">
-						save a picture to your event, it will appear in your event details
+						check the event you want to save the picture to, it will appear in your
+						event details
 					</p>
 				</div>
+				<EventCheckbox events={events} />
 				<SearchForm searchFor={getPictures} />
 			</div>
 			<div className="Inspiration">

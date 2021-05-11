@@ -23,8 +23,8 @@ const Routes = ({ login, signup, currentUser, newEvent }) => {
 		getEvents();
 	}, []);
 
-	async function getEvents (title) {
-		let events = await BoogieBotApi.getEvents(title);
+	async function getEvents () {
+		let events = await BoogieBotApi.getEvents();
 		setEvents(events);
 		setIsLoading(false);
 	}
@@ -53,11 +53,11 @@ const Routes = ({ login, signup, currentUser, newEvent }) => {
 				</Route>
 			)}
 			<Route path="/inspiration">
-				<Inspiration />
+				<Inspiration events={events} />
 			</Route>
 			{currentUser && (
 				<Route path="/catering">
-					<Catering />
+					<Catering events={events} />
 				</Route>
 			)}
 
