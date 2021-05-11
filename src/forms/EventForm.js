@@ -5,7 +5,7 @@ import { Form, FormGroup, Label, Input, Button } from "reactstrap";
 import { Row, Col } from "react-bootstrap";
 import "./EventForm.css";
 
-/** Form to signup a user and save user to db. */
+/** Form to add new event and save event to db. */
 
 const EventForm = ({ newEvent }) => {
 	const history = useHistory();
@@ -21,13 +21,13 @@ const EventForm = ({ newEvent }) => {
 	});
 	const [ formErrors, setFormErrors ] = useState([]);
 
-	/** On submit, redirect to homepage "/". */
+	/** On submit, redirect to events page "/". */
 
 	async function handleSubmit (e) {
 		e.preventDefault();
 		let result = await newEvent(formData);
 		if (result.success) {
-			history.push("/");
+			history.push("/events");
 		} else {
 			setFormErrors(result.errors);
 		}

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-/** Custom hook to keep state data synced with localStorage using passed-in key. Defaults to firtsValue if nothing in localStorage. Used with saving user token. */
+/** Custom hook to keep state data synced with localStorage using passed-in key. Defaults to firstValue if nothing in localStorage. Used with saving user token. */
 
 function useLocalStorage (key, firstValue = null) {
 	const initialValue = localStorage.getItem(key) || firstValue;

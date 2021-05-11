@@ -4,8 +4,6 @@ import "./Events.css";
 import { Card, CardImg, CardBody, CardTitle } from "reactstrap";
 import { Link } from "react-router-dom";
 
-/* Main search changes according to data type. */
-
 const Events = ({ events }) => {
 	return (
 		<div className="Events">

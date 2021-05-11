@@ -23,10 +23,10 @@ class BoogieBotApi {
 		}
 	}
 
-	/** Get events filtered by title, and single event filteres by id. */
+	/** Get all events and single event filtered by id. */
 
-	static async getEvents (title) {
-		let res = await this.request("events", { title });
+	static async getEvents () {
+		let res = await this.request("events");
 		return res.events;
 	}
 
@@ -65,13 +65,6 @@ class BoogieBotApi {
 
 	static async saveProfile (username, data) {
 		let res = await this.request(`users/${username}`, data, "patch");
-		return res.user;
-	}
-
-	/** Claim Event As Host. */
-
-	static async claimEventAsHost (username, event_id) {
-		let res = await this.request(`users/${username}/events/${event_id}`, {}, "post");
 		return res.user;
 	}
 }

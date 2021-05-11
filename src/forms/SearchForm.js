@@ -2,13 +2,12 @@ import React, { useState } from "react";
 import { Form, FormGroup, Label, Input, Button } from "reactstrap";
 import "./SearchForm.css";
 
-/** Search form to filter out companies and jobs, located on MainSearch page for both components. */
+/** Search form to filter out picture and restaurants in Inspiration and Catering components. */
 
 const SearchForm = ({ searchFor }) => {
 	const [ search, setSearch ] = useState("");
 
 	const handleSubmit = (e) => {
-		// take care of accidentally trying to search for just spaces
 		e.preventDefault();
 		searchFor(search.trim() || undefined);
 		setSearch(search.trim());

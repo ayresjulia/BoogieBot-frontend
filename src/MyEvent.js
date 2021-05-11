@@ -3,9 +3,7 @@ import { Redirect, useParams } from "react-router-dom";
 import { Card, CardBody, CardTitle } from "reactstrap";
 import "./MyEvent.css";
 
-/** Single job card. */
-
-const SearchJob = ({ events, cantFind }) => {
+const SearchEvent = ({ events, cantFind }) => {
 	const { id } = useParams();
 
 	let event = events.find((event) => parseInt(event.id) === parseInt(id));
@@ -35,4 +33,4 @@ const SearchJob = ({ events, cantFind }) => {
 	);
 };
 
-export default SearchJob;
+export default SearchEvent;

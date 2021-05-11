@@ -2,7 +2,7 @@ import React from "react";
 import "./Home.css";
 import { Image } from "react-bootstrap";
 
-/** Home page. If user is logged in, welcomes them by username. */
+/** Home page. If user is logged in, welcomes them by username and profile picture. */
 
 const Home = ({ currentUser }) => {
 	return (

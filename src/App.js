@@ -6,6 +6,7 @@ import BoogieBotApi from "./Api";
 import jwt from "jsonwebtoken";
 import useLocalStorage from "./hooks/useLocalStorage";
 import "./App.css";
+
 /** Key name for storing token in localStorage. */
 export const TOKEN_STORAGE_ID = "boogiebot-token";
 
@@ -22,10 +23,9 @@ const App = () => {
 	const [ infoLoaded, setInfoLoaded ] = useState(false);
 	const [ currentUser, setCurrentUser ] = useState(null);
 	const [ token, setToken ] = useLocalStorage(TOKEN_STORAGE_ID);
-	const [ eventData, setEventData ] = useState(null);
-	/** Load user info from API. Until a user is logged in and they have a token,
-	this should not run. It only needs to re-run when a user logs out, so
-	the value of the token is a dependency for this effect. */
+	// const [ eventData, setEventData ] = useState(null);
+
+	/** Load user info from API. Until a user is logged in and they have a token, this should not run. It only needs to re-run when a user logs out, so the value of the token is a dependency for this effect. */
 
 	useEffect(
 		function loadUserInfo () {
@@ -44,9 +44,7 @@ const App = () => {
 				}
 				setInfoLoaded(true);
 			}
-			/** set infoLoaded to false while async getCurrentUser runs; once the
-			data is fetched, this will be set back
-			to false to display Loading... again. */
+			/** set infoLoaded to false while async getCurrentUser runs; once the data is fetched, this will be set back to false to display Loading... again. */
 			setInfoLoaded(false);
 			getCurrentUser();
 		},
@@ -86,6 +84,7 @@ const App = () => {
 		setToken(null);
 	};
 
+	/** Add new event to db. */
 	async function newEvent (data) {
 		try {
 			let newData = await BoogieBotApi.newEvent(data);
