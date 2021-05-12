@@ -1,23 +1,29 @@
 import React from "react";
-// import EventForm from "./forms/EventForm";
 import "./Events.css";
 import { Card, CardImg, CardBody, CardTitle } from "reactstrap";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
+import dict from "./helpers/dictionary";
 
-const Events = ({ events }) => {
+const Events = ({ events, currentUser }) => {
+	if (!currentUser.username) return <Redirect to="/" />;
+
+	let filteredEvents = currentUser.isAdmin
+		? events
+		: events.filter((e) => Object.values(e).includes(currentUser.username));
+
 	return (
 		<div className="Events">
 			{events && (
 				<div className="Events-body">
 					<div className="Events-create">
 						<Link to="/events/new" className="Events-new">
-							<span className="big-bold">create</span>
-							<p>new event.</p>
-							<i>or modify existing.</i>
+							<span className="big-bold">{dict.eventsCreate}</span>
+							<p>{dict.eventsNew}</p>
+							<i>{dict.eventsMisc}</i>
 						</Link>
 					</div>
 					<div className="Events-current">
-						{events.map((event) => (
+						{filteredEvents.map((event) => (
 							<Link to={`/events/${event.id}`} key={event.id} className="link">
 								<Card className="evt">
 									<CardImg

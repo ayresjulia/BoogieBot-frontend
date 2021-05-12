@@ -2,6 +2,7 @@ import React from "react";
 import { Redirect, useParams } from "react-router-dom";
 import { Card, CardBody, CardTitle } from "reactstrap";
 import "./MyEvent.css";
+import dict from "./helpers/dictionary";
 
 const SearchEvent = ({ events, cantFind }) => {
 	const { id } = useParams();
@@ -16,16 +17,16 @@ const SearchEvent = ({ events, cantFind }) => {
 					<CardTitle className="font-weight-bold text-center">{event.title}</CardTitle>
 
 					<p>
-						<b>Description:</b> {event.description}
+						<b>{dict.myEventDesc}</b> {event.description}
 					</p>
 					<p>
-						<b>When:</b> {event.eventDate}
+						<b>{dict.myEventWhen}</b> {event.eventDate}
 					</p>
 					<p>
-						<b>Time:</b> {event.eventTime}
+						<b>{dict.myEventTime}</b> {event.eventTime}
 					</p>
 					<p>
-						<b>Location:</b> {event.city} | {event.state} | {event.country}
+						<b>{dict.myEventLocation}</b> {event.city} | {event.state} | {event.country}
 					</p>
 				</CardBody>
 			</Card>

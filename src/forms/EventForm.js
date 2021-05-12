@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import Alert from "../Alert";
+import Alert from "../helpers/Alert";
 import { Form, FormGroup, Label, Input, Button } from "reactstrap";
 import { Row, Col } from "react-bootstrap";
 import "./EventForm.css";
+import dict from "../helpers/dictionary";
 
 /** Form to add new event and save event to db. */
 
-const EventForm = ({ newEvent }) => {
+const EventForm = ({ newEvent, currentUser }) => {
 	const history = useHistory();
 	const [ formData, setFormData ] = useState({
 		title: "",
@@ -17,7 +18,8 @@ const EventForm = ({ newEvent }) => {
 		city: "",
 		state: "",
 		country: "",
-		imgUrl: ""
+		imgUrl: dict.defaultEventImg,
+		hostUsername: currentUser.username
 	});
 	const [ formErrors, setFormErrors ] = useState([]);
 
@@ -41,11 +43,8 @@ const EventForm = ({ newEvent }) => {
 	return (
 		<div className="EventForm">
 			<div className="EventForm-left">
-				<span className="big-bold">tip.</span>
-				<p>
-					scoop your ice-cream into a cupcake pan and pop in the freezer for a hassle-free
-					serving at your party.
-				</p>
+				<span className="big-bold">{dict.eventFormTip}</span>
+				<p>{dict.eventFormTipDesc}</p>
 			</div>
 			<div className="EventForm-right">
 				<Form className="Form-body" onSubmit={handleSubmit}>
@@ -82,7 +81,7 @@ const EventForm = ({ newEvent }) => {
 									name="eventDate"
 									className="Form-input"
 									value={formData.eventDate}
-									placeholder="event date"
+									placeholder="date (YYYY-MM-DD)"
 									onChange={handleChange}
 									required
 								/>
@@ -159,6 +158,7 @@ const EventForm = ({ newEvent }) => {
 							required
 						/>
 					</FormGroup>
+
 					{formErrors.length ? <Alert type="danger" messages={formErrors} /> : null}
 
 					<Button className="btn btn-success float-right" onSubmit={handleSubmit}>

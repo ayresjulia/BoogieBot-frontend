@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Redirect } from "react-router-dom";
 import SearchForm from "./forms/SearchForm";
 import EventCheckbox from "./forms/EventCheckbox";
 import { Image } from "react-bootstrap";
@@ -22,6 +23,8 @@ const Inspiration = ({ events }) => {
 		let data = pics.data.results;
 		setPictures(data);
 	}
+
+	if (!events) return <Redirect to="/" />;
 
 	return (
 		<div>

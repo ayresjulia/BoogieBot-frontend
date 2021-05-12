@@ -4,12 +4,12 @@ import { useHistory } from "react-router-dom";
 import "./EditProfileForm.css";
 import BoogieBotApi from "../Api";
 import { Row, Col } from "react-bootstrap";
-import Alert from "../Alert";
+import Alert from "../helpers/Alert";
+import dict from "../helpers/dictionary";
 
 /** Form to edit user info in db. */
 
 const EditProfileForm = ({ currentUser }) => {
-	console.log("CURRENTUSER", currentUser);
 	const INITIAL_STATE = {
 		username: currentUser.username,
 		firstName: currentUser.firstName,
@@ -46,12 +46,11 @@ const EditProfileForm = ({ currentUser }) => {
 		try {
 			let username = currentUser.username;
 			let updatedUser = await BoogieBotApi.saveProfile(username, profileData);
-			console.log(updatedUser);
 		} catch (e) {
 			setFormErrors(e);
 			return;
 		}
-		setFormData((f) => ({ ...f, password: "" }));
+		setFormData((form) => ({ ...form, password: "" }));
 		setFormErrors([]);
 		setSaveConfirmed(true);
 
@@ -61,11 +60,8 @@ const EditProfileForm = ({ currentUser }) => {
 	return (
 		<div className="Form">
 			<div className="Form-left">
-				<span className="Form-update">tip.</span>
-				<p>
-					while updating your info, keep in mind, that picking a great playlist is key for
-					any party!
-				</p>
+				<span className="Form-update">{dict.editProfileFormTip}</span>
+				<p>{dict.editProfileFormTipDesc}</p>
 			</div>
 			<div className="Form-right">
 				<img
@@ -81,7 +77,7 @@ const EditProfileForm = ({ currentUser }) => {
 					<Row form>
 						<Col md={6}>
 							<FormGroup>
-								<Label htmlFor="firstName">First Name</Label>
+								<Label htmlFor="firstName">{dict.formFirstName}</Label>
 								<Input
 									className="Form-input"
 									name="firstName"
@@ -93,7 +89,7 @@ const EditProfileForm = ({ currentUser }) => {
 						</Col>
 						<Col md={6}>
 							<FormGroup>
-								<Label htmlFor="lastName">Last Name</Label>
+								<Label htmlFor="lastName">{dict.formLastName}</Label>
 								<Input
 									className="Form-input"
 									name="lastName"
@@ -105,7 +101,7 @@ const EditProfileForm = ({ currentUser }) => {
 						</Col>
 					</Row>
 					<FormGroup>
-						<Label htmlFor="email">Email</Label>
+						<Label htmlFor="email">{dict.formEmail}</Label>
 						<Input
 							className="Form-input"
 							name="email"
@@ -115,7 +111,7 @@ const EditProfileForm = ({ currentUser }) => {
 						/>
 					</FormGroup>
 					<FormGroup>
-						<Label htmlFor="profileUrl">Profile URL</Label>
+						<Label htmlFor="profileUrl">{dict.formProfileURL}</Label>
 						<Input
 							className="Form-input"
 							name="profileUrl"
@@ -125,7 +121,7 @@ const EditProfileForm = ({ currentUser }) => {
 						/>
 					</FormGroup>
 					<FormGroup>
-						<Label htmlFor="password">Confirm password to make changes</Label>
+						<Label htmlFor="password">{dict.editProfileFormConfirmPwd}</Label>
 						<Input
 							className="Form-input"
 							type="password"

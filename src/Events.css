@@ -33,6 +33,11 @@
 	display: grid;
 	grid-template-columns: auto auto auto;
 	margin-top: 40px;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+	justify-content: space-evenly;
+	width: auto;
 }
 
 .evt {
@@ -41,6 +46,7 @@
 	color: rgb(53, 52, 52);
 	background-color: rgb(246, 249, 252) !important;
 	margin-bottom: 200px;
+	width: 250px;
 }
 
 .evt-img {

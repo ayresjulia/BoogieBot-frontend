@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./NavBar.css";
 import { NavLink } from "react-router-dom";
 import { Navbar, Nav, NavItem, NavbarBrand, Collapse, NavbarToggler } from "reactstrap";
-
+import dict from "../helpers/dictionary";
 /** Navigation bar that changes according to currentUser. */
 
 const NavBar = ({ currentUser, logout }) => {
@@ -14,7 +14,7 @@ const NavBar = ({ currentUser, logout }) => {
 		<div>
 			<Navbar expand="md" light className="Navbar">
 				<NavbarBrand href="/" className="Navbar-brand">
-					BoogieBot
+					{dict.logoName}
 				</NavbarBrand>
 				<NavbarToggler onClick={toggleNavbar} className="Navbar-hamburger" />
 				<Collapse isOpen={!collapsed} navbar>
@@ -22,28 +22,28 @@ const NavBar = ({ currentUser, logout }) => {
 						<Nav className="ml-auto" navbar className="Navbar-cntr">
 							<NavItem>
 								<NavLink className="navbar-link" to="/events">
-									My Events
+									{dict.navMyEvents}
 								</NavLink>
 							</NavItem>
 							<NavItem>
 								<NavLink className="navbar-link" to="/inspiration">
-									Get Inspired
+									{dict.navInspiration}
 								</NavLink>
 							</NavItem>
 							<NavItem>
 								<NavLink className="navbar-link" to="/catering">
-									Catering
+									{dict.navCatering}
 								</NavLink>
 							</NavItem>
 							<NavItem>
 								<NavLink className="navbar-link" to="/profile">
-									Profile
+									{dict.navProfile}
 								</NavLink>
 							</NavItem>
 
 							<NavItem>
 								<NavLink className="navbar-link" to="/" onClick={logout}>
-									Log Out
+									{dict.navLogOut}
 								</NavLink>
 							</NavItem>
 						</Nav>
@@ -52,12 +52,12 @@ const NavBar = ({ currentUser, logout }) => {
 						<Nav className="ml-auto" navbar>
 							<NavItem>
 								<NavLink className="navbar-link" to="/login">
-									Log In
+									{dict.navLogIn}
 								</NavLink>
 							</NavItem>
 							<NavItem>
 								<NavLink className="navbar-link" to="/signup">
-									Sign Up
+									{dict.navSignUp}
 								</NavLink>
 							</NavItem>
 						</Nav>

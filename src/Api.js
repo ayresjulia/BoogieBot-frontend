@@ -68,4 +68,5 @@ class BoogieBotApi {
 		return res.user;
 	}
 }
+
 export default BoogieBotApi;

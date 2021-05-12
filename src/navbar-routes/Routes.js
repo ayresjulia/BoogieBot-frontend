@@ -10,6 +10,7 @@ import Catering from "../Catering";
 import LoginForm from "../forms/LoginForm";
 import SignupForm from "../forms/SignupForm";
 import EditProfileForm from "../forms/EditProfileForm";
+import dict from "../helpers/dictionary";
 
 /** Main Routes, some are protected and only accessible to logged in users. 
  * If user is not logged in, page redirects to homepage and asks to log in or sign up.
@@ -28,8 +29,9 @@ const Routes = ({ login, signup, currentUser, newEvent }) => {
 		setEvents(events);
 		setIsLoading(false);
 	}
+
 	if (isLoading) {
-		return <p>Loading &hellip;</p>;
+		return <p>{dict.loading}</p>;
 	}
 
 	return (
@@ -39,12 +41,12 @@ const Routes = ({ login, signup, currentUser, newEvent }) => {
 			</Route>
 			{currentUser && (
 				<Route exact path="/events">
-					<Events events={events} />
+					<Events events={events} currentUser={currentUser} />
 				</Route>
 			)}
 			{currentUser && (
 				<Route exact path="/events/new">
-					<EventForm newEvent={newEvent} />
+					<EventForm newEvent={newEvent} currentUser={currentUser} />
 				</Route>
 			)}
 			{currentUser && (

@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import Alert from "../Alert";
+import Alert from "../helpers/Alert";
 import { Form, FormGroup, Label, Input, Button } from "reactstrap";
 import "./LoginForm.css";
+import dict from "../helpers/dictionary";
 
 /** Form to login a user and show homepage at "/" . */
 
@@ -33,7 +34,7 @@ const LoginForm = ({ login }) => {
 		<div className="LoginForm">
 			<Form className="Form-body" onSubmit={handleSubmit}>
 				<FormGroup>
-					<Label htmlFor="username">Username</Label>
+					<Label htmlFor="username">{dict.formUsername}</Label>
 					<Input
 						id="username"
 						name="username"
@@ -46,7 +47,7 @@ const LoginForm = ({ login }) => {
 				</FormGroup>
 
 				<FormGroup>
-					<Label htmlFor="password">Password</Label>
+					<Label htmlFor="password">{dict.formPwd}</Label>
 					<Input
 						id="password"
 						type="password"

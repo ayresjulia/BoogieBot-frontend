@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import Alert from "../Alert";
+import Alert from "../helpers/Alert";
 import { Form, FormGroup, Label, Input, Button } from "reactstrap";
 import "./SignupForm.css";
+import dict from "../helpers/dictionary";
 
 /** Form to signup a user and save user to db. */
 
@@ -39,7 +40,7 @@ const SignupForm = ({ signup }) => {
 		<div className="SignupForm">
 			<Form className="Form-body" onSubmit={handleSubmit}>
 				<FormGroup>
-					<Label htmlFor="username">Username</Label>
+					<Label htmlFor="username">{dict.formUsername}</Label>
 					<Input
 						id="username"
 						name="username"
@@ -51,7 +52,7 @@ const SignupForm = ({ signup }) => {
 				</FormGroup>
 
 				<FormGroup>
-					<Label htmlFor="password">Password</Label>
+					<Label htmlFor="password">{dict.formPwd}</Label>
 					<Input
 						id="password"
 						type="password"
@@ -63,7 +64,7 @@ const SignupForm = ({ signup }) => {
 					/>
 				</FormGroup>
 				<FormGroup>
-					<Label htmlFor="firstName">First Name</Label>
+					<Label htmlFor="firstName">{dict.formFirstName}</Label>
 					<Input
 						id="firstName"
 						type="text"
@@ -75,7 +76,7 @@ const SignupForm = ({ signup }) => {
 					/>
 				</FormGroup>
 				<FormGroup>
-					<Label htmlFor="lastName">Last Name</Label>
+					<Label htmlFor="lastName">{dict.formLastName}</Label>
 					<Input
 						id="lastName"
 						type="text"
@@ -87,7 +88,7 @@ const SignupForm = ({ signup }) => {
 					/>
 				</FormGroup>
 				<FormGroup>
-					<Label htmlFor="email">Email</Label>
+					<Label htmlFor="email">{dict.formEmail}</Label>
 					<Input
 						id="email"
 						type="email"
@@ -99,7 +100,7 @@ const SignupForm = ({ signup }) => {
 					/>
 				</FormGroup>
 				<FormGroup>
-					<Label htmlFor="profileUrl">Profile URL</Label>
+					<Label htmlFor="profileUrl">{dict.formProfileURL}</Label>
 					<Input
 						id="profileUrl"
 						type="text"

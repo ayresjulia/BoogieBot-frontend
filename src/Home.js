@@ -1,6 +1,7 @@
 import React from "react";
 import "./Home.css";
 import { Image } from "react-bootstrap";
+import dict from "./helpers/dictionary";
 
 /** Home page. If user is logged in, welcomes them by username and profile picture. */
 
@@ -11,7 +12,8 @@ const Home = ({ currentUser }) => {
 				<div className="Home-body">
 					{currentUser && (
 						<p>
-							Welcome back, <b>{currentUser.username}</b>{" "}
+							{dict.homeWelcome}
+							<b>{currentUser.username}</b>{" "}
 							<Image
 								className="Profile-url"
 								src={currentUser.profileUrl}
@@ -19,7 +21,7 @@ const Home = ({ currentUser }) => {
 							/>
 						</p>
 					)}
-					{!currentUser && <p>Please, Log in or Sign up to begin.</p>}
+					{!currentUser && <p>{dict.homeNonUserMsg}</p>}
 				</div>
 				<div className="Home-img">
 					<Image

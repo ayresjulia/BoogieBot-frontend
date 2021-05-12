@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Redirect } from "react-router-dom";
 import SearchForm from "./forms/SearchForm";
 import EventCheckbox from "./forms/EventCheckbox";
 import { Card, CardTitle, CardSubtitle, Button, CardImg, CardBody } from "reactstrap";
 import "./Catering.css";
 import { CLIENT_KEY_DOCUMENU } from "./secret";
+import dict from "./helpers/dictionary";
 
 const API_BASE_URL = "https://api.documenu.com/v2/restaurants/search/fields?";
 
@@ -23,18 +25,15 @@ const Catering = ({ events }) => {
 		let data = getRestaurant.data.data;
 		setRestaurants(data);
 	}
+	if (!events) return <Redirect to="/" />;
+
 	return (
 		<section>
 			<div className="Catering-form">
 				<div className="Catering-new">
-					<span className="Catering-bold">lookup</span>
-					<p className="Catering-p">
-						restaurants nearby with your <i>zip code</i> for catering options.
-					</p>
-					<p className="Catering-small">
-						check the event you want to save the restaurant to, it will appear in your
-						event details
-					</p>
+					<span className="Catering-bold">{dict.cateringLookup}</span>
+					<p className="Catering-p">{dict.cateringInfo}</p>
+					<p className="Catering-small">{dict.cateringFootnote}</p>
 				</div>
 				<EventCheckbox events={events} />
 				<SearchForm searchFor={getRestaurants} />
