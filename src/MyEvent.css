@@ -1,12 +1,35 @@
-.Event {
-	margin-top: 20px;
+.Event-card {
+	width: 400px;
 	margin-left: auto;
 	margin-right: auto;
-	width: 600px;
+	border-radius: 0mm !important;
+	border: none !important;
+	background-color: rgba(255, 255, 255, 0) !important;
 }
 
-.Event-btn {
-	width: 100px;
+.mb-left {
+	margin-top: 20px;
+	margin-left: 20px;
+	display: grid;
+	grid-template-columns: auto auto auto;
+	grid-template-rows: auto auto auto;
+}
 
-	margin-left: 480px;
+.mb-right {
+	margin-top: 20px;
+	margin-right: 20px;
+}
+
+.mb-insp {
+	padding: 10px;
+	background-color: white;
+}
+
+.mb-card-title {
+	font-size: 3rem;
+}
+
+.mb-catering-title {
+	margin-top: 30px;
+	font-size: 2rem;
 }

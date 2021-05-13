@@ -13,7 +13,7 @@ const Events = ({ events, currentUser }) => {
 
 	return (
 		<div className="Events">
-			{events && (
+			{filteredEvents && (
 				<div className="Events-body">
 					<div className="Events-create">
 						<Link to="/events/new" className="Events-new">

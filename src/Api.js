@@ -25,8 +25,8 @@ class BoogieBotApi {
 
 	/** Get all events and single event filtered by id. */
 
-	static async getEvents () {
-		let res = await this.request("events");
+	static async getEvents (eventId) {
+		let res = await this.request("events", { eventId });
 		return res.events;
 	}
 
@@ -66,6 +66,13 @@ class BoogieBotApi {
 	static async saveProfile (username, data) {
 		let res = await this.request(`users/${username}`, data, "patch");
 		return res.user;
+	}
+
+	/** Save to moodboard. */
+
+	static async saveToMoodboard (data) {
+		let res = await this.request(`events/moodboard/new`, data, "post");
+		return res.event;
 	}
 }
 

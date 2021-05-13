@@ -16,7 +16,7 @@ import dict from "../helpers/dictionary";
  * If user is not logged in, page redirects to homepage and asks to log in or sign up.
 */
 
-const Routes = ({ login, signup, currentUser, newEvent }) => {
+const Routes = ({ login, signup, currentUser, newEvent, saveToMoodboard }) => {
 	const [ isLoading, setIsLoading ] = useState(true);
 	const [ events, setEvents ] = useState([]);
 
@@ -55,11 +55,19 @@ const Routes = ({ login, signup, currentUser, newEvent }) => {
 				</Route>
 			)}
 			<Route path="/inspiration">
-				<Inspiration events={events} />
+				<Inspiration
+					events={events}
+					currentUser={currentUser}
+					saveToMoodboard={saveToMoodboard}
+				/>
 			</Route>
 			{currentUser && (
 				<Route path="/catering">
-					<Catering events={events} />
+					<Catering
+						events={events}
+						currentUser={currentUser}
+						saveToMoodboard={saveToMoodboard}
+					/>
 				</Route>
 			)}
 

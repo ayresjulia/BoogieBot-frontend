@@ -13,10 +13,8 @@
 	font-size: 18px;
 	text-decoration: none;
 	color: rgb(53, 52, 52);
-	display: flex;
-	justify-content: center;
 }
 
-.Navbar-cntr {
-	margin-left: 25%;
-}
+/* .navbar-link:hover {
+	border-bottom: 3px solid rgba(37, 36, 216, 0.5);
+} */
