@@ -50,13 +50,20 @@ const dict = {
 		"https://images.unsplash.com/photo-1534119238569-839b7389d552?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80",
 	consoleEventsError: "ERROR!!! Events could not be loaded",
 	consoleUserError: "ERROR!!! currentUser.username could not be loaded",
-	myEventCat: "catering options",
+	myEventCat: "catering",
 	cateringDefault:
 		"https://images.unsplash.com/photo-1557962011-4b36a6f5d921?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
 	cateringWeb: "website",
-	errorMsg: "Oops, try again: ",
 	userDefaultUrl: "https://supersimple.com/wp-content/uploads/peek-a-boo-800-800-200x200.jpg",
-	apiError: "There is an error with getting data from API. Please check connection"
+	apiError: "There is an error with getting data from API. Please check connection",
+	editEventFormTip: "tip.",
+	editEventFormTipDesc:
+		"don't forget about younger audience, set up a cool kids table at your party",
+	editEventFormTitle: "Title",
+	editEventFormDescription: "Description",
+	editEventFormEventDate: "Event Date",
+	editEventFormEventTime: "Event Time",
+	editEventFormCity: "City"
 };
 
 export default dict;

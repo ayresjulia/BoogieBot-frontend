@@ -39,3 +39,16 @@
 	margin-top: 20px;
 	margin-left: 70px;
 }
+
+.title-icon {
+	display: flex;
+	flex-direction: row;
+}
+
+.icon {
+	color: rgb(53, 52, 52) !important;
+}
+
+.icon:hover {
+	color: rgba(37, 36, 216, 0.7) !important;
+}

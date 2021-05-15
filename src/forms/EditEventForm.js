@@ -1,30 +1,31 @@
-import React, { useParams, useState } from "react";
+import React, { useState } from "react";
 import { Form, FormGroup, Label, Input, Button } from "reactstrap";
+import { useParams } from "react-router-dom";
 import BoogieBotApi from "../Api";
 import { Row, Col } from "react-bootstrap";
 import Alert from "../helpers/Alert";
 import dict from "../helpers/dictionary";
 import states from "../helpers/states";
 import countries from "../helpers/countries";
+import { v4 as uuid } from "uuid";
+import "./EditEventForm.css";
 
 /** Form to edit user info in db. */
 
 const EditEventForm = ({ events }) => {
-	console.log("EVENTS", events);
+	let { id } = useParams();
 
-	const { id } = useParams();
-	let event = events.find((e) => e.id === id);
+	let targetEvent = events.find((evt) => parseInt(evt.id) === parseInt(id));
 
-	console.log("EVENT", event, "ID", id);
 	const INITIAL_STATE = {
-		title: "",
-		description: "",
-		eventDate: "",
-		eventTime: "",
-		city: "",
-		state: "",
-		country: "",
-		imageUrl: ""
+		title: targetEvent.title,
+		description: targetEvent.description,
+		event_date: targetEvent.event_date,
+		event_time: targetEvent.event_time,
+		city: targetEvent.city,
+		state: targetEvent.state,
+		country: targetEvent.country,
+		img_url: targetEvent.img_url
 	};
 	const [ formData, setFormData ] = useState(INITIAL_STATE);
 	const [ formErrors, setFormErrors ] = useState([]);
@@ -45,12 +46,12 @@ const EditEventForm = ({ events }) => {
 		let eventData = {
 			title: formData.title,
 			description: formData.description,
-			eventDate: formData.eventDate,
-			eventTime: formData.eventTime,
+			event_date: formData.event_date,
+			event_time: formData.event_time,
 			city: formData.city,
 			state: formData.state,
 			country: formData.country,
-			imageUrl: formData.imageUrl
+			img_url: formData.img_url
 		};
 		try {
 			await BoogieBotApi.editEvent(id, eventData);
@@ -66,15 +67,18 @@ const EditEventForm = ({ events }) => {
 	return (
 		<div className="Form">
 			<div className="Form-left">
-				<span className="Form-update">{dict.editProfileFormTip}</span>
-				<p>{dict.editProfileFormTipDesc}</p>
+				<span className="Form-update">{dict.editEventFormTip}</span>
+				<p>{dict.editEventFormTipDesc}</p>
 			</div>
 			<div className="Form-right">
+				<div className="font-weight-bold text-center mb-card-title event-title">
+					Edit {targetEvent.title}
+				</div>
 				<Form className="Form-body" onSubmit={handleSubmit}>
 					<Row>
 						<Col md={6}>
 							<FormGroup>
-								<Label htmlFor="title">Title</Label>
+								<Label htmlFor="title">{dict.editEventFormTitle}</Label>
 								<Input
 									className="Form-input"
 									name="title"
@@ -86,7 +90,7 @@ const EditEventForm = ({ events }) => {
 						</Col>
 						<Col md={6}>
 							<FormGroup>
-								<Label htmlFor="description">Description</Label>
+								<Label htmlFor="description">{dict.editEventFormDescription}</Label>
 								<Input
 									className="Form-input"
 									name="description"
@@ -97,32 +101,38 @@ const EditEventForm = ({ events }) => {
 							</FormGroup>
 						</Col>
 					</Row>
-					<FormGroup>
-						<Label htmlFor="eventDate">Event Date</Label>
-						<Input
-							className="Form-input"
-							type="date"
-							name="eventDate"
-							id="eventDate"
-							value={formData.eventDate}
-							onChange={handleChange}
-						/>
-					</FormGroup>
-					<FormGroup>
-						<Label htmlFor="eventTime">Event Time</Label>
-						<Input
-							className="Form-input"
-							type="time"
-							name="eventTime"
-							id="eventTime"
-							value={formData.eventTime}
-							onChange={handleChange}
-						/>
-					</FormGroup>
 					<Row>
 						<Col md={6}>
 							<FormGroup>
-								<Label htmlFor="city">City</Label>
+								<Label htmlFor="eventDate">{dict.editEventFormEventDate}</Label>
+								<Input
+									className="Form-input"
+									type="date"
+									name="eventDate"
+									id="eventDate"
+									value={formData.event_date}
+									onChange={handleChange}
+								/>
+							</FormGroup>
+						</Col>
+						<Col md={6}>
+							<FormGroup>
+								<Label htmlFor="eventTime">{dict.editEventFormEventTime}</Label>
+								<Input
+									className="Form-input"
+									type="time"
+									name="eventTime"
+									id="eventTime"
+									value={formData.event_time}
+									onChange={handleChange}
+								/>
+							</FormGroup>
+						</Col>
+					</Row>
+					<Row>
+						<Col md={6}>
+							<FormGroup>
+								<Label htmlFor="city">{dict.editEventFormCity}</Label>
 								<Input
 									className="Form-input"
 									placeholder="city"
@@ -135,16 +145,16 @@ const EditEventForm = ({ events }) => {
 						</Col>
 						<Col md={2}>
 							<FormGroup>
-								<Label htmlFor="city">State</Label>
+								<Label htmlFor="state" />
 								<Input
 									className="Form-input"
 									type="select"
-									name="city"
-									id="city"
+									name="state"
+									id="state"
 									value={formData.state}
 									onChange={handleChange}>
 									<option>state</option>
-									{states.map((state) => <option>{state}</option>)}
+									{states.map((state) => <option key={uuid()}>{state}</option>)}
 								</Input>
 							</FormGroup>
 						</Col>
@@ -159,7 +169,9 @@ const EditEventForm = ({ events }) => {
 									className="Form-input"
 									onChange={handleChange}>
 									<option>country</option>
-									{countries.map((country) => <option>{country}</option>)}
+									{countries.map((country) => (
+										<option key={uuid()}>{country}</option>
+									))}
 								</Input>
 							</FormGroup>
 						</Col>
@@ -170,10 +182,9 @@ const EditEventForm = ({ events }) => {
 							id="imgUrl"
 							name="imgUrl"
 							className="Form-input"
-							value={formData.imgUrl}
+							value={formData.img_url}
 							placeholder="event image url (optional)"
 							onChange={handleChange}
-							required
 						/>
 					</FormGroup>
 					{formErrors.length ? <Alert type="danger" messages={formErrors} /> : null}

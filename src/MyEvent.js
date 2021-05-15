@@ -3,6 +3,8 @@ import { useParams, Link } from "react-router-dom";
 import { Card, CardBody, CardTitle, CardSubtitle } from "reactstrap";
 import { Image, Row, Col } from "react-bootstrap";
 import { v4 as uuid } from "uuid";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEdit } from "@fortawesome/free-solid-svg-icons";
 
 import "./MyEvent.css";
 import dict from "./helpers/dictionary";
@@ -12,17 +14,18 @@ const SearchEvent = ({ events }) => {
 	const { id } = useParams();
 
 	const [ evtMoodboard, setEvtMoodboard ] = useState([]);
-
-	useEffect(() => {
-		getEvent();
-	});
-
 	let event = events.find((event) => parseInt(event.id) === parseInt(id));
 
-	async function getEvent (id) {
-		let moodboard = await BoogieBotApi.getEvent(event.id);
-		setEvtMoodboard(moodboard);
-	}
+	useEffect(
+		() => {
+			async function getEvent (id) {
+				let moodboard = await BoogieBotApi.getEvent(event.id);
+				setEvtMoodboard(moodboard);
+			}
+			getEvent(event.id);
+		},
+		[ event.id ]
+	);
 
 	if (!events) return console.error(dict.consoleEventsError);
 
@@ -52,10 +55,14 @@ const SearchEvent = ({ events }) => {
 					<div className="mb-right">
 						<Card className="Event-card">
 							<CardBody>
-								<CardTitle className="font-weight-bold text-center mb-card-title">
-									{event.title}
-								</CardTitle>{" "}
-								<Link to={`/events/${event.id}/edit`}>edit</Link>
+								<div className="title-icon">
+									<CardTitle className="font-weight-bold text-center mb-card-title">
+										{event.title}
+									</CardTitle>
+									<Link to={`/events/${event.id}/edit`}>
+										<FontAwesomeIcon className="icon" icon={faEdit} />
+									</Link>
+								</div>
 								<p>
 									<b>{dict.myEventDesc}</b> {event.description}
 								</p>

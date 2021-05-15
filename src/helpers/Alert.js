@@ -1,5 +1,4 @@
 import React from "react";
-import dict from "./dictionary";
 /** Alert is custom component to show bootstrap-style alerts. */
 
 const Alert = ({ type = "danger", messages = [] }) => {
@@ -8,7 +7,6 @@ const Alert = ({ type = "danger", messages = [] }) => {
 			{messages &&
 				messages.map((error) => (
 					<p className="mb-0 small" key={error}>
-						{dict.errorMsg}
 						{error}
 					</p>
 				))}
