@@ -19,7 +19,7 @@ const NavBar = ({ currentUser, logout }) => {
 				<NavbarToggler onClick={toggleNavbar} className="Navbar-hamburger" />
 				<Collapse isOpen={!collapsed} navbar>
 					{currentUser && (
-						<Nav className="ml-auto" navbar className="Navbar-cntr">
+						<Nav className="Navbar-cntr ml-auto" navbar>
 							<NavItem>
 								<NavLink className="navbar-link" to="/events">
 									{dict.navMyEvents}

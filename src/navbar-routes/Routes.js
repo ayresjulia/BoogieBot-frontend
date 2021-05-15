@@ -11,7 +11,7 @@ import LoginForm from "../forms/LoginForm";
 import SignupForm from "../forms/SignupForm";
 import EditProfileForm from "../forms/EditProfileForm";
 import dict from "../helpers/dictionary";
-
+import EditEventForm from "../forms/EditEventForm";
 /** Main Routes, some are protected and only accessible to logged in users. 
  * If user is not logged in, page redirects to homepage and asks to log in or sign up.
 */
@@ -50,10 +50,16 @@ const Routes = ({ login, signup, currentUser, newEvent, saveToMoodboard }) => {
 				</Route>
 			)}
 			{currentUser && (
+				<Route path="/events/:id/edit">
+					<EditEventForm events={events} currentUser={currentUser} />
+				</Route>
+			)}
+			{currentUser && (
 				<Route path="/events/:id">
 					<MyEvent events={events} cantFind="/events" />
 				</Route>
 			)}
+
 			<Route path="/inspiration">
 				<Inspiration
 					events={events}
@@ -82,6 +88,7 @@ const Routes = ({ login, signup, currentUser, newEvent, saveToMoodboard }) => {
 					<EditProfileForm currentUser={currentUser} />
 				</Route>
 			)}
+
 			<Redirect to="/" />
 		</Switch>
 	);

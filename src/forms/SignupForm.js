@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import Alert from "../helpers/Alert";
 import { Form, FormGroup, Label, Input, Button } from "reactstrap";
+import { Image } from "react-bootstrap";
 import "./SignupForm.css";
 import dict from "../helpers/dictionary";
 
@@ -15,7 +16,7 @@ const SignupForm = ({ signup }) => {
 		firstName: "",
 		lastName: "",
 		email: "",
-		profileUrl: ""
+		profileUrl: dict.userDefaultUrl
 	});
 	const [ formErrors, setFormErrors ] = useState([]);
 
@@ -39,6 +40,8 @@ const SignupForm = ({ signup }) => {
 	return (
 		<div className="SignupForm">
 			<Form className="Form-body" onSubmit={handleSubmit}>
+				<Image className="Profile-url" src={dict.userDefaultUrl} alt="user-profile" />
+
 				<FormGroup>
 					<Label htmlFor="username">{dict.formUsername}</Label>
 					<Input
@@ -95,18 +98,6 @@ const SignupForm = ({ signup }) => {
 						name="email"
 						className="Form-input"
 						value={formData.email}
-						onChange={handleChange}
-						required
-					/>
-				</FormGroup>
-				<FormGroup>
-					<Label htmlFor="profileUrl">{dict.formProfileURL}</Label>
-					<Input
-						id="profileUrl"
-						type="text"
-						name="profileUrl"
-						className="Form-input"
-						value={formData.profileUrl}
 						onChange={handleChange}
 						required
 					/>

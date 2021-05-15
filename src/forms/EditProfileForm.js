@@ -45,7 +45,7 @@ const EditProfileForm = ({ currentUser }) => {
 		};
 		try {
 			let username = currentUser.username;
-			let updatedUser = await BoogieBotApi.saveProfile(username, profileData);
+			await BoogieBotApi.saveProfile(username, profileData);
 		} catch (e) {
 			setFormErrors(e);
 			return;
@@ -74,7 +74,7 @@ const EditProfileForm = ({ currentUser }) => {
 				</p>
 
 				<Form className="Form-body" onSubmit={handleSubmit}>
-					<Row form>
+					<Row>
 						<Col md={6}>
 							<FormGroup>
 								<Label htmlFor="firstName">{dict.formFirstName}</Label>

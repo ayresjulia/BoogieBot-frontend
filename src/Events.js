@@ -1,15 +1,17 @@
 import React from "react";
-import "./Events.css";
 import { Card, CardImg, CardBody, CardTitle } from "reactstrap";
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
+
+import "./Events.css";
 import dict from "./helpers/dictionary";
 
 const Events = ({ events, currentUser }) => {
-	if (!currentUser.username) return <Redirect to="/" />;
-
 	let filteredEvents = currentUser.isAdmin
 		? events
 		: events.filter((e) => Object.values(e).includes(currentUser.username));
+
+	if (!events) return console.error(dict.consoleEventsError);
+	if (!currentUser.username) return console.error(dict.consoleUserError);
 
 	return (
 		<div className="Events">

@@ -1,4 +1,5 @@
-.Event-card {
+.Event-card,
+.Cat-card {
 	width: 400px;
 	margin-left: auto;
 	margin-right: auto;
@@ -32,4 +33,9 @@
 .mb-catering-title {
 	margin-top: 30px;
 	font-size: 2rem;
+}
+
+.MyEvent-rmrk {
+	margin-top: 20px;
+	margin-left: 70px;
 }

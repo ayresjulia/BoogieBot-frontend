@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Redirect } from "react-router-dom";
+import { Image } from "react-bootstrap";
+import { Form, FormGroup, Label, Input, Row, Col, Button } from "reactstrap";
+
+import "./Inspiration.css";
 import SearchForm from "./forms/SearchForm";
 import Alert from "./helpers/Alert";
-import { Form, FormGroup, Label, Input, Row, Col, Button } from "reactstrap";
 import dict from "./helpers/dictionary";
-import { Image } from "react-bootstrap";
-import "./Inspiration.css";
 import { CLIENT_ID_UNSPLASH } from "./secret";
 
 const API_BASE_URL = "https://api.unsplash.com/search/photos?";
 
 const Inspiration = ({ events, currentUser, saveToMoodboard }) => {
 	const [ pictures, setPictures ] = useState([]);
-	const [ checkedId, setCheckedId ] = useState(null); // get id of which event is checked
-	const [ inspUrl, setInspUrl ] = useState(null); // get url of which image is clicked
+	const [ checkedId, setCheckedId ] = useState(null);
+	const [ inspUrl, setInspUrl ] = useState(null);
 	const [ formErrors, setFormErrors ] = useState([]);
 
 	useEffect(() => {
@@ -29,22 +29,20 @@ const Inspiration = ({ events, currentUser, saveToMoodboard }) => {
 		setPictures(data);
 	}
 
-	// FROM EVENT CHECKBOX FORM
 	let filteredEvents = currentUser.isAdmin
 		? events
 		: events.filter((e) => Object.values(e).includes(currentUser.username));
 
 	const getEventId = (e) => {
 		if (e.target.checked) {
-			setCheckedId(e.target.value); // got the id of checked event
+			setCheckedId(e.target.value);
 		}
 	};
 
 	const getInspImageUrl = (e) => {
-		setInspUrl(e.target.src); // getting URL
+		setInspUrl(e.target.src);
 	};
 
-	// SUBMIT FORM
 	async function handleSubmit (e) {
 		e.preventDefault();
 		let result = await saveToMoodboard({
@@ -52,13 +50,13 @@ const Inspiration = ({ events, currentUser, saveToMoodboard }) => {
 			inspiration_url: inspUrl,
 			restaurant_key: null
 		});
-		if (result.success) {
+		if (!result.success) {
 			setFormErrors(result.errors);
 		}
 	}
 
-	if (!events) return <Redirect to="/" />;
-	if (!currentUser.username) return <Redirect to="/" />;
+	if (!events) return console.error(dict.consoleEventsError);
+	if (!currentUser.username) return console.error(dict.consoleUserError);
 
 	return (
 		<div>
@@ -76,7 +74,7 @@ const Inspiration = ({ events, currentUser, saveToMoodboard }) => {
 						<Row>
 							{filteredEvents &&
 								filteredEvents.map((event) => (
-									<Col m={4}>
+									<Col key={event.id}>
 										<FormGroup check>
 											<Label check>
 												<Input
@@ -92,22 +90,24 @@ const Inspiration = ({ events, currentUser, saveToMoodboard }) => {
 						</Row>
 					</div>
 					<div className="Inspiration-imgs">
-						{pictures.map((item) => (
-							<div>
-								<Button type="submit" className="Insp-btn">
-									<Image
-										className="Inspiration-rounded"
-										onClick={getInspImageUrl}
-										value={item.urls.regular}
-										fluid
-										src={item.urls.regular}
-									/>
-								</Button>
-								{formErrors.length ? (
-									<Alert type="danger" messages={formErrors} />
-								) : null}
-							</div>
-						))}
+						<Row xs="1" sm="2" md="4">
+							{pictures.map((item) => (
+								<Col key={item.id}>
+									<Button type="submit" className="Insp-btn">
+										<Image
+											className="Inspiration-rounded"
+											onClick={getInspImageUrl}
+											value={item.urls.regular}
+											fluid
+											src={item.urls.regular}
+										/>
+									</Button>
+									{formErrors.length ? (
+										<Alert type="danger" messages={formErrors} />
+									) : null}
+								</Col>
+							))}
+						</Row>
 					</div>
 				</Form>
 			</div>

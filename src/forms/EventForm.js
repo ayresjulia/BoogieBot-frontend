@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
 import Alert from "../helpers/Alert";
+import { useHistory } from "react-router-dom";
 import { Form, FormGroup, Label, Input, Button } from "reactstrap";
 import { Row, Col } from "react-bootstrap";
 import "./EventForm.css";
 import dict from "../helpers/dictionary";
+import states from "../helpers/states";
+import countries from "../helpers/countries";
 
 /** Form to add new event and save event to db. */
 
@@ -19,7 +21,7 @@ const EventForm = ({ newEvent, currentUser }) => {
 		state: "",
 		country: "",
 		imgUrl: dict.defaultEventImg,
-		hostUsername: currentUser.username
+		hostUsername: ""
 	});
 	const [ formErrors, setFormErrors ] = useState([]);
 
@@ -27,7 +29,9 @@ const EventForm = ({ newEvent, currentUser }) => {
 
 	async function handleSubmit (e) {
 		e.preventDefault();
+
 		let result = await newEvent(formData);
+		console.log("RESULT", result);
 		if (result.success) {
 			history.push("/events");
 		} else {
@@ -72,16 +76,16 @@ const EventForm = ({ newEvent, currentUser }) => {
 							required
 						/>
 					</FormGroup>
-					<Row form>
+					<Row>
 						<Col md={6}>
 							<FormGroup className="form-row">
 								<Label htmlFor="eventDate" />
 								<Input
 									id="eventDate"
+									type="date"
 									name="eventDate"
 									className="Form-input"
 									value={formData.eventDate}
-									placeholder="date (YYYY-MM-DD)"
 									onChange={handleChange}
 									required
 								/>
@@ -92,17 +96,17 @@ const EventForm = ({ newEvent, currentUser }) => {
 								<Label htmlFor="eventTime" />
 								<Input
 									id="eventTime"
+									type="time"
 									name="eventTime"
 									className="Form-input"
 									value={formData.eventTime}
-									placeholder="event time"
 									onChange={handleChange}
 									required
 								/>
 							</FormGroup>
 						</Col>
 					</Row>
-					<Row form>
+					<Row>
 						<Col md={6}>
 							<FormGroup>
 								<Label htmlFor="city" />
@@ -121,13 +125,14 @@ const EventForm = ({ newEvent, currentUser }) => {
 							<FormGroup>
 								<Label htmlFor="state" />
 								<Input
+									type="select"
 									id="state"
 									name="state"
-									className="Form-input"
 									value={formData.state}
-									placeholder="state"
-									onChange={handleChange}
-								/>
+									onChange={handleChange}>
+									<option>state</option>
+									{states.map((state) => <option>{state}</option>)}
+								</Input>
 							</FormGroup>
 						</Col>
 
@@ -135,14 +140,15 @@ const EventForm = ({ newEvent, currentUser }) => {
 							<FormGroup>
 								<Label htmlFor="country" />
 								<Input
+									type="select"
 									id="country"
 									name="country"
-									className="Form-input"
 									value={formData.country}
-									placeholder="country"
-									onChange={handleChange}
-									required
-								/>
+									className="Form-input"
+									onChange={handleChange}>
+									<option>country</option>
+									{countries.map((country) => <option>{country}</option>)}
+								</Input>
 							</FormGroup>
 						</Col>
 					</Row>
@@ -158,7 +164,18 @@ const EventForm = ({ newEvent, currentUser }) => {
 							required
 						/>
 					</FormGroup>
-
+					<FormGroup>
+						<Label htmlFor="hostUsername" />
+						<Input
+							id="hostUsername"
+							name="hostUsername"
+							className="Form-input"
+							value={formData.hostUsername}
+							placeholder="your username"
+							onChange={handleChange}
+							required
+						/>
+					</FormGroup>
 					{formErrors.length ? <Alert type="danger" messages={formErrors} /> : null}
 
 					<Button className="btn btn-success float-right" onSubmit={handleSubmit}>

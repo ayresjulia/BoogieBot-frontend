@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { BrowserRouter, Redirect } from "react-router-dom";
+import jwt from "jsonwebtoken";
+
+import "./App.css";
 import NavBar from "./navbar-routes/NavBar";
 import Routes from "./navbar-routes/Routes";
-import { BrowserRouter, Redirect } from "react-router-dom";
 import BoogieBotApi from "./Api";
-import jwt from "jsonwebtoken";
 import useLocalStorage from "./hooks/useLocalStorage";
-import "./App.css";
 
 /** Key name for storing token in localStorage. */
 export const TOKEN_STORAGE_ID = "boogiebot-token";
@@ -34,7 +35,6 @@ const App = () => {
 				if (token) {
 					try {
 						let { username } = jwt.decode(token);
-						// put the token on the Api class so it can use it to call the API.
 						BoogieBotApi.token = token;
 						let currentUser = await BoogieBotApi.getCurrentUser(username);
 						setCurrentUser(currentUser);
@@ -45,7 +45,6 @@ const App = () => {
 				}
 				setInfoLoaded(true);
 			}
-			/** set infoLoaded to false while async getCurrentUser runs; once the data is fetched, this will be set back to false to display Loading... again. */
 			setInfoLoaded(false);
 			getCurrentUser();
 		},
@@ -86,6 +85,7 @@ const App = () => {
 	};
 
 	/** Add new event to db. */
+
 	async function newEvent (data) {
 		try {
 			let newData = await BoogieBotApi.newEvent(data);
@@ -97,6 +97,8 @@ const App = () => {
 		}
 	}
 
+	/** Add event data to moodboard. */
+
 	async function saveToMoodboard (data) {
 		try {
 			let newData = await BoogieBotApi.saveToMoodboard(data);
@@ -107,7 +109,6 @@ const App = () => {
 			return { success: false, errors };
 		}
 	}
-
 	return (
 		<div className="App">
 			<BrowserRouter>

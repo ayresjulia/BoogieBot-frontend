@@ -25,8 +25,8 @@ class BoogieBotApi {
 
 	/** Get all events and single event filtered by id. */
 
-	static async getEvents (eventId) {
-		let res = await this.request("events", { eventId });
+	static async getEvents () {
+		let res = await this.request("events");
 		return res.events;
 	}
 
@@ -35,8 +35,24 @@ class BoogieBotApi {
 		return res.event;
 	}
 
+	/** Save new event data to db. */
+
 	static async newEvent (data) {
 		let res = await this.request(`events/new`, data, "post");
+		return res.event;
+	}
+
+	/** Save event data to moodboard. */
+
+	static async saveToMoodboard (data) {
+		let res = await this.request(`events/moodboard/new`, data, "post");
+		return res.event;
+	}
+
+	/** Edit event data and save to db. */
+
+	static async editEvent (id, data) {
+		let res = await this.request(`events/${id}/edit`, data, "patch");
 		return res.event;
 	}
 
@@ -66,13 +82,6 @@ class BoogieBotApi {
 	static async saveProfile (username, data) {
 		let res = await this.request(`users/${username}`, data, "patch");
 		return res.user;
-	}
-
-	/** Save to moodboard. */
-
-	static async saveToMoodboard (data) {
-		let res = await this.request(`events/moodboard/new`, data, "post");
-		return res.event;
 	}
 }
 

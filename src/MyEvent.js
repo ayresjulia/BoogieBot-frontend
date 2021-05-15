@@ -1,56 +1,51 @@
 import React, { useState, useEffect } from "react";
-import { Redirect, useParams } from "react-router-dom";
-import axios from "axios";
-import { Card, CardBody, CardTitle } from "reactstrap";
+import { useParams, Link } from "react-router-dom";
+import { Card, CardBody, CardTitle, CardSubtitle } from "reactstrap";
+import { Image, Row, Col } from "react-bootstrap";
+import { v4 as uuid } from "uuid";
+
 import "./MyEvent.css";
 import dict from "./helpers/dictionary";
-import { Image, Row, Col } from "react-bootstrap";
-import { CLIENT_KEY_DOCUMENU } from "./secret";
 import BoogieBotApi from "./Api";
 
-const API_BASE_URL = "https://api.documenu.com/v2/restaurants/search/fields?";
-
-const SearchEvent = ({ events, cantFind }) => {
+const SearchEvent = ({ events }) => {
 	const { id } = useParams();
-	const [ restaurants, setRestaurants ] = useState([]);
-	const [ evtMoodboard, setEvtMoodboard ] = useState([]);
 
-	let event = events.find((event) => parseInt(event.id) === parseInt(id));
+	const [ evtMoodboard, setEvtMoodboard ] = useState([]);
 
 	useEffect(() => {
 		getEvent();
-		getRestaurants();
-	}, []);
+	});
 
-	async function getRestaurants (zip) {
-		let getRestaurant = await axios.get(
-			`${API_BASE_URL}zip_code=${zip}&key=${CLIENT_KEY_DOCUMENU}`
-		);
+	let event = events.find((event) => parseInt(event.id) === parseInt(id));
 
-		let data = getRestaurant.data.data;
-		setRestaurants(data);
-	}
-
-	async function getEvent () {
+	async function getEvent (id) {
 		let moodboard = await BoogieBotApi.getEvent(event.id);
 		setEvtMoodboard(moodboard);
 	}
 
-	// let result = restaurants.find(
-	// 	(item) => item.restaurant_id === evtMoodboard.moodboard.restaurantKey
-	// );
-	console.log(restaurants);
-	if (!event) return <Redirect to={cantFind} />;
+	if (!events) return console.error(dict.consoleEventsError);
 
 	return (
 		<div>
+			<p className="MyEvent-rmrk">
+				<i>browse pictures in Get Inspired tab to save them here</i>
+			</p>
 			<Row>
 				<Col m={6}>
 					<div className="mb-left">
 						{evtMoodboard.moodboard &&
-							evtMoodboard.moodboard.map((item) => (
-								<Image className="mb-insp" fluid src={item.inspirationUrl} />
-							))}
+							evtMoodboard.moodboard.map(
+								(item) =>
+									item.inspirationUrl && (
+										<Image
+											key={uuid()}
+											className="mb-insp"
+											fluid
+											src={item.inspirationUrl}
+										/>
+									)
+							)}
 					</div>
 				</Col>
 				<Col m={6}>
@@ -59,8 +54,8 @@ const SearchEvent = ({ events, cantFind }) => {
 							<CardBody>
 								<CardTitle className="font-weight-bold text-center mb-card-title">
 									{event.title}
-								</CardTitle>
-
+								</CardTitle>{" "}
+								<Link to={`/events/${event.id}/edit`}>edit</Link>
 								<p>
 									<b>{dict.myEventDesc}</b> {event.description}
 								</p>
@@ -75,13 +70,33 @@ const SearchEvent = ({ events, cantFind }) => {
 									{event.country}
 								</p>
 								<CardTitle className="font-weight-bold text-center mb-catering-title">
-									catering options
+									{dict.myEventCat}
 								</CardTitle>
+								<i>browse restaurants in Catering tab to save them here</i>
 								<ol>
 									{evtMoodboard.moodboard &&
 										evtMoodboard.moodboard.map(
 											(item) =>
-												item.restaurantKey && <li>{item.restaurantKey}</li>
+												item.restaurantName && (
+													<div key={uuid()}>
+														<li>
+															<Card className="Cat-card">
+																<CardTitle>
+																	{item.restaurantName}
+																</CardTitle>
+
+																<CardSubtitle>
+																	<a
+																		target="_blank"
+																		rel="noreferrer"
+																		href={`http://maps.google.com/?q=${item.restaurantAddress}`}>
+																		{item.restaurantAddress}
+																	</a>
+																</CardSubtitle>
+															</Card>
+														</li>
+													</div>
+												)
 										)}
 								</ol>
 							</CardBody>

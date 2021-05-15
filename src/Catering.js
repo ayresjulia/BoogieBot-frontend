@@ -1,20 +1,38 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Redirect } from "react-router-dom";
+import {
+	Card,
+	CardTitle,
+	CardSubtitle,
+	Button,
+	CardImg,
+	CardBody,
+	Container,
+	Form,
+	FormGroup,
+	Label,
+	Input,
+	Row,
+	Col
+} from "reactstrap";
+
+import "./Catering.css";
 import Alert from "./helpers/Alert";
 import SearchForm from "./forms/SearchForm";
-import { Card, CardTitle, CardSubtitle, Button, CardImg, CardBody } from "reactstrap";
-import "./Catering.css";
 import { CLIENT_KEY_DOCUMENU } from "./secret";
 import dict from "./helpers/dictionary";
-import { Form, FormGroup, Label, Input, Row, Col } from "reactstrap";
 
 const API_BASE_URL = "https://api.documenu.com/v2/restaurants/search/fields?";
 
 const Catering = ({ events, currentUser, saveToMoodboard }) => {
 	const [ restaurants, setRestaurants ] = useState([]);
-	const [ checkedId, setCheckedId ] = useState(null); // get id of which event is checked
-	const [ restId, setRestId ] = useState(null); // get id of which restaurant is clicked
+	const [ checkedId, setCheckedId ] = useState(null);
+	const [ restInfo, setRestInfo ] = useState({
+		event_id: checkedId,
+		inspiration_url: null,
+		restaurant_name: "",
+		restaurant_address: ""
+	});
 	const [ formErrors, setFormErrors ] = useState([]);
 
 	useEffect(() => {
@@ -30,38 +48,37 @@ const Catering = ({ events, currentUser, saveToMoodboard }) => {
 		setRestaurants(data);
 	}
 
-	// FROM EVENT CHECKBOX FORM
 	let filteredEvents = currentUser.isAdmin
 		? events
 		: events.filter((e) => Object.values(e).includes(currentUser.username));
 
 	const getEventId = (e) => {
 		if (e.target.checked) {
-			setCheckedId(e.target.value); // got the id of checked event
+			setCheckedId(e.target.value);
 		}
 	};
 
-	const getRestaurantID = (e) => {
-		setRestId(e.target.value); // restaurant id
+	const getRestaurantInfo = (e) => {
+		let restName = e.target.parentNode.querySelector(".restName").innerText;
+		let restAddr = e.target.parentNode.querySelector(".restAddr").innerText;
+		setRestInfo({
+			event_id: checkedId,
+			restaurant_name: restName,
+			restaurant_address: restAddr
+		});
 	};
 
-	// SUBMIT FORM
 	async function handleSubmit (e) {
 		e.preventDefault();
 
-		let result = await saveToMoodboard({
-			event_id: parseInt(checkedId),
-			inspiration_url: null,
-			restaurant_key: restId
-		});
-
-		if (result.success) {
+		let result = await saveToMoodboard(restInfo);
+		if (!result.success) {
 			setFormErrors(result.errors);
 		}
 	}
 
-	if (!events) return <Redirect to="/" />;
-	if (!currentUser.username) return <Redirect to="/" />;
+	if (!events) return console.error(dict.consoleEventsError);
+	if (!currentUser.username) return console.error(dict.consoleUserError);
 
 	return (
 		<div>
@@ -79,7 +96,7 @@ const Catering = ({ events, currentUser, saveToMoodboard }) => {
 						<Row>
 							{filteredEvents &&
 								filteredEvents.map((event) => (
-									<Col m={4}>
+									<Col key={event.id}>
 										<FormGroup check>
 											<Label check>
 												<Input
@@ -94,79 +111,81 @@ const Catering = ({ events, currentUser, saveToMoodboard }) => {
 								))}
 						</Row>
 					</div>
-					<div className="Catering-cards">
-						{restaurants.map((item) => (
-							<Card
-								key={item.restaurant_id}
-								id={item.restaurant_id}
-								className="Catering-card">
-								<CardImg
-									top
-									className="Catering-card-img"
-									width="100%"
-									src="https://images.unsplash.com/photo-1557962011-4b36a6f5d921?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
-									alt="restaurant image"
-								/>
-								<CardBody>
-									<CardTitle tag="h5">{item.restaurant_name}</CardTitle>
-									{item.cuisines.length > 1 && (
-										<CardSubtitle tag="h6" className="mb2 text-muted">
-											Cuisine: {item.cuisines[0]}
-										</CardSubtitle>
-									)}
-									{item.address && (
-										<p>
-											<a
-												a
-												href={`http://maps.google.com/?q=${item.address[
-													"formatted"
-												]}`}
-												target="_blank"
-												rel="noreferrer"
-												tag="h6"
-												className="mb2 text-muted">
-												{item.address["formatted"]}
-											</a>
-										</p>
-									)}
-									{item.restaurant_phone && (
-										<p>
-											<a
-												href={`tel:${item.restaurant_phone}`}
-												tag="h6"
-												className="mb2 text-muted">
-												{item.restaurant_phone}
-											</a>
-										</p>
-									)}
-									{item.restaurant_website && (
-										<p>
-											<a
-												href={item.restaurant_website}
-												target="_blank"
-												rel="noreferrer"
-												tag="h6"
-												className="mb2 text-muted">
-												website
-											</a>
-										</p>
-									)}
-								</CardBody>
-								{formErrors.length ? (
-									<Alert type="danger" messages={formErrors} />
-								) : null}
+					<Container className="Catering-cards">
+						<Row xs="1" sm="2" md="4">
+							{restaurants.map((item) => (
+								<Col key={item.restaurant_id}>
+									<Card
+										key={item.restaurant_id}
+										id={item.restaurant_id}
+										className="Catering-card">
+										<CardImg
+											top
+											className="Catering-card-img"
+											width="100%"
+											src={dict.cateringDefault}
+											alt="restaurant image"
+										/>
+										<CardBody>
+											<CardTitle tag="h5" className="restName">
+												{item.restaurant_name}
+											</CardTitle>
+											{item.cuisines.length > 1 && (
+												<CardSubtitle tag="h6" className="mb2 text-muted">
+													Cuisine: {item.cuisines[0]}
+												</CardSubtitle>
+											)}
+											{item.address && (
+												<p>
+													<a
+														href={`http://maps.google.com/?q=${item
+															.address["formatted"]}`}
+														target="_blank"
+														rel="noreferrer"
+														tag="h6"
+														className="mb2 text-muted restAddr">
+														{item.address["formatted"]}
+													</a>
+												</p>
+											)}
+											{item.restaurant_phone && (
+												<p>
+													<a
+														href={`tel:${item.restaurant_phone}`}
+														tag="h6"
+														className="mb2 text-muted">
+														{item.restaurant_phone}
+													</a>
+												</p>
+											)}
+											{item.restaurant_website && (
+												<p>
+													<a
+														href={item.restaurant_website}
+														target="_blank"
+														rel="noreferrer"
+														tag="h6"
+														className="mb2 text-muted">
+														{dict.cateringWeb}
+													</a>
+												</p>
+											)}
+										</CardBody>
+										{formErrors.length ? (
+											<Alert type="danger" messages={formErrors} />
+										) : null}
 
-								<Button
-									type="submit"
-									id={item.restaurant_id}
-									value={item.restaurant_id}
-									className="Catering-btn btn-secondary"
-									onClick={getRestaurantID}>
-									Save!
-								</Button>
-							</Card>
-						))}
-					</div>
+										<Button
+											type="submit"
+											className="Catering-btn btn-secondary"
+											onClick={getRestaurantInfo}>
+											Save!
+										</Button>
+									</Card>
+								</Col>
+							))}
+						</Row>
+					</Container>
 				</Form>
 			</div>
 		</div>

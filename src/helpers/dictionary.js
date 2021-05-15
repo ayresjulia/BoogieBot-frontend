@@ -28,8 +28,8 @@ const dict = {
 	eventsCreate: "create",
 	eventsNew: "new event.",
 	eventsMisc: "or modify existing",
-	homeWelcome: "Welcome back, ",
-	homeNonUserMsg: "Please, Log in or Sign up to begin.",
+	homeWelcome: "Welcome, ",
+	nonUserMsg: "Please, Log in or Sign up to begin.",
 	myEventDesc: "Description:",
 	myEventWhen: "When:",
 	myEventTime: "Time:",
@@ -39,7 +39,24 @@ const dict = {
 	inspirationFootnote:
 		"check the event you want to save the picture to, it will appear in your event details",
 	inspirationAdd: "add",
-	inspirationInfo: "pictures to your event moodboard for inspiration."
+	inspirationInfo: "pictures to your event moodboard for inspiration.",
+	homeImg1:
+		"https://images.unsplash.com/photo-1620324446278-be6c7bb3ece5?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+	homeImg2:
+		"https://images.unsplash.com/photo-1527275393322-8ddae8bd5de9?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+	homeImg3:
+		"https://images.unsplash.com/photo-1525268771113-32d9e9021a97?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+	homeImg4:
+		"https://images.unsplash.com/photo-1534119238569-839b7389d552?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80",
+	consoleEventsError: "ERROR!!! Events could not be loaded",
+	consoleUserError: "ERROR!!! currentUser.username could not be loaded",
+	myEventCat: "catering options",
+	cateringDefault:
+		"https://images.unsplash.com/photo-1557962011-4b36a6f5d921?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+	cateringWeb: "website",
+	errorMsg: "Oops, try again: ",
+	userDefaultUrl: "https://supersimple.com/wp-content/uploads/peek-a-boo-800-800-200x200.jpg",
+	apiError: "There is an error with getting data from API. Please check connection"
 };
 
 export default dict;
