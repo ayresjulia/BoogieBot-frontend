@@ -28,7 +28,7 @@ const dict = {
 	eventsCreate: "create",
 	eventsNew: "new event.",
 	eventsMisc: "or modify existing",
-	homeWelcome: "Welcome, ",
+	homeWelcomeUser: "Welcome, ",
 	nonUserMsg: "Please, Log in or Sign up to begin.",
 	myEventDesc: "Description:",
 	myEventWhen: "When:",
@@ -63,7 +63,10 @@ const dict = {
 	editEventFormDescription: "Description",
 	editEventFormEventDate: "Event Date",
 	editEventFormEventTime: "Event Time",
-	editEventFormCity: "City"
+	editEventFormCity: "City",
+	myEventRmrk1: "browse pictures in Get Inspired tab to save them here",
+	myEventRmrk2: "browse restaurants in Catering tab to save them here",
+	eventsRmrk: "your events will be shown here. click on event to get details or create a new one"
 };
 
 export default dict;

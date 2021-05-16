@@ -12,17 +12,17 @@ import BoogieBotApi from "./Api";
 
 const SearchEvent = ({ events }) => {
 	const { id } = useParams();
-
 	const [ evtMoodboard, setEvtMoodboard ] = useState([]);
-	let event = events.find((event) => parseInt(event.id) === parseInt(id));
+
+	let event = events.find((evt) => parseInt(evt.id) === parseInt(id));
 
 	useEffect(
 		() => {
-			async function getEvent (id) {
+			async function getEvent () {
 				let moodboard = await BoogieBotApi.getEvent(event.id);
 				setEvtMoodboard(moodboard);
 			}
-			getEvent(event.id);
+			getEvent();
 		},
 		[ event.id ]
 	);
@@ -32,7 +32,7 @@ const SearchEvent = ({ events }) => {
 	return (
 		<div>
 			<p className="MyEvent-rmrk">
-				<i>browse pictures in Get Inspired tab to save them here</i>
+				<i>{dict.myEventRmrk1}</i>
 			</p>
 			<Row>
 				<Col m={6}>
@@ -55,14 +55,13 @@ const SearchEvent = ({ events }) => {
 					<div className="mb-right">
 						<Card className="Event-card">
 							<CardBody>
-								<div className="title-icon">
-									<CardTitle className="font-weight-bold text-center mb-card-title">
-										{event.title}
-									</CardTitle>
+								<CardTitle className="font-weight-bold text-center mb-card-title">
+									{event.title}
 									<Link to={`/events/${event.id}/edit`}>
 										<FontAwesomeIcon className="icon" icon={faEdit} />
 									</Link>
-								</div>
+								</CardTitle>
+
 								<p>
 									<b>{dict.myEventDesc}</b> {event.description}
 								</p>
@@ -79,7 +78,7 @@ const SearchEvent = ({ events }) => {
 								<CardTitle className="font-weight-bold text-center mb-catering-title">
 									{dict.myEventCat}
 								</CardTitle>
-								<i>browse restaurants in Catering tab to save them here</i>
+								<i>{dict.myEventRmrk2}</i>
 								<ol>
 									{evtMoodboard.moodboard &&
 										evtMoodboard.moodboard.map(

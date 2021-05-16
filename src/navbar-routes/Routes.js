@@ -36,17 +36,15 @@ const Routes = ({ login, signup, currentUser, newEvent, saveToMoodboard }) => {
 
 	return (
 		<Switch>
-			<Route exact path="/">
-				<Home currentUser={currentUser} />
+			<Route path="/login">
+				<LoginForm login={login} />
+			</Route>
+			<Route path="/signup">
+				<SignupForm signup={signup} />
 			</Route>
 			{currentUser && (
-				<Route exact path="/events">
-					<Events events={events} currentUser={currentUser} />
-				</Route>
-			)}
-			{currentUser && (
 				<Route exact path="/events/new">
-					<EventForm newEvent={newEvent} currentUser={currentUser} />
+					<EventForm newEvent={newEvent} />
 				</Route>
 			)}
 			{currentUser && (
@@ -60,13 +58,20 @@ const Routes = ({ login, signup, currentUser, newEvent, saveToMoodboard }) => {
 				</Route>
 			)}
 
-			<Route path="/inspiration">
-				<Inspiration
-					events={events}
-					currentUser={currentUser}
-					saveToMoodboard={saveToMoodboard}
-				/>
-			</Route>
+			{currentUser && (
+				<Route exact path="/events">
+					<Events events={events} currentUser={currentUser} />
+				</Route>
+			)}
+			{currentUser && (
+				<Route path="/inspiration">
+					<Inspiration
+						events={events}
+						currentUser={currentUser}
+						saveToMoodboard={saveToMoodboard}
+					/>
+				</Route>
+			)}
 			{currentUser && (
 				<Route path="/catering">
 					<Catering
@@ -76,19 +81,16 @@ const Routes = ({ login, signup, currentUser, newEvent, saveToMoodboard }) => {
 					/>
 				</Route>
 			)}
-
-			<Route path="/login">
-				<LoginForm login={login} />
-			</Route>
-			<Route path="/signup">
-				<SignupForm signup={signup} />
-			</Route>
 			{currentUser && (
 				<Route path="/profile">
 					<EditProfileForm currentUser={currentUser} />
 				</Route>
 			)}
-
+			{currentUser && (
+				<Route exact path="/">
+					<Home currentUser={currentUser} />
+				</Route>
+			)}
 			<Redirect to="/" />
 		</Switch>
 	);

@@ -19,6 +19,7 @@ const SignupForm = ({ signup }) => {
 		profileUrl: dict.userDefaultUrl
 	});
 	const [ formErrors, setFormErrors ] = useState([]);
+	const [ formSuccess, setFormSuccess ] = useState(false);
 
 	/** On submit, redirect to homepage "/". */
 
@@ -27,6 +28,7 @@ const SignupForm = ({ signup }) => {
 		let result = await signup(formData);
 		if (result.success) {
 			history.push("/");
+			setFormSuccess(true);
 		} else {
 			setFormErrors(result.errors);
 		}
@@ -103,7 +105,9 @@ const SignupForm = ({ signup }) => {
 					/>
 				</FormGroup>
 				{formErrors.length ? <Alert type="danger" messages={formErrors} /> : null}
-
+				{formSuccess ? (
+					<Alert type="success" messages={[ "Updated successfully." ]} />
+				) : null}
 				<Button className="btn btn-success float-right" onSubmit={handleSubmit}>
 					Submit
 				</Button>

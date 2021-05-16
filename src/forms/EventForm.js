@@ -1,17 +1,16 @@
 import React, { useState } from "react";
 import Alert from "../helpers/Alert";
-import { useHistory } from "react-router-dom";
 import { Form, FormGroup, Label, Input, Button } from "reactstrap";
 import { Row, Col } from "react-bootstrap";
 import "./EventForm.css";
 import dict from "../helpers/dictionary";
 import states from "../helpers/states";
 import countries from "../helpers/countries";
+import { v4 as uuid } from "uuid";
 
 /** Form to add new event and save event to db. */
 
-const EventForm = ({ newEvent, currentUser }) => {
-	const history = useHistory();
+const EventForm = ({ newEvent }) => {
 	const [ formData, setFormData ] = useState({
 		title: "",
 		description: "",
@@ -24,16 +23,14 @@ const EventForm = ({ newEvent, currentUser }) => {
 		hostUsername: ""
 	});
 	const [ formErrors, setFormErrors ] = useState([]);
+	const [ formSuccess, setFormSuccess ] = useState(false);
 
 	/** On submit, redirect to events page "/". */
 
 	async function handleSubmit (e) {
-		e.preventDefault();
-
 		let result = await newEvent(formData);
-		console.log("RESULT", result);
 		if (result.success) {
-			history.push("/events");
+			setFormSuccess(true);
 		} else {
 			setFormErrors(result.errors);
 		}
@@ -131,7 +128,7 @@ const EventForm = ({ newEvent, currentUser }) => {
 									value={formData.state}
 									onChange={handleChange}>
 									<option>state</option>
-									{states.map((state) => <option>{state}</option>)}
+									{states.map((state) => <option key={uuid()}>{state}</option>)}
 								</Input>
 							</FormGroup>
 						</Col>
@@ -147,7 +144,9 @@ const EventForm = ({ newEvent, currentUser }) => {
 									className="Form-input"
 									onChange={handleChange}>
 									<option>country</option>
-									{countries.map((country) => <option>{country}</option>)}
+									{countries.map((country) => (
+										<option key={uuid()}>{country}</option>
+									))}
 								</Input>
 							</FormGroup>
 						</Col>
@@ -177,7 +176,9 @@ const EventForm = ({ newEvent, currentUser }) => {
 						/>
 					</FormGroup>
 					{formErrors.length ? <Alert type="danger" messages={formErrors} /> : null}
-
+					{formSuccess ? (
+						<Alert type="success" messages={[ "Created successfully." ]} />
+					) : null}
 					<Button className="btn btn-success float-right" onSubmit={handleSubmit}>
 						Submit
 					</Button>

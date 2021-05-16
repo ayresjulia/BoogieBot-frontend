@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, CardImg, CardBody, CardTitle } from "reactstrap";
+import { Card, CardImg, CardBody, CardTitle, Row, Col } from "reactstrap";
 import { Link } from "react-router-dom";
 
 import "./Events.css";
@@ -15,6 +15,9 @@ const Events = ({ events, currentUser }) => {
 
 	return (
 		<div className="Events">
+			<p className="Events-rmrk">
+				<i>{dict.eventsRmrk}</i>
+			</p>
 			{filteredEvents && (
 				<div className="Events-body">
 					<div className="Events-create">
@@ -24,23 +27,31 @@ const Events = ({ events, currentUser }) => {
 							<i>{dict.eventsMisc}</i>
 						</Link>
 					</div>
+
 					<div className="Events-current">
-						{filteredEvents.map((event) => (
-							<Link to={`/events/${event.id}`} key={event.id} className="link">
-								<Card className="evt">
-									<CardImg
-										className="evt-img"
-										top
-										width="100%"
-										src={event.imgUrl}
-										alt="Card image cap"
-									/>
-									<CardBody>
-										<CardTitle tag="h5">{event.title}</CardTitle>
-									</CardBody>
-								</Card>
-							</Link>
-						))}
+						<Row xs="1" lg="2">
+							{filteredEvents.map((event) => (
+								<Col key={event.id}>
+									<Link
+										to={`/events/${event.id}`}
+										key={event.id}
+										className="link">
+										<Card className="evt">
+											<CardImg
+												className="evt-img"
+												top
+												width="100%"
+												src={event.imgUrl}
+												alt="Card image cap"
+											/>
+											<CardBody>
+												<CardTitle tag="h5">{event.title}</CardTitle>
+											</CardBody>
+										</Card>
+									</Link>
+								</Col>
+							))}
+						</Row>
 					</div>
 				</div>
 			)}

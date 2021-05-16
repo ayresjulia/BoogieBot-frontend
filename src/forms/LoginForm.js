@@ -14,12 +14,14 @@ const LoginForm = ({ login }) => {
 		password: ""
 	});
 	const [ formErrors, setFormErrors ] = useState([]);
+	const [ formSuccess, setFormSuccess ] = useState(false);
 
 	async function handleSubmit (e) {
 		e.preventDefault();
 		let result = await login(formData);
 		if (result.success) {
 			history.push("/");
+			setFormSuccess(true);
 		} else {
 			setFormErrors(result.errors);
 		}
@@ -61,6 +63,7 @@ const LoginForm = ({ login }) => {
 				</FormGroup>
 
 				{formErrors.length ? <Alert type="danger" messages={formErrors} /> : null}
+				{formSuccess ? <Alert type="success" messages={[ "Success!" ]} /> : null}
 
 				<Button className="btn btn-success float-right" onSubmit={handleSubmit}>
 					Submit

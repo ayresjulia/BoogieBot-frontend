@@ -29,7 +29,7 @@ const EditEventForm = ({ events }) => {
 	};
 	const [ formData, setFormData ] = useState(INITIAL_STATE);
 	const [ formErrors, setFormErrors ] = useState([]);
-	const [ saveConfirmed, setSaveConfirmed ] = useState(false);
+	const [ formSuccess, setFormSuccess ] = useState(false);
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;
@@ -55,13 +55,13 @@ const EditEventForm = ({ events }) => {
 		};
 		try {
 			await BoogieBotApi.editEvent(id, eventData);
+			setFormSuccess(true);
 		} catch (e) {
 			setFormErrors(e);
 			return;
 		}
 		setFormData((form) => ({ ...form }));
 		setFormErrors([]);
-		setSaveConfirmed(true);
 	};
 
 	return (
@@ -188,8 +188,7 @@ const EditEventForm = ({ events }) => {
 						/>
 					</FormGroup>
 					{formErrors.length ? <Alert type="danger" messages={formErrors} /> : null}
-
-					{saveConfirmed ? (
+					{formSuccess ? (
 						<Alert type="success" messages={[ "Updated successfully." ]} />
 					) : null}
 					<Button className="Form-btn btn-success">Save</Button>

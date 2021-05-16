@@ -20,7 +20,7 @@ const EditProfileForm = ({ currentUser }) => {
 	};
 	const [ formData, setFormData ] = useState(INITIAL_STATE);
 	const [ formErrors, setFormErrors ] = useState([]);
-	const [ saveConfirmed, setSaveConfirmed ] = useState(false);
+	const [ formSuccess, setFormSuccess ] = useState(false);
 
 	const history = useHistory();
 
@@ -46,15 +46,14 @@ const EditProfileForm = ({ currentUser }) => {
 		try {
 			let username = currentUser.username;
 			await BoogieBotApi.saveProfile(username, profileData);
+			setFormSuccess(true);
+			history.push("/");
 		} catch (e) {
 			setFormErrors(e);
 			return;
 		}
 		setFormData((form) => ({ ...form, password: "" }));
 		setFormErrors([]);
-		setSaveConfirmed(true);
-
-		history.push("/");
 	};
 
 	return (
@@ -132,8 +131,7 @@ const EditProfileForm = ({ currentUser }) => {
 						/>
 					</FormGroup>
 					{formErrors.length ? <Alert type="danger" messages={formErrors} /> : null}
-
-					{saveConfirmed ? (
+					{formSuccess ? (
 						<Alert type="success" messages={[ "Updated successfully." ]} />
 					) : null}
 					<Button className="Form-btn btn-success">Save</Button>

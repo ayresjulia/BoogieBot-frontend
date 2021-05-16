@@ -13,7 +13,7 @@ const Home = ({ currentUser }) => {
 				<div className="Home-body">
 					{currentUser && (
 						<p>
-							{dict.homeWelcome}
+							{dict.homeWelcomeUser}
 							<b>{currentUser.username}</b>{" "}
 							<Image
 								className="Profile-url"
@@ -22,6 +22,7 @@ const Home = ({ currentUser }) => {
 							/>
 						</p>
 					)}
+					{!currentUser && <p>{dict.nonUserMsg}</p>}
 				</div>
 				<div className="Home-img">
 					<Image className="img1" fluid src={dict.homeImg1} alt="homepage-img" />
