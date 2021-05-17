@@ -29,29 +29,22 @@ const Events = ({ events, currentUser }) => {
 					</div>
 
 					<div className="Events-current">
-						<Row xs="1" lg="2">
-							{filteredEvents.map((event) => (
-								<Col key={event.id}>
-									<Link
-										to={`/events/${event.id}`}
-										key={event.id}
-										className="link">
-										<Card className="evt">
-											<CardImg
-												className="evt-img"
-												top
-												width="100%"
-												src={event.imgUrl}
-												alt="Card image cap"
-											/>
-											<CardBody>
-												<CardTitle tag="h5">{event.title}</CardTitle>
-											</CardBody>
-										</Card>
-									</Link>
-								</Col>
-							))}
-						</Row>
+						{filteredEvents.map((event) => (
+							<Link to={`/events/${event.id}`} key={event.id} className="link">
+								<Card className="evt">
+									<CardImg
+										className="evt-img"
+										top
+										width="100%"
+										src={event.imgUrl}
+										alt="Card image cap"
+									/>
+									<CardBody>
+										<CardTitle tag="h5">{event.title}</CardTitle>
+									</CardBody>
+								</Card>
+							</Link>
+						))}
 					</div>
 				</div>
 			)}

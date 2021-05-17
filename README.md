@@ -1,72 +1,90 @@
-# Getting Started with Create React App
+# BoogieBot Event Planner App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<!-- ![homepage_gif](./static/homepage.gif)
+![jobseeeker_gif](./static/jobseeker.gif)
+![recruiter_gif](./static/recruiter.gif) -->
 
-## Available Scripts
+## Description
 
-In the project directory, you can run:
+BoogieBot is created to help with event planning by being able to create user's own moodboard for a specific event, and search for nearby restaurants for catering options.
 
-### `npm start`
+## Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- login to create new events and modify them
+- word search Unsplash API in Inspiration route to save pictures to a moodboard of an event of your choice
+- zip code search Documenu API in Catering route to save restaurants around the area to an event of your choice
+- edit user profile
+- admins can create new users and modify user information as well as events information
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Installation
 
-### `npm test`
+- clone repository using command line
+  
+```
+$ git clone https://github.com/ayresjulia/Capstone-HR.git
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- install app requirements from package.json
 
-### `npm run build`
+```
+$ npm install
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- start backend of the app in localhost
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```
+$ cd backend
+$ nodemon server.js
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- start frontend of the app in localhost
 
-### `npm run eject`
+```
+$ cd frontend
+$ npm start
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Tests
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- to run tests for backend
+  
+```
+$ jest --runInBand
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- to run tests for frontend
+  
+```
+$ npm test
+```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## APIs Used
 
-## Learn More
+[Unsplash API](https://api.unsplash.com)
+[Documenu API](https://api.documenu.com)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Tech Stack
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Web/Frontend
+  - JavaScript
+  
+- Frontend Libraries/Frameworks
+  - React | Reactstrap | Axios
+  
+- Server/Backend
+  - Node | PostgreSQL
 
-### Code Splitting
+- Backend Libraries/Frameworks
+  - Express | Cors | Jest
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Database Schema
 
-### Analyzing the Bundle Size
+![db_image](./helpers/db.png)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## User Flow
 
-### Making a Progressive Web App
+![userflow_image](./helpers/userflow.png)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## BoogieBot Event Planner App v2.0
 
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-# BoogieBot-frontend
-# BoogieBot-frontend
+- being able to delete events and their moodboard elements individually

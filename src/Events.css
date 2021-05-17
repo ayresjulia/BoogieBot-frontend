@@ -42,11 +42,10 @@
 }
 
 .evt {
-	margin: 20px;
+	margin: 10px;
 	transition: all .2s ease-in-out;
 	color: rgb(53, 52, 52);
 	background-color: rgb(246, 249, 252) !important;
-	margin-bottom: 200px;
 	width: 250px;
 }
 
