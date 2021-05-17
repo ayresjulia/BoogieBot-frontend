@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Alert from "../helpers/Alert";
 import { Form, FormGroup, Label, Input, Button } from "reactstrap";
+import { useHistory } from "react-router-dom";
 import { Row, Col } from "react-bootstrap";
 import "./EventForm.css";
 import dict from "../helpers/dictionary";
@@ -10,7 +11,9 @@ import { v4 as uuid } from "uuid";
 
 /** Form to add new event and save event to db. */
 
-const EventForm = ({ newEvent }) => {
+const EventForm = ({ newEvent, currentUser }) => {
+	console.log("CURRENTUSER", currentUser);
+	const history = useHistory();
 	const [ formData, setFormData ] = useState({
 		title: "",
 		description: "",
@@ -20,7 +23,7 @@ const EventForm = ({ newEvent }) => {
 		state: "",
 		country: "",
 		imgUrl: dict.defaultEventImg,
-		hostUsername: ""
+		hostUsername: currentUser.username
 	});
 	const [ formErrors, setFormErrors ] = useState([]);
 	const [ formSuccess, setFormSuccess ] = useState(false);
@@ -29,7 +32,9 @@ const EventForm = ({ newEvent }) => {
 
 	async function handleSubmit (e) {
 		let result = await newEvent(formData);
+		console.log("EVENT", result);
 		if (result.success) {
+			history.push("/events");
 			setFormSuccess(true);
 		} else {
 			setFormErrors(result.errors);

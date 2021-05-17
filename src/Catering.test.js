@@ -1,5 +1,5 @@
 import React from "react";
-import { render, fireEvent, getByAltText } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import Catering from "./Catering";
 import { MemoryRouter } from "react-router";
 

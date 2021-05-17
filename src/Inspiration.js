@@ -88,6 +88,12 @@ const Inspiration = ({ events, currentUser, saveToMoodboard }) => {
 									</Col>
 								))}
 						</Row>
+						{formErrors.length ? (
+							<Alert
+								type="danger"
+								messages={[ "Please choose an event before adding pictures." ]}
+							/>
+						) : null}
 					</div>
 					<div className="Inspiration-imgs">
 						<Row xs="1" sm="2" md="4">
@@ -102,9 +108,6 @@ const Inspiration = ({ events, currentUser, saveToMoodboard }) => {
 											src={item.urls.regular}
 										/>
 									</Button>
-									{formErrors.length ? (
-										<Alert type="danger" messages={formErrors} />
-									) : null}
 								</Col>
 							))}
 						</Row>

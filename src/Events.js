@@ -1,9 +1,12 @@
 import React from "react";
-import { Card, CardImg, CardBody, CardTitle, Row, Col } from "reactstrap";
+import { Card, CardImg, CardBody, CardTitle } from "reactstrap";
 import { Link } from "react-router-dom";
 
 import "./Events.css";
 import dict from "./helpers/dictionary";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+// import BoogieBotApi from "./Api";
 
 const Events = ({ events, currentUser }) => {
 	let filteredEvents = currentUser.isAdmin
@@ -12,6 +15,12 @@ const Events = ({ events, currentUser }) => {
 
 	if (!events) return console.error(dict.consoleEventsError);
 	if (!currentUser.username) return console.error(dict.consoleUserError);
+
+	// let event = events.find((evt) => parseInt(evt.id) === parseInt(id));
+
+	// async function removeEvent () {
+	// 	await BoogieBotApi.removeEvent(event.id);
+	// }
 
 	return (
 		<div className="Events">
@@ -30,20 +39,29 @@ const Events = ({ events, currentUser }) => {
 
 					<div className="Events-current">
 						{filteredEvents.map((event) => (
-							<Link to={`/events/${event.id}`} key={event.id} className="link">
-								<Card className="evt">
-									<CardImg
-										className="evt-img"
-										top
-										width="100%"
-										src={event.imgUrl}
-										alt="Card image cap"
+							<div>
+								<Link to={`/events/${event.id}`} key={event.id} className="link">
+									<Card className="evt">
+										<CardImg
+											className="evt-img"
+											top
+											width="100%"
+											src={event.imgUrl}
+											alt="Card image cap"
+										/>
+										<CardBody>
+											<CardTitle tag="h5">{event.title}</CardTitle>
+										</CardBody>
+									</Card>
+								</Link>
+								<Link to={`/events/${event.id}/delete`}>
+									<FontAwesomeIcon
+										className="icon"
+										icon={faTrash}
+										// onClick={removeEvent}
 									/>
-									<CardBody>
-										<CardTitle tag="h5">{event.title}</CardTitle>
-									</CardBody>
-								</Card>
-							</Link>
+								</Link>
+							</div>
 						))}
 					</div>
 				</div>

@@ -36,24 +36,24 @@ const Routes = ({ login, signup, currentUser, newEvent, saveToMoodboard }) => {
 
 	return (
 		<Switch>
-			<Route path="/login">
+			<Route exact path="/login">
 				<LoginForm login={login} />
 			</Route>
-			<Route path="/signup">
+			<Route exact path="/signup">
 				<SignupForm signup={signup} />
 			</Route>
 			{currentUser && (
 				<Route exact path="/events/new">
-					<EventForm newEvent={newEvent} />
+					<EventForm newEvent={newEvent} currentUser={currentUser} />
 				</Route>
 			)}
 			{currentUser && (
-				<Route path="/events/:id/edit">
+				<Route exact path="/events/:id/edit">
 					<EditEventForm events={events} currentUser={currentUser} />
 				</Route>
 			)}
 			{currentUser && (
-				<Route path="/events/:id">
+				<Route exact path="/events/:id">
 					<MyEvent events={events} cantFind="/events" />
 				</Route>
 			)}
@@ -64,7 +64,7 @@ const Routes = ({ login, signup, currentUser, newEvent, saveToMoodboard }) => {
 				</Route>
 			)}
 			{currentUser && (
-				<Route path="/inspiration">
+				<Route exact path="/inspiration">
 					<Inspiration
 						events={events}
 						currentUser={currentUser}
@@ -73,7 +73,7 @@ const Routes = ({ login, signup, currentUser, newEvent, saveToMoodboard }) => {
 				</Route>
 			)}
 			{currentUser && (
-				<Route path="/catering">
+				<Route exact path="/catering">
 					<Catering
 						events={events}
 						currentUser={currentUser}
@@ -82,7 +82,7 @@ const Routes = ({ login, signup, currentUser, newEvent, saveToMoodboard }) => {
 				</Route>
 			)}
 			{currentUser && (
-				<Route path="/profile">
+				<Route exact path="/profile">
 					<EditProfileForm currentUser={currentUser} />
 				</Route>
 			)}

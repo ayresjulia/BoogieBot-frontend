@@ -5,10 +5,9 @@ import { Image, Row, Col } from "react-bootstrap";
 import { v4 as uuid } from "uuid";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
-
+import BoogieBotApi from "./Api";
 import "./MyEvent.css";
 import dict from "./helpers/dictionary";
-import BoogieBotApi from "./Api";
 
 const SearchEvent = ({ events }) => {
 	const { id } = useParams();
