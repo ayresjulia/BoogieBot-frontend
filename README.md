@@ -18,15 +18,18 @@ BoogieBot is created to help with event planning by being able to create user's 
 
 ## Installation
 
-- clone repository using command line
+<!-- - clone repository using command line
   
 ```
 $ git clone https://github.com/ayresjulia/Capstone-HR.git
-```
+``` -->
 
-- install app requirements from package.json
+- install app requirements from package.json (separately for backend and frontend)
 
 ```
+$ cd backend
+$ npm install
+$ cd frontend
 $ npm install
 ```
 
@@ -79,12 +82,12 @@ $ npm test
 
 ## Database Schema
 
-![db_image](./helpers/db.png)
+![db_image](./src/helpers/db.png)
 
 ## User Flow
 
-![userflow_image](./helpers/userflow.png)
+![userflow_image](./src/helpers/userflow.png)
 
 ## BoogieBot Event Planner App v2.0
 
-- being able to delete events and their moodboard elements individually
+- delete event moodboard elements individually
