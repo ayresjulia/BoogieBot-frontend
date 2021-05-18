@@ -82,11 +82,11 @@ $ npm test
 
 ## Database Schema
 
-![db_image](./src/helpers/db.png)
+![db](./src/helpers/db.png)
 
 ## User Flow
 
-![userflow_image](./src/helpers/userflow.png)
+![userflow](./src/helpers/userflow.png)
 
 ## BoogieBot Event Planner App v2.0
 
