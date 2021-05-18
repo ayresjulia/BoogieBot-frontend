@@ -24,8 +24,8 @@ const App = () => {
 	const [ infoLoaded, setInfoLoaded ] = useState(false);
 	const [ currentUser, setCurrentUser ] = useState(null);
 	const [ token, setToken ] = useLocalStorage(TOKEN_STORAGE_ID);
-	// const [ eventData, setEventData ] = useState(null);
-	// const [ moodboardData, setMoodboardData ] = useState(null);
+	const [ eventData, setEventData ] = useState(null);
+	const [ moodboardData, setMoodboardData ] = useState(null);
 
 	/** Load user info from API. Until a user is logged in and they have a token, this should not run. It only needs to re-run when a user logs out, so the value of the token is a dependency for this effect. */
 
@@ -88,8 +88,8 @@ const App = () => {
 
 	async function newEvent (data) {
 		try {
-			await BoogieBotApi.newEvent(data);
-			// setEventData(newData);
+			let newData = await BoogieBotApi.newEvent(data);
+			setEventData(newData);
 			return { success: true };
 		} catch (errors) {
 			console.error("adding new event failed", errors);
@@ -101,15 +101,14 @@ const App = () => {
 
 	async function saveToMoodboard (data) {
 		try {
-			await BoogieBotApi.saveToMoodboard(data);
-			// setMoodboardData(newData);
+			let saveData = await BoogieBotApi.saveToMoodboard(data);
+			setMoodboardData(saveData);
 			return { success: true };
 		} catch (errors) {
-			console.error("adding new event failed", errors);
+			console.error("saving to moodboard failed", errors);
 			return { success: false, errors };
 		}
 	}
-	// if (!eventData || !moodboardData) console.error("No event data or moodboard data fetched.");
 
 	return (
 		<div className="App">

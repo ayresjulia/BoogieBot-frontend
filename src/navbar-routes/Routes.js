@@ -47,6 +47,7 @@ const Routes = ({ login, signup, currentUser, newEvent, saveToMoodboard }) => {
 					<EventForm newEvent={newEvent} currentUser={currentUser} />
 				</Route>
 			)}
+
 			{currentUser && (
 				<Route exact path="/events/:id/edit">
 					<EditEventForm events={events} currentUser={currentUser} />

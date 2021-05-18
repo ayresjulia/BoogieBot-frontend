@@ -45,7 +45,7 @@ class BoogieBotApi {
 	/** Delete event data to db. */
 
 	static async removeEvent (id) {
-		let res = await this.request(`events/${id}/delete`, id, "delete");
+		let res = await this.request(`events/${id}/delete`, {}, "delete");
 		return res.event;
 	}
 	/** Save event data to moodboard. */

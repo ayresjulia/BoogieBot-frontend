@@ -9,10 +9,12 @@ import states from "../helpers/states";
 import countries from "../helpers/countries";
 import { v4 as uuid } from "uuid";
 import "./EditEventForm.css";
+import { useHistory } from "react-router-dom";
 
 /** Form to edit user info in db. */
 
 const EditEventForm = ({ events }) => {
+	const history = useHistory();
 	let { id } = useParams();
 
 	let targetEvent = events.find((evt) => parseInt(evt.id) === parseInt(id));
@@ -42,7 +44,6 @@ const EditEventForm = ({ events }) => {
 	/** Submit form and add new event data to db. */
 
 	const handleSubmit = async (e) => {
-		e.preventDefault();
 		let eventData = {
 			title: formData.title,
 			description: formData.description,
@@ -56,8 +57,11 @@ const EditEventForm = ({ events }) => {
 		try {
 			await BoogieBotApi.editEvent(id, eventData);
 			setFormSuccess(true);
+			history.push("/events");
 		} catch (e) {
 			setFormErrors(e);
+			alert("stop");
+			console.error(formErrors);
 			return;
 		}
 		setFormData((form) => ({ ...form }));
@@ -112,6 +116,7 @@ const EditEventForm = ({ events }) => {
 									id="eventDate"
 									value={formData.event_date}
 									onChange={handleChange}
+									required
 								/>
 							</FormGroup>
 						</Col>
@@ -125,6 +130,7 @@ const EditEventForm = ({ events }) => {
 									id="eventTime"
 									value={formData.event_time}
 									onChange={handleChange}
+									required
 								/>
 							</FormGroup>
 						</Col>
@@ -187,7 +193,7 @@ const EditEventForm = ({ events }) => {
 							onChange={handleChange}
 						/>
 					</FormGroup>
-					{formErrors.length ? <Alert type="danger" messages={formErrors} /> : null}
+					{/* {formErrors.length ? <Alert type="danger" messages={formErrors} /> : null} */}
 					{formSuccess ? (
 						<Alert type="success" messages={[ "Updated successfully." ]} />
 					) : null}

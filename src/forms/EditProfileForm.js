@@ -50,6 +50,8 @@ const EditProfileForm = ({ currentUser }) => {
 			history.push("/");
 		} catch (e) {
 			setFormErrors(e);
+			alert("Password is incorrect, please try again.");
+			console.error(formErrors);
 			return;
 		}
 		setFormData((form) => ({ ...form, password: "" }));
@@ -130,7 +132,7 @@ const EditProfileForm = ({ currentUser }) => {
 							onChange={handleChange}
 						/>
 					</FormGroup>
-					{formErrors.length ? <Alert type="danger" messages={formErrors} /> : null}
+
 					{formSuccess ? (
 						<Alert type="success" messages={[ "Updated successfully." ]} />
 					) : null}

@@ -27,7 +27,6 @@ const dict = {
 	cateringInfo: "restaurants nearby with your zip code for catering options.",
 	eventsCreate: "create",
 	eventsNew: "new event.",
-	eventsMisc: "or modify existing",
 	homeWelcomeUser: "Welcome, ",
 	nonUserMsg: "Please, Log in or Sign up to begin.",
 	myEventDesc: "Description:",

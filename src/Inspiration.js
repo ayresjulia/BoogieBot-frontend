@@ -5,11 +5,8 @@ import { Form, FormGroup, Label, Input, Row, Col, Button } from "reactstrap";
 
 import "./Inspiration.css";
 import SearchForm from "./forms/SearchForm";
-import Alert from "./helpers/Alert";
 import dict from "./helpers/dictionary";
-import { CLIENT_ID_UNSPLASH } from "./secret";
-
-const API_BASE_URL = "https://api.unsplash.com/search/photos?";
+import { CLIENT_ID_UNSPLASH, UNSPLASH_API_URL } from "./secret";
 
 const Inspiration = ({ events, currentUser, saveToMoodboard }) => {
 	const [ pictures, setPictures ] = useState([]);
@@ -23,7 +20,7 @@ const Inspiration = ({ events, currentUser, saveToMoodboard }) => {
 
 	async function getPictures (query) {
 		let pics = await axios.get(
-			`${API_BASE_URL}client_id=${CLIENT_ID_UNSPLASH}&query=${query}&orientation=squarish&per_page=100`
+			`${UNSPLASH_API_URL}client_id=${CLIENT_ID_UNSPLASH}&query=${query}&orientation=squarish&per_page=100`
 		);
 		let data = pics.data.results;
 		setPictures(data);
@@ -45,6 +42,8 @@ const Inspiration = ({ events, currentUser, saveToMoodboard }) => {
 
 	async function handleSubmit (e) {
 		e.preventDefault();
+		setFormErrors([]);
+
 		let result = await saveToMoodboard({
 			event_id: parseInt(checkedId),
 			inspiration_url: inspUrl,
@@ -52,6 +51,8 @@ const Inspiration = ({ events, currentUser, saveToMoodboard }) => {
 		});
 		if (!result.success) {
 			setFormErrors(result.errors);
+			console.error(formErrors);
+			alert("Please choose an event first.");
 		}
 	}
 
@@ -88,12 +89,6 @@ const Inspiration = ({ events, currentUser, saveToMoodboard }) => {
 									</Col>
 								))}
 						</Row>
-						{formErrors.length ? (
-							<Alert
-								type="danger"
-								messages={[ "Please choose an event before adding pictures." ]}
-							/>
-						) : null}
 					</div>
 					<div className="Inspiration-imgs">
 						<Row xs="1" sm="2" md="4">

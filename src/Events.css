@@ -10,6 +10,7 @@
 	border-left: 1px solid rgb(238, 238, 238);
 	height: auto;
 }
+
 .Events-create {
 	font-size: 1.5rem;
 	display: inline-block;
@@ -37,7 +38,6 @@
 	text-align: center;
 	justify-content: space-evenly;
 	width: auto;
-	background-color: white;
 	min-height: 600px;
 }
 

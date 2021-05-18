@@ -12,7 +12,6 @@ import { v4 as uuid } from "uuid";
 /** Form to add new event and save event to db. */
 
 const EventForm = ({ newEvent, currentUser }) => {
-	console.log("CURRENTUSER", currentUser);
 	const history = useHistory();
 	const [ formData, setFormData ] = useState({
 		title: "",

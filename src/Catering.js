@@ -17,12 +17,9 @@ import {
 } from "reactstrap";
 
 import "./Catering.css";
-import Alert from "./helpers/Alert";
 import SearchForm from "./forms/SearchForm";
-import { CLIENT_KEY_DOCUMENU } from "./secret";
+import { CLIENT_KEY_DOCUMENU, DOCUMENU_API_URL } from "./secret";
 import dict from "./helpers/dictionary";
-
-const API_BASE_URL = "https://api.documenu.com/v2/restaurants/search/fields?";
 
 const Catering = ({ events, currentUser, saveToMoodboard }) => {
 	const [ restaurants, setRestaurants ] = useState([]);
@@ -41,7 +38,7 @@ const Catering = ({ events, currentUser, saveToMoodboard }) => {
 
 	async function getRestaurants (zip) {
 		let getRestaurant = await axios.get(
-			`${API_BASE_URL}zip_code=${zip}&key=${CLIENT_KEY_DOCUMENU}`
+			`${DOCUMENU_API_URL}zip_code=${zip}&key=${CLIENT_KEY_DOCUMENU}`
 		);
 
 		let data = getRestaurant.data.data;
@@ -70,10 +67,13 @@ const Catering = ({ events, currentUser, saveToMoodboard }) => {
 
 	async function handleSubmit (e) {
 		e.preventDefault();
+		setFormErrors([]);
 
 		let result = await saveToMoodboard(restInfo);
 		if (!result.success) {
 			setFormErrors(result.errors);
+			console.error(formErrors);
+			alert("Please choose an event first.");
 		}
 	}
 
@@ -112,7 +112,7 @@ const Catering = ({ events, currentUser, saveToMoodboard }) => {
 						</Row>
 					</div>
 					<Container className="Catering-cards">
-						<Row xs="1" sm="2" md="4">
+						<Row xs="1" sm="2" md="3">
 							{restaurants.map((item) => (
 								<Col key={item.restaurant_id}>
 									<Card
@@ -171,9 +171,6 @@ const Catering = ({ events, currentUser, saveToMoodboard }) => {
 												</p>
 											)}
 										</CardBody>
-										{formErrors.length ? (
-											<Alert type="danger" messages={formErrors} />
-										) : null}
 
 										<Button
 											type="submit"

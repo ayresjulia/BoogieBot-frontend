@@ -28,11 +28,10 @@ exports[`matches snapshot 1`] = `
             create
           </span>
           <p>
-            new event.
+            <i>
+              new event.
+            </i>
           </p>
-          <i>
-            or modify existing
-          </i>
         </a>
       </div>
       <div

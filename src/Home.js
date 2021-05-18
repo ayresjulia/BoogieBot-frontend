@@ -1,6 +1,5 @@
 import React from "react";
 import { Image } from "react-bootstrap";
-
 import "./Home.css";
 import dict from "./helpers/dictionary";
 
