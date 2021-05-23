@@ -33,18 +33,6 @@ let testEvents = [
 ];
 let currentUser = { username: "testuser", isAdmin: false };
 
-beforeAll(() => {
-	currentUser;
-});
-
-beforeEach(() => {
-	testEvents;
-});
-
-afterEach(() => {
-	testEvents = [];
-});
-
 describe("<EditEventForm.js />", () => {
 	it("can tell mocked from unmocked functions", () => {
 		expect(jest.isMockFunction(useParams)).toBe(true);
@@ -61,22 +49,12 @@ it("renders without crashing", () => {
 	);
 });
 
-// it("matches snapshot", () => {
-// 	useParams.mockReturnValue({ id: 1 });
-// 	const { asFragment } = render(
-// 		<MemoryRouter>
-// 			<MyEvent currentUser={currentUser} events={testEvents} />
-// 		</MemoryRouter>
-// 	);
-// 	expect(asFragment()).toMatchSnapshot();
-// });
-
-// it("shows page default text", () => {
-// 	useParams.mockReturnValue({ id: 1 });
-// 	const { getByText } = render(
-// 		<MemoryRouter>
-// 			<MyEvent currentUser={currentUser} events={testEvents} />
-// 		</MemoryRouter>
-// 	);
-// 	expect(getByText("edit")).toBeInTheDocument();
-// });
+it("shows page default text", () => {
+	useParams.mockReturnValue({ id: 2 });
+	const { getByText } = render(
+		<MemoryRouter>
+			<MyEvent currentUser={currentUser} events={testEvents} />
+		</MemoryRouter>
+	);
+	expect(getByText("browse restaurants in Catering tab to save them here")).toBeInTheDocument();
+});

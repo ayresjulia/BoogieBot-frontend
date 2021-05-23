@@ -26,39 +26,39 @@ $ git clone https://github.com/ayresjulia/Capstone-HR.git
 
 - install app requirements from package.json (separately for backend and frontend)
 
-```
-$ cd backend
-$ npm install
-$ cd frontend
-$ npm install
+```terminal
+$cd backend
+$npm install
+$cd frontend
+$npm install
 ```
 
 - start backend of the app in localhost
 
-```
-$ cd backend
-$ nodemon server.js
+```terminal
+$cd backend
+$nodemon server.js
 ```
 
 - start frontend of the app in localhost
 
-```
-$ cd frontend
-$ npm start
+```terminal
+$cd frontend
+$npm start
 ```
 
 ## Tests
 
 - to run tests for backend
   
-```
-$ jest --runInBand
+```terminal
+$jest --runInBand
 ```
 
 - to run tests for frontend
   
-```
-$ npm test
+```terminal
+$npm test
 ```
 
 ## APIs Used

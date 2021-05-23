@@ -32,14 +32,10 @@ let testEvents = [
 	}
 ];
 
-beforeEach(() => {
-	testEvents;
-});
-
-afterEach(() => {
-	testEvents = [];
-});
-
+const userInfo = {
+	username: "testuser",
+	isAdmin: false
+};
 describe("<EditEventForm.js />", () => {
 	it("can tell mocked from unmocked functions", () => {
 		expect(jest.isMockFunction(useParams)).toBe(true);
@@ -47,30 +43,31 @@ describe("<EditEventForm.js />", () => {
 	});
 });
 
-it("renders without crashing", () => {
-	let userInfo = {
-		username: "testuser",
-		isAdmin: false
-	};
-	let targetEvent = {
-		id: 1,
-		title: "Anniversary",
-		description: "Anniversary",
-		eventDate: "2021-05-19",
-		eventTime: "13:00",
-		city: "Minsk",
-		state: "CA",
-		country: "Belarus",
-		imgUrl:
-			"https://images.unsplash.com/photo-1532117182044-031e7cd916ee?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-		hostUsername: "testuser"
-	};
-
+it("renders without crashing", async () => {
 	useParams.mockReturnValue({ id: 1 });
-
 	render(
 		<MemoryRouter>
-			<EditEventForm events={testEvents} targetEvent={targetEvent} currentUser={userInfo} />
+			<EditEventForm currentUser={userInfo} events={testEvents} />
 		</MemoryRouter>
 	);
+});
+
+it("matches snapshot", async () => {
+	useParams.mockReturnValue({ id: 1 });
+	const { asFragment } = render(
+		<MemoryRouter>
+			<EditEventForm currentUser={userInfo} events={testEvents} />
+		</MemoryRouter>
+	);
+	expect(asFragment()).toMatchSnapshot();
+});
+
+it("renders a field in the form", async () => {
+	useParams.mockReturnValue({ id: 1 });
+	const { getByText } = render(
+		<MemoryRouter>
+			<EditEventForm currentUser={userInfo} events={testEvents} />
+		</MemoryRouter>
+	);
+	expect(getByText("Edit Anniversary")).toBeInTheDocument();
 });

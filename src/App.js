@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Redirect } from "react-router-dom";
 import jwt from "jsonwebtoken";
-
 import "./App.css";
 import NavBar from "./navbar-routes/NavBar";
 import Routes from "./navbar-routes/Routes";
@@ -24,9 +23,6 @@ const App = () => {
 	const [ infoLoaded, setInfoLoaded ] = useState(false);
 	const [ currentUser, setCurrentUser ] = useState(null);
 	const [ token, setToken ] = useLocalStorage(TOKEN_STORAGE_ID);
-	const [ eventData, setEventData ] = useState(null);
-	const [ moodboardData, setMoodboardData ] = useState(null);
-
 	/** Load user info from API. Until a user is logged in and they have a token, this should not run. It only needs to re-run when a user logs out, so the value of the token is a dependency for this effect. */
 
 	useEffect(
@@ -88,8 +84,7 @@ const App = () => {
 
 	async function newEvent (data) {
 		try {
-			let newData = await BoogieBotApi.newEvent(data);
-			setEventData(newData);
+			await BoogieBotApi.newEvent(data);
 			return { success: true };
 		} catch (errors) {
 			console.error("adding new event failed", errors);
@@ -101,15 +96,13 @@ const App = () => {
 
 	async function saveToMoodboard (data) {
 		try {
-			let saveData = await BoogieBotApi.saveToMoodboard(data);
-			setMoodboardData(saveData);
+			await BoogieBotApi.saveToMoodboard(data);
 			return { success: true };
 		} catch (errors) {
 			console.error("saving to moodboard failed", errors);
 			return { success: false, errors };
 		}
 	}
-
 	return (
 		<div className="App">
 			<BrowserRouter>

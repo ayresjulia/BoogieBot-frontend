@@ -1,11 +1,12 @@
 import React from "react";
 import { render } from "@testing-library/react";
 import Catering from "./Catering";
+import { act } from "react-dom/test-utils";
 import { MemoryRouter } from "react-router";
 
-let currentUser = { username: "testuser", isAdmin: false };
+const currentUser = { username: "testuser", isAdmin: false };
 
-let testEvents = [
+const testEvents = [
 	{
 		id: 1,
 		title: "Anniversary",
@@ -33,39 +34,24 @@ let testEvents = [
 		hostUsername: "testuser"
 	}
 ];
-beforeAll(() => {
-	currentUser;
-});
-beforeEach(() => {
-	testEvents;
+
+it("renders without crashing", async () => {
+	act(() => {
+		render(
+			<MemoryRouter>
+				<Catering events={testEvents} currentUser={currentUser} />
+			</MemoryRouter>
+		);
+	});
 });
 
-afterEach(() => {
-	testEvents = [];
-});
-
-it("renders without crashing", () => {
-	render(
-		<MemoryRouter>
-			<Catering currentUser={currentUser} events={testEvents} />
-		</MemoryRouter>
-	);
-});
-
-it("matches snapshot", () => {
-	const { asFragment } = render(
-		<MemoryRouter>
-			<Catering currentUser={currentUser} events={testEvents} />
-		</MemoryRouter>
-	);
-	expect(asFragment()).toMatchSnapshot();
-});
-
-it("shows page default text", () => {
-	const { getByText } = render(
-		<MemoryRouter>
-			<Catering currentUser={currentUser} events={testEvents} />
-		</MemoryRouter>
-	);
-	expect(getByText("lookup")).toBeInTheDocument();
+it("shows text on the page", async () => {
+	act(() => {
+		const { getByText } = render(
+			<MemoryRouter>
+				<Catering events={testEvents} currentUser={currentUser} />
+			</MemoryRouter>
+		);
+		expect(getByText("lookup")).toBeInTheDocument();
+	});
 });

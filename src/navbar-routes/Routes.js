@@ -36,6 +36,10 @@ const Routes = ({ login, signup, currentUser, newEvent, saveToMoodboard }) => {
 
 	return (
 		<Switch>
+			<Route exact path="/">
+				<Home currentUser={currentUser} />
+			</Route>
+
 			<Route exact path="/login">
 				<LoginForm login={login} />
 			</Route>
@@ -87,11 +91,7 @@ const Routes = ({ login, signup, currentUser, newEvent, saveToMoodboard }) => {
 					<EditProfileForm currentUser={currentUser} />
 				</Route>
 			)}
-			{currentUser && (
-				<Route exact path="/">
-					<Home currentUser={currentUser} />
-				</Route>
-			)}
+
 			<Redirect to="/" />
 		</Switch>
 	);

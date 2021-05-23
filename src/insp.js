@@ -3,6 +3,9 @@ import { render } from "@testing-library/react";
 import Inspiration from "./Inspiration";
 import { act } from "react-dom/test-utils";
 import { MemoryRouter } from "react-router";
+import { getPictures } from "./Inspiration";
+
+jest.mock("./Inspiration");
 
 const testEvents = [
 	{
@@ -42,15 +45,8 @@ it("renders without crashing", async () => {
 			</MemoryRouter>
 		);
 	});
+	expect(screen.getByText("Loading...")).toBeInTheDocument();
+	expect(getPictures).toHaveBeenCalledTimes(1);
 });
 
-it("shows text on the page", async () => {
-	act(() => {
-		const { getByText } = render(
-			<MemoryRouter>
-				<Inspiration events={testEvents} currentUser={currentUser} />
-			</MemoryRouter>
-		);
-		expect(getByText("add")).toBeInTheDocument();
-	});
-});
+// 1 fail - Inspiration(...): Nothing was returned from render. This usually means a return statement is missing. Or, to render nothing, return null.

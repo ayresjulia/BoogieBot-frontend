@@ -18,12 +18,15 @@ import {
 
 import "./Catering.css";
 import SearchForm from "./forms/SearchForm";
-import { CLIENT_KEY_DOCUMENU, DOCUMENU_API_URL } from "./secret";
+import { CLIENT_KEY_DOCUMENU } from "./secret";
 import dict from "./helpers/dictionary";
+
+const DOCUMENU_API_URL = "https://api.documenu.com/v2/restaurants/search/fields?";
 
 const Catering = ({ events, currentUser, saveToMoodboard }) => {
 	const [ restaurants, setRestaurants ] = useState([]);
 	const [ checkedId, setCheckedId ] = useState(null);
+	const [ loading, setLoading ] = useState(true);
 	const [ restInfo, setRestInfo ] = useState({
 		event_id: checkedId,
 		inspiration_url: null,
@@ -33,7 +36,15 @@ const Catering = ({ events, currentUser, saveToMoodboard }) => {
 	const [ formErrors, setFormErrors ] = useState([]);
 
 	useEffect(() => {
-		getRestaurants();
+		let mounted = true;
+		getRestaurants().then(() => {
+			if (mounted) {
+				setLoading(false);
+			}
+		});
+		return function cleanup () {
+			mounted = false;
+		};
 	}, []);
 
 	async function getRestaurants (zip) {
@@ -113,74 +124,77 @@ const Catering = ({ events, currentUser, saveToMoodboard }) => {
 					</div>
 					<Container className="Catering-cards">
 						<Row xs="1" sm="2" md="3">
-							{restaurants.map((item) => (
-								<Col key={item.restaurant_id}>
-									<Card
-										key={item.restaurant_id}
-										id={item.restaurant_id}
-										className="Catering-card">
-										<CardImg
-											top
-											className="Catering-card-img"
-											width="100%"
-											src={dict.cateringDefault}
-											alt="restaurant image"
-										/>
-										<CardBody>
-											<CardTitle tag="h5" className="restName">
-												{item.restaurant_name}
-											</CardTitle>
-											{item.cuisines.length > 1 && (
-												<CardSubtitle tag="h6" className="mb2 text-muted">
-													Cuisine: {item.cuisines[0]}
-												</CardSubtitle>
-											)}
-											{item.address && (
-												<p>
-													<a
-														href={`http://maps.google.com/?q=${item
-															.address["formatted"]}`}
-														target="_blank"
-														rel="noreferrer"
-														tag="h6"
-														className="mb2 text-muted restAddr">
-														{item.address["formatted"]}
-													</a>
-												</p>
-											)}
-											{item.restaurant_phone && (
-												<p>
-													<a
-														href={`tel:${item.restaurant_phone}`}
+							{!loading &&
+								restaurants.map((item) => (
+									<Col key={item.restaurant_id}>
+										<Card
+											key={item.restaurant_id}
+											id={item.restaurant_id}
+											className="Catering-card">
+											<CardImg
+												top
+												className="Catering-card-img"
+												width="100%"
+												src={dict.cateringDefault}
+												alt="restaurant image"
+											/>
+											<CardBody>
+												<CardTitle tag="h5" className="restName">
+													{item.restaurant_name}
+												</CardTitle>
+												{item.cuisines.length > 1 && (
+													<CardSubtitle
 														tag="h6"
 														className="mb2 text-muted">
-														{item.restaurant_phone}
-													</a>
-												</p>
-											)}
-											{item.restaurant_website && (
-												<p>
-													<a
-														href={item.restaurant_website}
-														target="_blank"
-														rel="noreferrer"
-														tag="h6"
-														className="mb2 text-muted">
-														{dict.cateringWeb}
-													</a>
-												</p>
-											)}
-										</CardBody>
+														Cuisine: {item.cuisines[0]}
+													</CardSubtitle>
+												)}
+												{item.address && (
+													<p>
+														<a
+															href={`http://maps.google.com/?q=${item
+																.address["formatted"]}`}
+															target="_blank"
+															rel="noreferrer"
+															tag="h6"
+															className="mb2 text-muted restAddr">
+															{item.address["formatted"]}
+														</a>
+													</p>
+												)}
+												{item.restaurant_phone && (
+													<p>
+														<a
+															href={`tel:${item.restaurant_phone}`}
+															tag="h6"
+															className="mb2 text-muted">
+															{item.restaurant_phone}
+														</a>
+													</p>
+												)}
+												{item.restaurant_website && (
+													<p>
+														<a
+															href={item.restaurant_website}
+															target="_blank"
+															rel="noreferrer"
+															tag="h6"
+															className="mb2 text-muted">
+															{dict.cateringWeb}
+														</a>
+													</p>
+												)}
+											</CardBody>
 
-										<Button
-											type="submit"
-											className="Catering-btn btn-secondary"
-											onClick={getRestaurantInfo}>
-											Save!
-										</Button>
-									</Card>
-								</Col>
-							))}
+											<Button
+												type="submit"
+												className="Catering-btn btn-secondary"
+												onClick={getRestaurantInfo}>
+												Save!
+											</Button>
+										</Card>
+									</Col>
+								))}
 						</Row>
 					</Container>
 				</Form>

@@ -43,7 +43,7 @@ const EditEventForm = ({ events }) => {
 
 	/** Submit form and add new event data to db. */
 
-	const handleSubmit = async (e) => {
+	const handleSubmit = async () => {
 		let eventData = {
 			title: formData.title,
 			description: formData.description,
@@ -60,7 +60,6 @@ const EditEventForm = ({ events }) => {
 			history.push("/events");
 		} catch (e) {
 			setFormErrors(e);
-			alert("stop");
 			console.error(formErrors);
 			return;
 		}

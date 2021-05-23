@@ -6,37 +6,56 @@ import { Form, FormGroup, Label, Input, Row, Col, Button } from "reactstrap";
 import "./Inspiration.css";
 import SearchForm from "./forms/SearchForm";
 import dict from "./helpers/dictionary";
-import { CLIENT_ID_UNSPLASH, UNSPLASH_API_URL } from "./secret";
+import { CLIENT_ID_UNSPLASH } from "./secret";
+
+const UNSPLASH_API_URL = "https://api.unsplash.com/search/photos?";
 
 const Inspiration = ({ events, currentUser, saveToMoodboard }) => {
 	const [ pictures, setPictures ] = useState([]);
 	const [ checkedId, setCheckedId ] = useState(null);
 	const [ inspUrl, setInspUrl ] = useState(null);
 	const [ formErrors, setFormErrors ] = useState([]);
+	const [ loading, setLoading ] = useState(true);
 
-	useEffect(() => {
-		getPictures();
-	}, []);
+	useEffect(
+		() => {
+			let mounted = true;
+			getPictures().then(() => {
+				if (mounted) {
+					setLoading(false);
+				}
+			});
+			return function cleanup () {
+				mounted = false;
+			};
+		},
+		[ loading ]
+	);
 
 	async function getPictures (query) {
-		let pics = await axios.get(
-			`${UNSPLASH_API_URL}client_id=${CLIENT_ID_UNSPLASH}&query=${query}&orientation=squarish&per_page=100`
-		);
-		let data = pics.data.results;
-		setPictures(data);
+		try {
+			let pics = await axios.get(
+				`${UNSPLASH_API_URL}client_id=${CLIENT_ID_UNSPLASH}&query=${query}&orientation=squarish&per_page=100`
+			);
+			let data = pics.data.results;
+			setPictures(data);
+			setLoading(false);
+		} catch (err) {
+			console.error(err);
+		}
 	}
 
 	let filteredEvents = currentUser.isAdmin
 		? events
 		: events.filter((e) => Object.values(e).includes(currentUser.username));
 
-	const getEventId = (e) => {
+	let getEventId = (e) => {
 		if (e.target.checked) {
 			setCheckedId(e.target.value);
 		}
 	};
 
-	const getInspImageUrl = (e) => {
+	let getInspImageUrl = (e) => {
 		setInspUrl(e.target.src);
 	};
 
@@ -49,6 +68,7 @@ const Inspiration = ({ events, currentUser, saveToMoodboard }) => {
 			inspiration_url: inspUrl,
 			restaurant_key: null
 		});
+
 		if (!result.success) {
 			setFormErrors(result.errors);
 			console.error(formErrors);
@@ -90,21 +110,22 @@ const Inspiration = ({ events, currentUser, saveToMoodboard }) => {
 								))}
 						</Row>
 					</div>
-					<div className="Inspiration-imgs">
+					<div className="Inspiration-imgs" data-testid="insp-img">
 						<Row xs="1" sm="2" md="4">
-							{pictures.map((item) => (
-								<Col key={item.id}>
-									<Button type="submit" className="Insp-btn">
-										<Image
-											className="Inspiration-rounded"
-											onClick={getInspImageUrl}
-											value={item.urls.regular}
-											fluid
-											src={item.urls.regular}
-										/>
-									</Button>
-								</Col>
-							))}
+							{!loading &&
+								pictures.map((item) => (
+									<Col key={item.id}>
+										<Button type="submit" className="Insp-btn">
+											<Image
+												className="Inspiration-rounded"
+												onClick={getInspImageUrl}
+												value={item.urls.regular}
+												fluid
+												src={item.urls.regular}
+											/>
+										</Button>
+									</Col>
+								))}
 						</Row>
 					</div>
 				</Form>

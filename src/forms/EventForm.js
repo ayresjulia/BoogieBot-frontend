@@ -31,7 +31,6 @@ const EventForm = ({ newEvent, currentUser }) => {
 
 	async function handleSubmit (e) {
 		let result = await newEvent(formData);
-		console.log("EVENT", result);
 		if (result.success) {
 			history.push("/events");
 			setFormSuccess(true);

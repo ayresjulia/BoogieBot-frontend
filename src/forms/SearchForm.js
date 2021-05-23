@@ -24,12 +24,17 @@ const SearchForm = ({ searchFor }) => {
 					<Label htmlFor="search" />
 					<Input
 						className="form-control flex-grow-1"
+						data-testid="search-input"
 						name="search"
 						placeholder="Enter search term.."
 						value={search}
 						onChange={handleChange}
 					/>
-					<Button type="submit" className="Searchform-btn" color="primary">
+					<Button
+						type="submit"
+						data-testid="search"
+						className="Searchform-btn"
+						color="primary">
 						Submit
 					</Button>
 				</FormGroup>
