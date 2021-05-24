@@ -1,9 +1,9 @@
 # BoogieBot Event Planner App
 
-![homepage_gif](./helpers/homepage.gif)
-![events_gif](./helpers/events.gif)
-![inspiration_gif](./helpers/inspiration.gif)
-![catering_gif](./helpers/catering.gif)
+![homepage_gif](./src/helpers/homepage.gif)
+![events_gif](./src/helpers/events.gif)
+![inspiration_gif](./src/helpers/inspiration.gif)
+![catering_gif](./src/helpers/catering.gif)
 
 ## Description
 
