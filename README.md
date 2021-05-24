@@ -1,8 +1,9 @@
 # BoogieBot Event Planner App
 
-<!-- ![homepage_gif](./static/homepage.gif)
-![jobseeeker_gif](./static/jobseeker.gif)
-![recruiter_gif](./static/recruiter.gif) -->
+![homepage_gif](./helpers/homepage.gif)
+![events_gif](./helpers/events.gif)
+![inspiration_gif](./helpers/inspiration.gif)
+![catering_gif](./helpers/catering.gif)
 
 ## Description
 
