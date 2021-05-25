@@ -1,8 +1,19 @@
 import React from "react";
-import { render } from "@testing-library/react";
 import Inspiration from "./Inspiration";
+import ReactDOM from "react-dom";
 import { act } from "react-dom/test-utils";
-import { MemoryRouter } from "react-router";
+
+let container;
+
+beforeEach(() => {
+	container = document.createElement("div");
+	document.body.appendChild(container);
+});
+
+afterEach(() => {
+	document.body.removeChild(container);
+	container = null;
+});
 
 const testEvents = [
 	{
@@ -34,23 +45,17 @@ const testEvents = [
 ];
 const currentUser = { username: "testuser", isAdmin: false };
 
-it("renders without crashing", async () => {
-	act(() => {
-		render(
-			<MemoryRouter>
-				<Inspiration events={testEvents} currentUser={currentUser} />
-			</MemoryRouter>
-		);
-	});
-});
-
-it("shows text on the page", async () => {
-	act(() => {
-		const { getByText } = render(
-			<MemoryRouter>
-				<Inspiration events={testEvents} currentUser={currentUser} />
-			</MemoryRouter>
-		);
-		expect(getByText("add")).toBeInTheDocument();
+describe("component renders with elements on the page", () => {
+	it("shows search button on the page and initial text", () => {
+		act(() => {
+			ReactDOM.render(
+				<Inspiration events={testEvents} currentUser={currentUser} />,
+				container
+			);
+		});
+		let btn = container.querySelector("button");
+		expect(btn).toBeInTheDocument();
+		let add = container.querySelector(".bold");
+		expect(add).toBeInTheDocument();
 	});
 });

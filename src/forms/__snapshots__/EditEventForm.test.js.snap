@@ -95,7 +95,7 @@ exports[`matches snapshot 1`] = `
                 name="eventDate"
                 required=""
                 type="date"
-                value=""
+                value="2021-05-19"
               />
             </div>
           </div>
@@ -117,7 +117,7 @@ exports[`matches snapshot 1`] = `
                 name="eventTime"
                 required=""
                 type="time"
-                value=""
+                value="13:00"
               />
             </div>
           </div>
@@ -382,7 +382,7 @@ exports[`matches snapshot 1`] = `
                   Anguilla
                 </option>
                 <option>
-                  Antigua &amp; Barbuda
+                  Antigua & Barbuda
                 </option>
                 <option>
                   Argentina
@@ -436,7 +436,7 @@ exports[`matches snapshot 1`] = `
                   Bolivia
                 </option>
                 <option>
-                  Bosnia &amp; Herzegovina
+                  Bosnia & Herzegovina
                 </option>
                 <option>
                   Botswana
@@ -466,6 +466,9 @@ exports[`matches snapshot 1`] = `
                   Cameroon
                 </option>
                 <option>
+                  Canada
+                </option>
+                <option>
                   Cape Verde
                 </option>
                 <option>
@@ -493,7 +496,7 @@ exports[`matches snapshot 1`] = `
                   Costa Rica
                 </option>
                 <option>
-                  Cote D Ivoire
+                  Cote D'Ivoire
                 </option>
                 <option>
                   Croatia
@@ -829,7 +832,7 @@ exports[`matches snapshot 1`] = `
                   Rwanda
                 </option>
                 <option>
-                  Saint Pierre &amp; Miquelon
+                  Saint Pierre & Miquelon
                 </option>
                 <option>
                   Samoa
@@ -877,7 +880,7 @@ exports[`matches snapshot 1`] = `
                   Sri Lanka
                 </option>
                 <option>
-                  St Kitts &amp; Nevis
+                  St Kitts & Nevis
                 </option>
                 <option>
                   St Lucia
@@ -928,7 +931,7 @@ exports[`matches snapshot 1`] = `
                   Tonga
                 </option>
                 <option>
-                  Trinidad &amp; Tobago
+                  Trinidad & Tobago
                 </option>
                 <option>
                   Tunisia
@@ -940,7 +943,7 @@ exports[`matches snapshot 1`] = `
                   Turkmenistan
                 </option>
                 <option>
-                  Turks &amp; Caicos
+                  Turks & Caicos
                 </option>
                 <option>
                   Uganda
@@ -953,6 +956,9 @@ exports[`matches snapshot 1`] = `
                 </option>
                 <option>
                   United Kingdom
+                </option>
+                <option>
+                  United States
                 </option>
                 <option>
                   Uruguay
@@ -995,7 +1001,7 @@ exports[`matches snapshot 1`] = `
             name="imgUrl"
             placeholder="event image url (optional)"
             type="text"
-            value=""
+            value="https://images.unsplash.com/photo-1532117182044-031e7cd916ee?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
           />
         </div>
         <button

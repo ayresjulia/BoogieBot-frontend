@@ -23,8 +23,7 @@ const SearchForm = ({ searchFor }) => {
 				<FormGroup>
 					<Label htmlFor="search" />
 					<Input
-						className="form-control flex-grow-1"
-						data-testid="search-input"
+						className="form-control flex-grow-1 search-input"
 						name="search"
 						placeholder="Enter search term.."
 						value={search}
@@ -32,7 +31,7 @@ const SearchForm = ({ searchFor }) => {
 					/>
 					<Button
 						type="submit"
-						data-testid="search"
+						data-testid="submit-btn"
 						className="Searchform-btn"
 						color="primary">
 						Submit

@@ -16,8 +16,7 @@ exports[`matches snapshot 1`] = `
           for="search"
         />
         <input
-          class="form-control flex-grow-1 form-control"
-          data-testid="search-input"
+          class="form-control flex-grow-1 search-input form-control"
           name="search"
           placeholder="Enter search term.."
           type="text"
@@ -25,7 +24,7 @@ exports[`matches snapshot 1`] = `
         />
         <button
           class="Searchform-btn btn btn-primary"
-          data-testid="search"
+          data-testid="submit-btn"
           type="submit"
         >
           Submit

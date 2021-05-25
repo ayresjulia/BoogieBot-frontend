@@ -22,12 +22,12 @@ const EditEventForm = ({ events }) => {
 	const INITIAL_STATE = {
 		title: targetEvent.title,
 		description: targetEvent.description,
-		event_date: targetEvent.event_date,
-		event_time: targetEvent.event_time,
+		eventDate: targetEvent.eventDate,
+		eventTime: targetEvent.eventTime,
 		city: targetEvent.city,
 		state: targetEvent.state,
 		country: targetEvent.country,
-		img_url: targetEvent.img_url
+		imgUrl: targetEvent.imgUrl || dict.defaultEventImg
 	};
 	const [ formData, setFormData ] = useState(INITIAL_STATE);
 	const [ formErrors, setFormErrors ] = useState([]);
@@ -47,19 +47,21 @@ const EditEventForm = ({ events }) => {
 		let eventData = {
 			title: formData.title,
 			description: formData.description,
-			event_date: formData.event_date,
-			event_time: formData.event_time,
+			eventDate: formData.eventDate,
+			eventTime: formData.eventTime,
 			city: formData.city,
 			state: formData.state,
 			country: formData.country,
-			img_url: formData.img_url
+			imgUrl: formData.imgUrl
 		};
+
 		try {
 			await BoogieBotApi.editEvent(id, eventData);
 			setFormSuccess(true);
 			history.push("/events");
-		} catch (e) {
-			setFormErrors(e);
+		} catch (err) {
+			setFormErrors(err);
+			alert("Error");
 			console.error(formErrors);
 			return;
 		}
@@ -113,7 +115,7 @@ const EditEventForm = ({ events }) => {
 									type="date"
 									name="eventDate"
 									id="eventDate"
-									value={formData.event_date}
+									value={formData.eventDate}
 									onChange={handleChange}
 									required
 								/>
@@ -127,7 +129,7 @@ const EditEventForm = ({ events }) => {
 									type="time"
 									name="eventTime"
 									id="eventTime"
-									value={formData.event_time}
+									value={formData.eventTime}
 									onChange={handleChange}
 									required
 								/>
@@ -187,12 +189,11 @@ const EditEventForm = ({ events }) => {
 							id="imgUrl"
 							name="imgUrl"
 							className="Form-input"
-							value={formData.img_url}
+							value={formData.imgUrl}
 							placeholder="event image url (optional)"
 							onChange={handleChange}
 						/>
 					</FormGroup>
-					{/* {formErrors.length ? <Alert type="danger" messages={formErrors} /> : null} */}
 					{formSuccess ? (
 						<Alert type="success" messages={[ "Updated successfully." ]} />
 					) : null}

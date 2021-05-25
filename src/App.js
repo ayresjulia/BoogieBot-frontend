@@ -6,6 +6,7 @@ import NavBar from "./navbar-routes/NavBar";
 import Routes from "./navbar-routes/Routes";
 import BoogieBotApi from "./Api";
 import useLocalStorage from "./hooks/useLocalStorage";
+import UserContext from "./helpers/UserContext";
 
 /** Key name for storing token in localStorage. */
 export const TOKEN_STORAGE_ID = "boogiebot-token";
@@ -106,16 +107,18 @@ const App = () => {
 	return (
 		<div className="App">
 			<BrowserRouter>
-				<NavBar currentUser={currentUser} logout={logout} />
-				<Routes
-					login={login}
-					signup={signup}
-					logout={logout}
-					newEvent={newEvent}
-					currentUser={currentUser}
-					saveToMoodboard={saveToMoodboard}
-				/>
-				{!infoLoaded && <Redirect to="/" />}
+				<UserContext.Provider value={{ currentUser, setCurrentUser }}>
+					<NavBar currentUser={currentUser} logout={logout} />
+					<Routes
+						login={login}
+						signup={signup}
+						logout={logout}
+						newEvent={newEvent}
+						currentUser={currentUser}
+						saveToMoodboard={saveToMoodboard}
+					/>
+					{!infoLoaded && <Redirect to="/" />}
+				</UserContext.Provider>
 			</BrowserRouter>
 		</div>
 	);

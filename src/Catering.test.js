@@ -1,8 +1,19 @@
 import React from "react";
-import { render } from "@testing-library/react";
 import Catering from "./Catering";
 import { act } from "react-dom/test-utils";
-import { MemoryRouter } from "react-router";
+import ReactDOM from "react-dom";
+
+let container;
+
+beforeEach(() => {
+	container = document.createElement("div");
+	document.body.appendChild(container);
+});
+
+afterEach(() => {
+	document.body.removeChild(container);
+	container = null;
+});
 
 const currentUser = { username: "testuser", isAdmin: false };
 
@@ -35,23 +46,14 @@ const testEvents = [
 	}
 ];
 
-it("renders without crashing", async () => {
-	act(() => {
-		render(
-			<MemoryRouter>
-				<Catering events={testEvents} currentUser={currentUser} />
-			</MemoryRouter>
-		);
-	});
-});
-
-it("shows text on the page", async () => {
-	act(() => {
-		const { getByText } = render(
-			<MemoryRouter>
-				<Catering events={testEvents} currentUser={currentUser} />
-			</MemoryRouter>
-		);
-		expect(getByText("lookup")).toBeInTheDocument();
+describe("component renders with elements on the page", () => {
+	it("shows search button on the page and initial text", () => {
+		act(() => {
+			ReactDOM.render(<Catering events={testEvents} currentUser={currentUser} />, container);
+		});
+		let btn = container.querySelector("button");
+		expect(btn).toBeInTheDocument();
+		let lookup = container.querySelector(".Catering-bold");
+		expect(lookup).toBeInTheDocument();
 	});
 });

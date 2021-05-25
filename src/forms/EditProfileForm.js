@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Form, FormGroup, Label, Input, Button } from "reactstrap";
 import { useHistory } from "react-router-dom";
 import "./EditProfileForm.css";
@@ -6,10 +6,13 @@ import BoogieBotApi from "../Api";
 import { Row, Col } from "react-bootstrap";
 import Alert from "../helpers/Alert";
 import dict from "../helpers/dictionary";
+import UserContext from "../helpers/UserContext";
 
 /** Form to edit user info in db. */
 
-const EditProfileForm = ({ currentUser }) => {
+const EditProfileForm = () => {
+	const { currentUser, setCurrentUser } = useContext(UserContext);
+
 	const INITIAL_STATE = {
 		username: currentUser.username,
 		firstName: currentUser.firstName,
@@ -21,8 +24,9 @@ const EditProfileForm = ({ currentUser }) => {
 	const [ formData, setFormData ] = useState(INITIAL_STATE);
 	const [ formErrors, setFormErrors ] = useState([]);
 	const [ formSuccess, setFormSuccess ] = useState(false);
-
 	const history = useHistory();
+
+	const profile = currentUser.profileUrl === "" ? dict.userDefaultUrl : currentUser.profileUrl;
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;
@@ -43,19 +47,23 @@ const EditProfileForm = ({ currentUser }) => {
 			profileUrl: formData.profileUrl,
 			password: formData.password
 		};
+
+		let updatedUser;
+		let username = currentUser.username;
 		try {
-			let username = currentUser.username;
-			await BoogieBotApi.saveProfile(username, profileData);
+			updatedUser = await BoogieBotApi.saveProfile(username, profileData);
 			setFormSuccess(true);
 			history.push("/");
-		} catch (e) {
-			setFormErrors(e);
+		} catch (err) {
+			setFormErrors(err);
 			alert("Password is incorrect, please try again.");
 			console.error(formErrors);
 			return;
 		}
 		setFormData((form) => ({ ...form, password: "" }));
 		setFormErrors([]);
+		// trigger reloading of user information throughout the site
+		setCurrentUser(updatedUser);
 	};
 
 	return (
@@ -65,11 +73,7 @@ const EditProfileForm = ({ currentUser }) => {
 				<p>{dict.editProfileFormTipDesc}</p>
 			</div>
 			<div className="Form-right">
-				<img
-					className="Form-profile-pic"
-					src={currentUser.profileUrl}
-					alt="userprofilepicture"
-				/>
+				<img className="Form-profile-pic" src={profile} alt="userprofilepicture" />
 				<p>
 					<b>{currentUser.username}</b>
 				</p>

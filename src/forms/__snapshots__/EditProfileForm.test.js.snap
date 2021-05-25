@@ -25,7 +25,9 @@ exports[`matches snapshot 1`] = `
         class="Form-profile-pic"
       />
       <p>
-        <b />
+        <b>
+          testuser
+        </b>
       </p>
       <form
         class="Form-body"
@@ -50,7 +52,7 @@ exports[`matches snapshot 1`] = `
                 id="firstName"
                 name="firstName"
                 type="text"
-                value=""
+                value="testfirst"
               />
             </div>
           </div>
@@ -71,7 +73,7 @@ exports[`matches snapshot 1`] = `
                 id="lastName"
                 name="lastName"
                 type="text"
-                value=""
+                value="testlast"
               />
             </div>
           </div>
@@ -90,7 +92,7 @@ exports[`matches snapshot 1`] = `
             id="email"
             name="email"
             type="text"
-            value=""
+            value="test@test.net"
           />
         </div>
         <div

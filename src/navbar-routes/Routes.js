@@ -88,7 +88,7 @@ const Routes = ({ login, signup, currentUser, newEvent, saveToMoodboard }) => {
 			)}
 			{currentUser && (
 				<Route exact path="/profile">
-					<EditProfileForm currentUser={currentUser} />
+					<EditProfileForm />
 				</Route>
 			)}
 

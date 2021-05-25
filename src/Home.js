@@ -14,11 +14,20 @@ const Home = ({ currentUser }) => {
 						<p>
 							{dict.homeWelcomeUser}
 							<b>{currentUser.username}</b>{" "}
-							<Image
-								className="Profile-url"
-								src={currentUser.profileUrl}
-								alt="homepage-img"
-							/>
+							{currentUser.profileUrl !== "" && (
+								<Image
+									className="Profile-url"
+									src={currentUser.profileUrl}
+									alt="homepage-img"
+								/>
+							)}
+							{currentUser.profileUrl === "" && (
+								<Image
+									className="Profile-url"
+									src={dict.userDefaultUrl}
+									alt="homepage-img"
+								/>
+							)}
 						</p>
 					)}
 					{!currentUser && <p>{dict.nonUserMsg}</p>}

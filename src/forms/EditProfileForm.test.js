@@ -1,20 +1,30 @@
 import { render } from "@testing-library/react";
 import React from "react";
 import EditProfileForm from "./EditProfileForm";
+import { UserProvider } from "../helpers/testUtils";
 
 test("it renders without crashing", () => {
-	let username = "testuser";
-	render(<EditProfileForm currentUser={username} />);
+	render(
+		<UserProvider>
+			<EditProfileForm />
+		</UserProvider>
+	);
 });
 
 it("matches snapshot", () => {
-	let username = "testuser";
-	const { asFragment } = render(<EditProfileForm currentUser={username} />);
+	const { asFragment } = render(
+		<UserProvider>
+			<EditProfileForm />
+		</UserProvider>
+	);
 	expect(asFragment()).toMatchSnapshot();
 });
 
 it("renders a field in the form", () => {
-	let username = "testuser";
-	const { getByText } = render(<EditProfileForm currentUser={username} />);
+	const { getByText } = render(
+		<UserProvider>
+			<EditProfileForm />
+		</UserProvider>
+	);
 	expect(getByText("Confirm password to make changes")).toBeInTheDocument();
 });
