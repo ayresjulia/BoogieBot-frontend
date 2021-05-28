@@ -1,36 +1,38 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext, useRef } from "react";
 import axios from "axios";
 import { Image } from "react-bootstrap";
 import { Form, FormGroup, Label, Input, Row, Col, Button } from "reactstrap";
-
+import BoogieBotApi from "./Api";
 import "./Inspiration.css";
 import SearchForm from "./forms/SearchForm";
 import dict from "./helpers/dictionary";
 import { CLIENT_ID_UNSPLASH } from "./secret";
+import EventContext from "./helpers/EventContext";
 
 const UNSPLASH_API_URL = "https://api.unsplash.com/search/photos?";
 
-const Inspiration = ({ events, currentUser, saveToMoodboard }) => {
+const Inspiration = ({ currentUser, saveToMoodboard }) => {
+	const _isMounted = useRef(true);
+	const { events, setEvents } = useContext(EventContext);
 	const [ pictures, setPictures ] = useState([]);
 	const [ checkedId, setCheckedId ] = useState(null);
 	const [ inspUrl, setInspUrl ] = useState(null);
 	const [ formErrors, setFormErrors ] = useState([]);
 	const [ loading, setLoading ] = useState(true);
 
-	useEffect(
-		() => {
-			let mounted = true;
-			getPictures().then(() => {
-				if (mounted) {
-					setLoading(false);
-				}
-			});
-			return function cleanup () {
-				mounted = false;
-			};
-		},
-		[ loading ]
-	);
+	useEffect(() => {
+		getEvents();
+		getPictures();
+
+		return function cleanup () {
+			_isMounted.current = false;
+		};
+	});
+
+	async function getEvents () {
+		let events = await BoogieBotApi.getEvents();
+		setEvents(events);
+	}
 
 	async function getPictures (query) {
 		try {

@@ -1,9 +1,9 @@
 # BoogieBot Event Planner App
 
-![homepage_gif](./src/helpers/homepage.gif)
-![events_gif](./src/helpers/events.gif)
-![inspiration_gif](./src/helpers/inspiration.gif)
-![catering_gif](./src/helpers/catering.gif)
+![homepage_gif](./src/media/homepage.gif)
+![events_gif](./src/media/events.gif)
+![inspiration_gif](./src/media/inspiration.gif)
+![catering_gif](./src/media/catering.gif)
 
 ## Description
 
@@ -19,11 +19,11 @@ BoogieBot is created to help with event planning by being able to create user's 
 
 ## Installation
 
-<!-- - clone repository using command line
+- clone repository using command line
   
+```terminal
+$git clone https://github.com/ayresjulia/Boogiebot-full-stack.git
 ```
-$ git clone https://github.com/ayresjulia/Capstone-HR.git
-``` -->
 
 - install app requirements from package.json (separately for backend and frontend)
 
@@ -83,11 +83,11 @@ $npm test
 
 ## Database Schema
 
-![db](./src/helpers/db.png)
+![db](./src/media/db.png)
 
 ## User Flow
 
-![userflow](./src/helpers/userflow.png)
+![userflow](./src/media/userflow.png)
 
 ## BoogieBot Event Planner App v2.0
 

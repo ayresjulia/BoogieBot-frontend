@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import {
 	Card,
@@ -20,10 +20,12 @@ import "./Catering.css";
 import SearchForm from "./forms/SearchForm";
 import { CLIENT_KEY_DOCUMENU } from "./secret";
 import dict from "./helpers/dictionary";
+import EventContext from "./helpers/EventContext";
 
 const DOCUMENU_API_URL = "https://api.documenu.com/v2/restaurants/search/fields?";
 
-const Catering = ({ events, currentUser, saveToMoodboard }) => {
+const Catering = ({ currentUser, saveToMoodboard }) => {
+	const { events } = useContext(EventContext);
 	const [ restaurants, setRestaurants ] = useState([]);
 	const [ checkedId, setCheckedId ] = useState(null);
 	const [ loading, setLoading ] = useState(true);

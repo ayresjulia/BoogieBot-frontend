@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import Alert from "../helpers/Alert";
+import React, { useState, useEffect, useRef } from "react";
 import { Form, FormGroup, Label, Input, Button } from "reactstrap";
 import { useHistory } from "react-router-dom";
 import { Row, Col } from "react-bootstrap";
@@ -11,8 +10,10 @@ import { v4 as uuid } from "uuid";
 
 /** Form to add new event and save event to db. */
 
-const EventForm = ({ newEvent, currentUser }) => {
+const EventForm = ({ currentUser, newEvent }) => {
+	const _isMounted = useRef(true);
 	const history = useHistory();
+	const [ formErrors, setFormErrors ] = useState([]);
 	const [ formData, setFormData ] = useState({
 		title: "",
 		description: "",
@@ -24,18 +25,24 @@ const EventForm = ({ newEvent, currentUser }) => {
 		imgUrl: dict.defaultEventImg,
 		hostUsername: currentUser.username
 	});
-	const [ formErrors, setFormErrors ] = useState([]);
-	const [ formSuccess, setFormSuccess ] = useState(false);
 
-	/** On submit, redirect to events page "/". */
+	useEffect(() => {
+		return () => {
+			_isMounted.current = false;
+		};
+	}, []);
 
-	async function handleSubmit (e) {
+	/** On submit, redirect to events page "/events". */
+
+	async function handleSubmit () {
 		let result = await newEvent(formData);
-		if (result.success) {
-			history.push("/events");
-			setFormSuccess(true);
-		} else {
-			setFormErrors(result.errors);
+		if (_isMounted.current) {
+			if (result.success) {
+				history.push("/events");
+			} else {
+				setFormErrors(result.errors);
+				console.error(formErrors);
+			}
 		}
 	}
 
@@ -178,10 +185,7 @@ const EventForm = ({ newEvent, currentUser }) => {
 							required
 						/>
 					</FormGroup>
-					{formErrors.length ? <Alert type="danger" messages={formErrors} /> : null}
-					{formSuccess ? (
-						<Alert type="success" messages={[ "Created successfully." ]} />
-					) : null}
+
 					<Button className="btn btn-success float-right" onSubmit={handleSubmit}>
 						Submit
 					</Button>

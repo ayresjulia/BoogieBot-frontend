@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Form, FormGroup, Label, Input, Button } from "reactstrap";
 import { useParams } from "react-router-dom";
 import BoogieBotApi from "../Api";
@@ -10,13 +10,14 @@ import countries from "../helpers/countries";
 import { v4 as uuid } from "uuid";
 import "./EditEventForm.css";
 import { useHistory } from "react-router-dom";
+import EventContext from "../helpers/EventContext";
 
 /** Form to edit user info in db. */
 
-const EditEventForm = ({ events }) => {
+const EditEventForm = () => {
 	const history = useHistory();
 	let { id } = useParams();
-
+	const { events } = useContext(EventContext);
 	let targetEvent = events.find((evt) => parseInt(evt.id) === parseInt(id));
 
 	const INITIAL_STATE = {
@@ -40,7 +41,6 @@ const EditEventForm = ({ events }) => {
 			[name]: value
 		}));
 	};
-
 	/** Submit form and add new event data to db. */
 
 	const handleSubmit = async () => {
@@ -61,7 +61,6 @@ const EditEventForm = ({ events }) => {
 			history.push("/events");
 		} catch (err) {
 			setFormErrors(err);
-			alert("Error");
 			console.error(formErrors);
 			return;
 		}

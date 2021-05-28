@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Card, CardBody, CardTitle, CardSubtitle } from "reactstrap";
 import { Image, Row, Col } from "react-bootstrap";
@@ -8,10 +8,14 @@ import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import BoogieBotApi from "./Api";
 import "./MyEvent.css";
 import dict from "./helpers/dictionary";
+import EventContext from "./helpers/EventContext";
 
-const SearchEvent = ({ events }) => {
+const MAPS_BASE_URL = "http://maps.google.com/";
+
+const SearchEvent = () => {
 	const { id } = useParams();
 	const [ evtMoodboard, setEvtMoodboard ] = useState([]);
+	const { events } = useContext(EventContext);
 
 	let event = events.find((evt) => parseInt(evt.id) === parseInt(id));
 
@@ -94,7 +98,7 @@ const SearchEvent = ({ events }) => {
 																	<a
 																		target="_blank"
 																		rel="noreferrer"
-																		href={`http://maps.google.com/?q=${item.restaurantAddress}`}>
+																		href={`${MAPS_BASE_URL}?q=${item.restaurantAddress}`}>
 																		{item.restaurantAddress}
 																	</a>
 																</CardSubtitle>
