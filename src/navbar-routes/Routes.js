@@ -10,9 +10,8 @@ import Catering from "../Catering";
 import LoginForm from "../forms/LoginForm";
 import SignupForm from "../forms/SignupForm";
 import EditProfileForm from "../forms/EditProfileForm";
-import dict from "../helpers/dictionary";
+import staticMsg from "../helpers/staticUserMsg";
 import EditEventForm from "../forms/EditEventForm";
-
 import EventContext from "../helpers/EventContext";
 
 /** Main Routes, some are protected and only accessible to logged in users. 
@@ -34,7 +33,7 @@ const Routes = ({ login, signup, currentUser, newEvent, saveToMoodboard }) => {
 	}
 
 	if (isLoading) {
-		return <p>{dict.loading}</p>;
+		return <div>{staticMsg.LOADING}</div>;
 	}
 
 	return (

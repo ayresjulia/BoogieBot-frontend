@@ -4,3 +4,7 @@
 	margin-right: auto;
 	width: 600px;
 }
+
+.btn {
+	box-shadow: none !important;
+}

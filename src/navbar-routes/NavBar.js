@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import "./NavBar.css";
 import { NavLink } from "react-router-dom";
 import { Navbar, Nav, NavItem, NavbarBrand, Collapse, NavbarToggler } from "reactstrap";
-import dict from "../helpers/dictionary";
+import staticMsg from "../helpers/staticUserMsg";
+
 /** Navigation bar that changes according to currentUser. */
 
 const NavBar = ({ currentUser, logout }) => {
@@ -14,7 +15,7 @@ const NavBar = ({ currentUser, logout }) => {
 		<div>
 			<Navbar expand="md" light className="Navbar">
 				<NavbarBrand href="/" className="Navbar-brand">
-					{dict.logoName}
+					{staticMsg.LOGO_NAME}
 				</NavbarBrand>
 				<NavbarToggler onClick={toggleNavbar} className="Navbar-hamburger" />
 				<Collapse isOpen={!collapsed} navbar>
@@ -22,28 +23,28 @@ const NavBar = ({ currentUser, logout }) => {
 						<Nav className="Navbar-cntr ml-auto" navbar>
 							<NavItem>
 								<NavLink className="navbar-link" to="/events">
-									{dict.navMyEvents}
+									{staticMsg.NAV_MY_EVENTS}
 								</NavLink>
 							</NavItem>
 							<NavItem>
 								<NavLink className="navbar-link" to="/inspiration">
-									{dict.navInspiration}
+									{staticMsg.NAV_INSPIRATION}
 								</NavLink>
 							</NavItem>
 							<NavItem>
 								<NavLink className="navbar-link" to="/catering">
-									{dict.navCatering}
+									{staticMsg.NAV_CATERING}
 								</NavLink>
 							</NavItem>
 							<NavItem>
 								<NavLink className="navbar-link" to="/profile">
-									{dict.navProfile}
+									{staticMsg.NAV_PROFILE}
 								</NavLink>
 							</NavItem>
 
 							<NavItem>
 								<NavLink className="navbar-link" to="/" onClick={logout}>
-									{dict.navLogOut}
+									{staticMsg.NAV_LOG_OUT}
 								</NavLink>
 							</NavItem>
 						</Nav>
@@ -52,12 +53,12 @@ const NavBar = ({ currentUser, logout }) => {
 						<Nav className="ml-auto" navbar>
 							<NavItem>
 								<NavLink className="navbar-link" to="/login">
-									{dict.navLogIn}
+									{staticMsg.NAV_LOG_IN}
 								</NavLink>
 							</NavItem>
 							<NavItem>
 								<NavLink className="navbar-link" to="/signup">
-									{dict.navSignUp}
+									{staticMsg.NAV_SIGN_UP}
 								</NavLink>
 							</NavItem>
 						</Nav>

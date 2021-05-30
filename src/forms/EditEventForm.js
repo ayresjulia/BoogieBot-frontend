@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import BoogieBotApi from "../Api";
 import { Row, Col } from "react-bootstrap";
 import Alert from "../helpers/Alert";
-import dict from "../helpers/dictionary";
+import staticMsg from "../helpers/staticUserMsg";
 import states from "../helpers/states";
 import countries from "../helpers/countries";
 import { v4 as uuid } from "uuid";
@@ -16,9 +16,12 @@ import EventContext from "../helpers/EventContext";
 
 const EditEventForm = () => {
 	const history = useHistory();
-	let { id } = useParams();
 	const { events } = useContext(EventContext);
+	const [ showAlert, setShowAlert ] = useState(false);
+	let { id } = useParams();
+
 	let targetEvent = events.find((evt) => parseInt(evt.id) === parseInt(id));
+	if (!targetEvent) console.error(staticMsg.TARGET_ERR);
 
 	const INITIAL_STATE = {
 		title: targetEvent.title,
@@ -28,11 +31,10 @@ const EditEventForm = () => {
 		city: targetEvent.city,
 		state: targetEvent.state,
 		country: targetEvent.country,
-		imgUrl: targetEvent.imgUrl || dict.defaultEventImg
+		imgUrl: targetEvent.imgUrl === staticMsg.DEFAULT_EVENT_IMG ? "" : targetEvent.imgUrl
 	};
 	const [ formData, setFormData ] = useState(INITIAL_STATE);
 	const [ formErrors, setFormErrors ] = useState([]);
-	const [ formSuccess, setFormSuccess ] = useState(false);
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;
@@ -41,9 +43,11 @@ const EditEventForm = () => {
 			[name]: value
 		}));
 	};
+
 	/** Submit form and add new event data to db. */
 
-	const handleSubmit = async () => {
+	const handleSubmit = async (e) => {
+		e.preventDefault();
 		let eventData = {
 			title: formData.title,
 			description: formData.description,
@@ -57,10 +61,10 @@ const EditEventForm = () => {
 
 		try {
 			await BoogieBotApi.editEvent(id, eventData);
-			setFormSuccess(true);
 			history.push("/events");
 		} catch (err) {
 			setFormErrors(err);
+			setShowAlert(true);
 			console.error(formErrors);
 			return;
 		}
@@ -71,8 +75,8 @@ const EditEventForm = () => {
 	return (
 		<div className="Form">
 			<div className="Form-left">
-				<span className="Form-update">{dict.editEventFormTip}</span>
-				<p>{dict.editEventFormTipDesc}</p>
+				<span className="Form-update">{staticMsg.FORM_TIP}</span>
+				<p>{staticMsg.EDIT_EVENT_FORM_TIP_DESC}</p>
 			</div>
 			<div className="Form-right">
 				<div className="font-weight-bold text-center mb-card-title event-title">
@@ -82,7 +86,7 @@ const EditEventForm = () => {
 					<Row>
 						<Col md={6}>
 							<FormGroup>
-								<Label htmlFor="title">{dict.editEventFormTitle}</Label>
+								<Label htmlFor="title">{staticMsg.EDIT_EVENT_FORM_TITLE}</Label>
 								<Input
 									className="Form-input"
 									name="title"
@@ -94,7 +98,9 @@ const EditEventForm = () => {
 						</Col>
 						<Col md={6}>
 							<FormGroup>
-								<Label htmlFor="description">{dict.editEventFormDescription}</Label>
+								<Label htmlFor="description">
+									{staticMsg.EDIT_EVENT_FORM_DESC}
+								</Label>
 								<Input
 									className="Form-input"
 									name="description"
@@ -108,7 +114,9 @@ const EditEventForm = () => {
 					<Row>
 						<Col md={6}>
 							<FormGroup>
-								<Label htmlFor="eventDate">{dict.editEventFormEventDate}</Label>
+								<Label htmlFor="eventDate">
+									{staticMsg.EDIT_EVENT_FORM_EVENT_DATE}
+								</Label>
 								<Input
 									className="Form-input"
 									type="date"
@@ -122,7 +130,9 @@ const EditEventForm = () => {
 						</Col>
 						<Col md={6}>
 							<FormGroup>
-								<Label htmlFor="eventTime">{dict.editEventFormEventTime}</Label>
+								<Label htmlFor="eventTime">
+									{staticMsg.EDIT_EVENT_FORM_EVENT_TIME}
+								</Label>
 								<Input
 									className="Form-input"
 									type="time"
@@ -138,7 +148,7 @@ const EditEventForm = () => {
 					<Row>
 						<Col md={6}>
 							<FormGroup>
-								<Label htmlFor="city">{dict.editEventFormCity}</Label>
+								<Label htmlFor="city">{staticMsg.EDIT_EVENT_FORM_CITY}</Label>
 								<Input
 									className="Form-input"
 									placeholder="city"
@@ -189,13 +199,19 @@ const EditEventForm = () => {
 							name="imgUrl"
 							className="Form-input"
 							value={formData.imgUrl}
-							placeholder="event image url (optional)"
 							onChange={handleChange}
 						/>
 					</FormGroup>
-					{formSuccess ? (
-						<Alert type="success" messages={[ "Updated successfully." ]} />
-					) : null}
+					{formErrors &&
+					showAlert && (
+						<Alert
+							type="danger"
+							messages={[
+								"There was an error updating your event, please try again."
+							]}
+						/>
+					)}
+
 					<Button className="Form-btn btn-success">Save</Button>
 				</Form>
 			</div>

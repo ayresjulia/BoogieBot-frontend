@@ -1,17 +1,17 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import { Form, FormGroup, Label, Input, Button } from "reactstrap";
 import { useHistory } from "react-router-dom";
 import { Row, Col } from "react-bootstrap";
 import "./EventForm.css";
-import dict from "../helpers/dictionary";
+import staticMsg from "../helpers/staticUserMsg";
 import states from "../helpers/states";
 import countries from "../helpers/countries";
 import { v4 as uuid } from "uuid";
+// import EventContext from "../helpers/EventContext";
 
 /** Form to add new event and save event to db. */
 
 const EventForm = ({ currentUser, newEvent }) => {
-	const _isMounted = useRef(true);
 	const history = useHistory();
 	const [ formErrors, setFormErrors ] = useState([]);
 	const [ formData, setFormData ] = useState({
@@ -22,27 +22,21 @@ const EventForm = ({ currentUser, newEvent }) => {
 		city: "",
 		state: "",
 		country: "",
-		imgUrl: dict.defaultEventImg,
+		imgUrl: staticMsg.DEFAULT_EVENT_IMG,
 		hostUsername: currentUser.username
 	});
 
-	useEffect(() => {
-		return () => {
-			_isMounted.current = false;
-		};
-	}, []);
-
 	/** On submit, redirect to events page "/events". */
 
-	async function handleSubmit () {
+	async function handleSubmit (e) {
+		e.preventDefault();
+
 		let result = await newEvent(formData);
-		if (_isMounted.current) {
-			if (result.success) {
-				history.push("/events");
-			} else {
-				setFormErrors(result.errors);
-				console.error(formErrors);
-			}
+		if (result.success) {
+			history.push("/events");
+		} else {
+			setFormErrors(result.errors);
+			console.error(formErrors);
 		}
 	}
 
@@ -54,8 +48,8 @@ const EventForm = ({ currentUser, newEvent }) => {
 	return (
 		<div className="EventForm">
 			<div className="EventForm-left">
-				<span className="big-bold">{dict.eventFormTip}</span>
-				<p>{dict.eventFormTipDesc}</p>
+				<span className="big-bold">{staticMsg.FORM_TIP}</span>
+				<p>{staticMsg.EVENT_FORM_TIP_DESC}</p>
 			</div>
 			<div className="EventForm-right">
 				<Form className="Form-body" onSubmit={handleSubmit}>
@@ -161,18 +155,6 @@ const EventForm = ({ currentUser, newEvent }) => {
 							</FormGroup>
 						</Col>
 					</Row>
-					<FormGroup>
-						<Label htmlFor="imgUrl" />
-						<Input
-							id="imgUrl"
-							name="imgUrl"
-							className="Form-input"
-							value={formData.imgUrl}
-							placeholder="event image url (optional)"
-							onChange={handleChange}
-							required
-						/>
-					</FormGroup>
 					<FormGroup>
 						<Label htmlFor="hostUsername" />
 						<Input

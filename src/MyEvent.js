@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import BoogieBotApi from "./Api";
 import "./MyEvent.css";
-import dict from "./helpers/dictionary";
+import staticMsg from "./helpers/staticUserMsg";
 import EventContext from "./helpers/EventContext";
 
 const MAPS_BASE_URL = "http://maps.google.com/";
@@ -30,12 +30,12 @@ const SearchEvent = () => {
 		[ event.id ]
 	);
 
-	if (!events) return console.error(dict.consoleEventsError);
+	if (!events) return console.error(staticMsg.CONSOLE_EVENTS_ERROR);
 
 	return (
 		<div>
 			<p className="MyEvent-rmrk">
-				<i>{dict.myEventRmrk1}</i>
+				<i>{staticMsg.MY_EVENT_RMRK1}</i>
 			</p>
 			<Row>
 				<Col m={6}>
@@ -66,22 +66,22 @@ const SearchEvent = () => {
 								</CardTitle>
 
 								<p>
-									<b>{dict.myEventDesc}</b> {event.description}
+									<b>{staticMsg.MY_EVENT_DESC}</b> {event.description}
 								</p>
 								<p>
-									<b>{dict.myEventWhen}</b> {event.eventDate}
+									<b>{staticMsg.MY_EVENT_WHEN}</b> {event.eventDate}
 								</p>
 								<p>
-									<b>{dict.myEventTime}</b> {event.eventTime}
+									<b>{staticMsg.MY_EVENT_TIME}</b> {event.eventTime}
 								</p>
 								<p>
-									<b>{dict.myEventLocation}</b> {event.city} | {event.state} |{" "}
-									{event.country}
+									<b>{staticMsg.MY_EVENT_LOCATION}</b> {event.city} |{" "}
+									{event.state} | {event.country}
 								</p>
 								<CardTitle className="font-weight-bold text-center mb-catering-title">
-									{dict.myEventCat}
+									{staticMsg.MY_EVENT_CAT}
 								</CardTitle>
-								<i>{dict.myEventRmrk2}</i>
+								<i>{staticMsg.MY_EVENT_RMRK2}</i>
 								<ol>
 									{evtMoodboard.moodboard &&
 										evtMoodboard.moodboard.map(

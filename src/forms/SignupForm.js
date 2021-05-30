@@ -4,7 +4,7 @@ import Alert from "../helpers/Alert";
 import { Form, FormGroup, Label, Input, Button } from "reactstrap";
 import { Image } from "react-bootstrap";
 import "./SignupForm.css";
-import dict from "../helpers/dictionary";
+import staticMsg from "../helpers/staticUserMsg";
 
 /** Form to signup a user and save user to db. */
 
@@ -16,7 +16,7 @@ const SignupForm = ({ signup }) => {
 		firstName: "",
 		lastName: "",
 		email: "",
-		profileUrl: dict.userDefaultUrl
+		profileUrl: staticMsg.USER_DEFAULT_URL
 	});
 	const [ formErrors, setFormErrors ] = useState([]);
 	const [ formSuccess, setFormSuccess ] = useState(false);
@@ -42,10 +42,14 @@ const SignupForm = ({ signup }) => {
 	return (
 		<div className="SignupForm">
 			<Form className="Form-body" onSubmit={handleSubmit}>
-				<Image className="Profile-url" src={dict.userDefaultUrl} alt="user-profile" />
+				<Image
+					className="Profile-url"
+					src={staticMsg.USER_DEFAULT_URL}
+					alt="user-profile"
+				/>
 
 				<FormGroup>
-					<Label htmlFor="username">{dict.formUsername}</Label>
+					<Label htmlFor="username">{staticMsg.FORM_USERNAME}</Label>
 					<Input
 						id="username"
 						name="username"
@@ -57,7 +61,7 @@ const SignupForm = ({ signup }) => {
 				</FormGroup>
 
 				<FormGroup>
-					<Label htmlFor="password">{dict.formPwd}</Label>
+					<Label htmlFor="password">{staticMsg.FORM_PWD}</Label>
 					<Input
 						id="password"
 						type="password"
@@ -69,7 +73,7 @@ const SignupForm = ({ signup }) => {
 					/>
 				</FormGroup>
 				<FormGroup>
-					<Label htmlFor="firstName">{dict.formFirstName}</Label>
+					<Label htmlFor="firstName">{staticMsg.FORM_FIRST_NAME}</Label>
 					<Input
 						id="firstName"
 						type="text"
@@ -81,7 +85,7 @@ const SignupForm = ({ signup }) => {
 					/>
 				</FormGroup>
 				<FormGroup>
-					<Label htmlFor="lastName">{dict.formLastName}</Label>
+					<Label htmlFor="lastName">{staticMsg.FORM_LAST_NAME}</Label>
 					<Input
 						id="lastName"
 						type="text"
@@ -93,7 +97,7 @@ const SignupForm = ({ signup }) => {
 					/>
 				</FormGroup>
 				<FormGroup>
-					<Label htmlFor="email">{dict.formEmail}</Label>
+					<Label htmlFor="email">{staticMsg.FORM_EMAIL}</Label>
 					<Input
 						id="email"
 						type="email"

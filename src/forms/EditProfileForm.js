@@ -5,7 +5,7 @@ import "./EditProfileForm.css";
 import BoogieBotApi from "../Api";
 import { Row, Col } from "react-bootstrap";
 import Alert from "../helpers/Alert";
-import dict from "../helpers/dictionary";
+import staticMsg from "../helpers/staticUserMsg";
 import UserContext from "../helpers/UserContext";
 
 /** Form to edit user info in db. */
@@ -26,15 +26,8 @@ const EditProfileForm = () => {
 	const [ formSuccess, setFormSuccess ] = useState(false);
 	const history = useHistory();
 
-	const profile = currentUser.profileUrl === "" ? dict.userDefaultUrl : currentUser.profileUrl;
-
-	const handleChange = (e) => {
-		const { name, value } = e.target;
-		setFormData((formData) => ({
-			...formData,
-			[name]: value
-		}));
-	};
+	const profile =
+		currentUser.profileUrl === "" ? staticMsg.USER_DEFAULT_URL : currentUser.profileUrl;
 
 	/** Submit form and add new user data to db. */
 
@@ -52,25 +45,34 @@ const EditProfileForm = () => {
 		let username = currentUser.username;
 		try {
 			updatedUser = await BoogieBotApi.saveProfile(username, profileData);
-			setFormSuccess(true);
 			history.push("/");
 		} catch (err) {
-			setFormErrors(err);
 			alert("Password is incorrect, please try again.");
 			console.error(formErrors);
 			return;
 		}
 		setFormData((form) => ({ ...form, password: "" }));
+		setFormSuccess(true);
 		setFormErrors([]);
 		// trigger reloading of user information throughout the site
 		setCurrentUser(updatedUser);
 	};
 
+	/** Handle form data changing */
+
+	const handleChange = (e) => {
+		const { name, value } = e.target;
+		setFormData((formData) => ({
+			...formData,
+			[name]: value
+		}));
+	};
+
 	return (
 		<div className="Form">
 			<div className="Form-left">
-				<span className="Form-update">{dict.editProfileFormTip}</span>
-				<p>{dict.editProfileFormTipDesc}</p>
+				<span className="Form-update">{staticMsg.FORM_TIP}</span>
+				<p>{staticMsg.EDIT_PROFILE_FORM_TIP_DESC}</p>
 			</div>
 			<div className="Form-right">
 				<img className="Form-profile-pic" src={profile} alt="userprofilepicture" />
@@ -82,7 +84,7 @@ const EditProfileForm = () => {
 					<Row>
 						<Col md={6}>
 							<FormGroup>
-								<Label htmlFor="firstName">{dict.formFirstName}</Label>
+								<Label htmlFor="firstName">{staticMsg.FORM_FIRST_NAME}</Label>
 								<Input
 									className="Form-input"
 									name="firstName"
@@ -94,7 +96,7 @@ const EditProfileForm = () => {
 						</Col>
 						<Col md={6}>
 							<FormGroup>
-								<Label htmlFor="lastName">{dict.formLastName}</Label>
+								<Label htmlFor="lastName">{staticMsg.FORM_LAST_NAME}</Label>
 								<Input
 									className="Form-input"
 									name="lastName"
@@ -106,7 +108,7 @@ const EditProfileForm = () => {
 						</Col>
 					</Row>
 					<FormGroup>
-						<Label htmlFor="email">{dict.formEmail}</Label>
+						<Label htmlFor="email">{staticMsg.FORM_EMAIL}</Label>
 						<Input
 							className="Form-input"
 							name="email"
@@ -116,7 +118,7 @@ const EditProfileForm = () => {
 						/>
 					</FormGroup>
 					<FormGroup>
-						<Label htmlFor="profileUrl">{dict.formProfileURL}</Label>
+						<Label htmlFor="profileUrl">{staticMsg.FORM_PROFILE_URL}</Label>
 						<Input
 							className="Form-input"
 							name="profileUrl"
@@ -126,7 +128,7 @@ const EditProfileForm = () => {
 						/>
 					</FormGroup>
 					<FormGroup>
-						<Label htmlFor="password">{dict.editProfileFormConfirmPwd}</Label>
+						<Label htmlFor="password">{staticMsg.EDIT_PROFILE_FORM_CONFIRM_PWD}</Label>
 						<Input
 							className="Form-input"
 							type="password"

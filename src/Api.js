@@ -38,8 +38,7 @@ class BoogieBotApi {
 	/** Save new event data to db. */
 
 	static async newEvent (data) {
-		let res = await this.request(`events/new`, data, "post");
-		return res.event;
+		await this.request(`events/new`, data, "post");
 	}
 
 	/** Delete event data to db. */

@@ -1,15 +1,16 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Card, CardImg, CardBody, CardTitle, Button } from "reactstrap";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import "./Events.css";
-import dict from "./helpers/dictionary";
+import staticMsg from "./helpers/staticUserMsg";
 import BoogieBotApi from "./Api";
 import EventContext from "./helpers/EventContext";
 
 const Events = ({ currentUser }) => {
 	const history = useHistory();
-	const { events } = useContext(EventContext);
+	const { events, setEvents } = useContext(EventContext);
+
 	let filteredEvents = currentUser.isAdmin
 		? events
 		: events.filter((e) => Object.values(e).includes(currentUser.username));
@@ -28,21 +29,33 @@ const Events = ({ currentUser }) => {
 		}
 	};
 
-	if (!events) return console.error(dict.consoleEventsError);
-	if (!currentUser.username) return console.error(dict.consoleUserError);
+	useEffect(
+		() => {
+			const getEvents = async () => {
+				let events = await BoogieBotApi.getEvents();
+				setEvents(events);
+			};
+
+			getEvents();
+		},
+		[ setEvents ]
+	);
+
+	if (!events) return console.error(staticMsg.CONSOLE_EVENTS_ERROR);
+	if (!currentUser.username) return console.error(staticMsg.CONSOLE_USER_ERROR);
 
 	return (
 		<div className="Events">
 			<p className="Events-rmrk">
-				<i>{dict.eventsRmrk}</i>
+				<i>{staticMsg.EVENTS_RMRK}</i>
 			</p>
 
 			<div className="Events-body">
 				<div className="Events-create">
 					<Link to="/events/new" className="Events-new">
-						<span className="big-bold">{dict.eventsCreate}</span>
+						<span className="big-bold">{staticMsg.EVENTS_CREATE}</span>
 						<p>
-							<i>{dict.eventsNew}</i>
+							<i>{staticMsg.EVENTS_NEW}</i>
 						</p>
 					</Link>
 				</div>
@@ -57,7 +70,7 @@ const Events = ({ currentUser }) => {
 											className="evt-img"
 											top
 											width="100%"
-											src={event.imgUrl}
+											src={event.imgUrl || staticMsg.DEFAULT_EVENT_IMG}
 											alt="Card image cap"
 										/>
 										<CardBody>

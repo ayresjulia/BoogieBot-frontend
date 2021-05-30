@@ -19,10 +19,10 @@ import {
 import "./Catering.css";
 import SearchForm from "./forms/SearchForm";
 import { CLIENT_KEY_DOCUMENU } from "./secret";
-import dict from "./helpers/dictionary";
+import staticMsg from "./helpers/staticUserMsg";
 import EventContext from "./helpers/EventContext";
 
-const DOCUMENU_API_URL = "https://api.documenu.com/v2/restaurants/search/fields?";
+const DOCUMENU_API_URL = "https://api.documenu.com/v2/restaurants/search/fields";
 
 const Catering = ({ currentUser, saveToMoodboard }) => {
 	const { events } = useContext(EventContext);
@@ -51,7 +51,7 @@ const Catering = ({ currentUser, saveToMoodboard }) => {
 
 	async function getRestaurants (zip) {
 		let getRestaurant = await axios.get(
-			`${DOCUMENU_API_URL}zip_code=${zip}&key=${CLIENT_KEY_DOCUMENU}`
+			`${DOCUMENU_API_URL}?zip_code=${zip}&key=${CLIENT_KEY_DOCUMENU}`
 		);
 
 		let data = getRestaurant.data.data;
@@ -86,20 +86,20 @@ const Catering = ({ currentUser, saveToMoodboard }) => {
 		if (!result.success) {
 			setFormErrors(result.errors);
 			console.error(formErrors);
-			alert("Please choose an event first.");
+			alert(staticMsg.EVENT_ALERT);
 		}
 	}
 
-	if (!events) return console.error(dict.consoleEventsError);
-	if (!currentUser.username) return console.error(dict.consoleUserError);
+	if (!events) return console.error(staticMsg.CONSOLE_EVENTS_ERROR);
+	if (!currentUser.username) return console.error(staticMsg.CONSOLE_USER_ERROR);
 
 	return (
 		<div>
 			<div className="Catering-form">
 				<div className="Catering-new">
-					<span className="Catering-bold">{dict.cateringLookup}</span>
-					<p className="Catering-p">{dict.cateringInfo}</p>
-					<p className="Catering-small">{dict.cateringFootnote}</p>
+					<span className="Catering-bold">{staticMsg.CATERING_LOOKUP}</span>
+					<p className="Catering-p">{staticMsg.CATERING_INFO}</p>
+					<p className="Catering-small">{staticMsg.CATERING_FOOTNOTE}</p>
 				</div>
 				<SearchForm searchFor={getRestaurants} />
 			</div>
@@ -137,7 +137,7 @@ const Catering = ({ currentUser, saveToMoodboard }) => {
 												top
 												className="Catering-card-img"
 												width="100%"
-												src={dict.cateringDefault}
+												src={staticMsg.CATERING_DEFAULT}
 												alt="restaurant image"
 											/>
 											<CardBody>
@@ -182,7 +182,7 @@ const Catering = ({ currentUser, saveToMoodboard }) => {
 															rel="noreferrer"
 															tag="h6"
 															className="mb2 text-muted">
-															{dict.cateringWeb}
+															{staticMsg.CATERING_WEB}
 														</a>
 													</p>
 												)}

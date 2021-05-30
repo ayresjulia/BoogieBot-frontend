@@ -23,6 +23,7 @@ export const TOKEN_STORAGE_ID = "boogiebot-token";
 const App = () => {
 	const [ infoLoaded, setInfoLoaded ] = useState(false);
 	const [ currentUser, setCurrentUser ] = useState(null);
+	const [ events, setEvents ] = useState([]);
 	const [ token, setToken ] = useLocalStorage(TOKEN_STORAGE_ID);
 	/** Load user info from API. Until a user is logged in and they have a token, this should not run. It only needs to re-run when a user logs out, so the value of the token is a dependency for this effect. */
 
@@ -85,7 +86,8 @@ const App = () => {
 
 	async function newEvent (data) {
 		try {
-			await BoogieBotApi.newEvent(data);
+			let newEvent = await BoogieBotApi.newEvent(data);
+			setEvents({ ...events, ...newEvent });
 			return { success: true };
 		} catch (errors) {
 			console.error("adding new event failed", errors);
