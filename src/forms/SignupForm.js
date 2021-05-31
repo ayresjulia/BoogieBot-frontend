@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useHistory } from "react-router-dom";
 import Alert from "../helpers/Alert";
 import { Form, FormGroup, Label, Input, Button } from "reactstrap";
@@ -10,6 +10,7 @@ import staticMsg from "../helpers/staticUserMsg";
 
 const SignupForm = ({ signup }) => {
 	const history = useHistory();
+	const formDataRef = useRef();
 	const [ formData, setFormData ] = useState({
 		username: "",
 		password: "",
@@ -21,18 +22,33 @@ const SignupForm = ({ signup }) => {
 	const [ formErrors, setFormErrors ] = useState([]);
 	const [ formSuccess, setFormSuccess ] = useState(false);
 
+	useEffect(() => {
+		formDataRef.current = {
+			username: "",
+			password: "",
+			firstName: "",
+			lastName: "",
+			email: "",
+			profileUrl: staticMsg.USER_DEFAULT_URL
+		};
+		return () => (formDataRef.current = {});
+	});
+
 	/** On submit, redirect to homepage "/". */
 
-	async function handleSubmit (e) {
-		e.preventDefault();
-		let result = await signup(formData);
-		if (result.success) {
-			history.push("/");
-			setFormSuccess(true);
-		} else {
-			setFormErrors(result.errors);
-		}
-	}
+	const handleSubmit = useCallback(
+		async (e) => {
+			e.preventDefault();
+			let result = await signup(formData);
+			if (result.success) {
+				history.push("/");
+				setFormSuccess(true);
+			} else {
+				setFormErrors(result.errors);
+			}
+		},
+		[ formData, signup, history ]
+	);
 
 	function handleChange (e) {
 		const { name, value } = e.target;

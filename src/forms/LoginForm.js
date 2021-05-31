@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import { useHistory } from "react-router-dom";
 import Alert from "../helpers/Alert";
 import { Form, FormGroup, Label, Input, Button } from "reactstrap";
@@ -9,6 +9,7 @@ import staticMsg from "../helpers/staticUserMsg";
 
 const LoginForm = ({ login }) => {
 	const history = useHistory();
+	const formDataRef = useRef();
 	const [ formData, setFormData ] = useState({
 		username: "",
 		password: ""
@@ -16,16 +17,27 @@ const LoginForm = ({ login }) => {
 	const [ formErrors, setFormErrors ] = useState([]);
 	const [ formSuccess, setFormSuccess ] = useState(false);
 
-	async function handleSubmit (e) {
-		e.preventDefault();
-		let result = await login(formData);
-		if (result.success) {
-			history.push("/");
-			setFormSuccess(true);
-		} else {
-			setFormErrors(result.errors);
-		}
-	}
+	useEffect(() => {
+		formDataRef.current = {
+			username: "",
+			password: ""
+		};
+		return () => (formDataRef.current = {});
+	});
+
+	const handleSubmit = useCallback(
+		async (e) => {
+			e.preventDefault();
+			let result = await login(formData);
+			if (result.success) {
+				history.push("/");
+				setFormSuccess(true);
+			} else {
+				setFormErrors(result.errors);
+			}
+		},
+		[ formData, history, login ]
+	);
 
 	function handleChange (e) {
 		const { name, value } = e.target;

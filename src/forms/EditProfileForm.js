@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useRef, useEffect, useCallback } from "react";
 import { Form, FormGroup, Label, Input, Button } from "reactstrap";
 import { useHistory } from "react-router-dom";
 import "./EditProfileForm.css";
@@ -12,6 +12,7 @@ import UserContext from "../helpers/UserContext";
 
 const EditProfileForm = () => {
 	const { currentUser, setCurrentUser } = useContext(UserContext);
+	const formDataRef = useRef();
 
 	const INITIAL_STATE = {
 		username: currentUser.username,
@@ -29,34 +30,42 @@ const EditProfileForm = () => {
 	const profile =
 		currentUser.profileUrl === "" ? staticMsg.USER_DEFAULT_URL : currentUser.profileUrl;
 
+	useEffect(() => {
+		formDataRef.current = INITIAL_STATE;
+		return () => (formDataRef.current = {});
+	});
+
 	/** Submit form and add new user data to db. */
 
-	const handleSubmit = async (e) => {
-		e.preventDefault();
-		let profileData = {
-			firstName: formData.firstName,
-			lastName: formData.lastName,
-			email: formData.email,
-			profileUrl: formData.profileUrl,
-			password: formData.password
-		};
+	const handleSubmit = useCallback(
+		async (e) => {
+			e.preventDefault();
+			let profileData = {
+				firstName: formData.firstName,
+				lastName: formData.lastName,
+				email: formData.email,
+				profileUrl: formData.profileUrl,
+				password: formData.password
+			};
 
-		let updatedUser;
-		let username = currentUser.username;
-		try {
-			updatedUser = await BoogieBotApi.saveProfile(username, profileData);
-			history.push("/");
-		} catch (err) {
-			alert("Password is incorrect, please try again.");
-			console.error(formErrors);
-			return;
-		}
-		setFormData((form) => ({ ...form, password: "" }));
-		setFormSuccess(true);
-		setFormErrors([]);
-		// trigger reloading of user information throughout the site
-		setCurrentUser(updatedUser);
-	};
+			let updatedUser;
+			let username = currentUser.username;
+			try {
+				updatedUser = await BoogieBotApi.saveProfile(username, profileData);
+				history.push("/");
+			} catch (err) {
+				alert("Password is incorrect, please try again.");
+				console.error(formErrors);
+				return;
+			}
+			setFormData((form) => ({ ...form, password: "" }));
+			setFormSuccess(true);
+			setFormErrors([]);
+			// trigger reloading of user information throughout the site
+			setCurrentUser(updatedUser);
+		},
+		[ formData, history, currentUser.username, formErrors, setCurrentUser ]
+	);
 
 	/** Handle form data changing */
 

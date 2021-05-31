@@ -101,7 +101,7 @@ const Inspiration = ({ currentUser, saveToMoodboard }) => {
 												<Input
 													type="checkbox"
 													value={event.id}
-													onChange={getEventId}
+													onClick={getEventId}
 												/>{" "}
 												{event.title}
 											</Label>

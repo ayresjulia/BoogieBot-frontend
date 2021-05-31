@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useRef, useEffect, useCallback } from "react";
 import { Form, FormGroup, Label, Input, Button } from "reactstrap";
 import { useParams } from "react-router-dom";
 import BoogieBotApi from "../Api";
@@ -19,6 +19,7 @@ const EditEventForm = () => {
 	const { events } = useContext(EventContext);
 	const [ showAlert, setShowAlert ] = useState(false);
 	let { id } = useParams();
+	const formDataRef = useRef();
 
 	let targetEvent = events.find((evt) => parseInt(evt.id) === parseInt(id));
 	if (!targetEvent) console.error(staticMsg.TARGET_ERR);
@@ -36,6 +37,11 @@ const EditEventForm = () => {
 	const [ formData, setFormData ] = useState(INITIAL_STATE);
 	const [ formErrors, setFormErrors ] = useState([]);
 
+	useEffect(() => {
+		formDataRef.current = INITIAL_STATE;
+		return () => (formDataRef.current = {});
+	});
+
 	const handleChange = (e) => {
 		const { name, value } = e.target;
 		setFormData((formData) => ({
@@ -46,31 +52,34 @@ const EditEventForm = () => {
 
 	/** Submit form and add new event data to db. */
 
-	const handleSubmit = async (e) => {
-		e.preventDefault();
-		let eventData = {
-			title: formData.title,
-			description: formData.description,
-			eventDate: formData.eventDate,
-			eventTime: formData.eventTime,
-			city: formData.city,
-			state: formData.state,
-			country: formData.country,
-			imgUrl: formData.imgUrl
-		};
+	const handleSubmit = useCallback(
+		async (e) => {
+			e.preventDefault();
+			let eventData = {
+				title: formData.title,
+				description: formData.description,
+				eventDate: formData.eventDate,
+				eventTime: formData.eventTime,
+				city: formData.city,
+				state: formData.state,
+				country: formData.country,
+				imgUrl: formData.imgUrl
+			};
 
-		try {
-			await BoogieBotApi.editEvent(id, eventData);
-			history.push("/events");
-		} catch (err) {
-			setFormErrors(err);
-			setShowAlert(true);
-			console.error(formErrors);
-			return;
-		}
-		setFormData((form) => ({ ...form }));
-		setFormErrors([]);
-	};
+			try {
+				await BoogieBotApi.editEvent(id, eventData);
+				history.push("/events");
+			} catch (err) {
+				setFormErrors(err);
+				setShowAlert(true);
+				console.error(formErrors);
+				return;
+			}
+			setFormData((form) => ({ ...form }));
+			setFormErrors([]);
+		},
+		[ formData, history, formErrors, id ]
+	);
 
 	return (
 		<div className="Form">
